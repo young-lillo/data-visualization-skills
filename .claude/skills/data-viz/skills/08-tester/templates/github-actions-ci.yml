@@ -1,0 +1,47 @@
+name: Test & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest ruff pandera
+
+      - name: Lint (syntax + undefined names only)
+        run: ruff check . --select E9,F63,F7,F82
+
+      # Uncomment if using Kaggle datasets:
+      # - name: Configure Kaggle credentials
+      #   run: |
+      #     mkdir -p ~/.kaggle
+      #     echo '{"username":"${{ secrets.KAGGLE_USERNAME }}","key":"${{ secrets.KAGGLE_KEY }}"}' > ~/.kaggle/kaggle.json
+      #     chmod 600 ~/.kaggle/kaggle.json
+
+      # Uncomment if using BigQuery:
+      # - name: Configure BigQuery credentials
+      #   run: |
+      #     echo '${{ secrets.BIGQUERY_CREDENTIALS_JSON }}' > /tmp/bq-credentials.json
+      #     echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/bq-credentials.json" >> $GITHUB_ENV
+
+      - name: Data quality tests
+        run: pytest tests/test-data-quality.py -v
+
+      - name: Streamlit app tests
+        run: pytest tests/test-streamlit-app.py -v
+
+      # Streamlit Cloud auto-deploys on merge to main — no manual step needed.
+      # Ensure repo is linked at https://share.streamlit.io

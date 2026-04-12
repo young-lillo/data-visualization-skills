@@ -1,0 +1,84 @@
+THIRD PARTY NOTICES
+ck:data-viz Skill Toolkit
+=========================
+
+This skill toolkit generates projects that use the following third-party
+open source software. Their licenses are listed below.
+
+── Python Libraries ──────────────────────────────────────────────────────────
+
+streamlit
+  License: Apache License 2.0
+  Source:  https://github.com/streamlit/streamlit
+
+pandas
+  License: BSD 3-Clause License
+  Source:  https://github.com/pandas-dev/pandas
+
+plotly / plotly.py
+  License: MIT License
+  Source:  https://github.com/plotly/plotly.py
+
+altair
+  License: BSD 3-Clause License
+  Source:  https://github.com/altair-viz/altair
+
+pandera
+  License: MIT License
+  Source:  https://github.com/unionai-oss/pandera
+
+ydata-profiling (formerly pandas-profiling)
+  License: MIT License
+  Source:  https://github.com/ydataai/ydata-profiling
+
+pandas-gbq
+  License: BSD 3-Clause License
+  Source:  https://github.com/googleapis/python-bigquery-pandas
+
+kaggle
+  License: Apache License 2.0
+  Source:  https://github.com/Kaggle/kaggle-api
+
+sqlalchemy
+  License: MIT License
+  Source:  https://github.com/sqlalchemy/sqlalchemy
+
+psycopg2-binary
+  License: GNU Lesser General Public License v3 (LGPL-3.0)
+  Source:  https://github.com/psycopg/psycopg2
+
+google-auth / google-oauth2
+  License: Apache License 2.0
+  Source:  https://github.com/googleapis/google-auth-library-python
+
+ruff
+  License: MIT License
+  Source:  https://github.com/astral-sh/ruff
+
+pytest
+  License: MIT License
+  Source:  https://github.com/pytest-dev/pytest
+
+── Docker Images ─────────────────────────────────────────────────────────────
+
+metabase/metabase
+  License: GNU Affero General Public License v3 (AGPL-3.0)
+  Source:  https://github.com/metabase/metabase
+  Note:    Self-hosted usage only. Modifications to Metabase source require
+           source disclosure under AGPL-3.0. Using Metabase as a tool
+           (not modifying its code) does not trigger copyleft requirements.
+
+postgres (PostgreSQL)
+  License: PostgreSQL License (BSD-like, permissive)
+  Source:  https://github.com/postgres/postgres
+
+── CI/CD ─────────────────────────────────────────────────────────────────────
+
+GitHub Actions
+  actions/checkout@v4  — MIT License
+  actions/setup-python@v5 — MIT License
+  Source: https://github.com/actions/
+
+=============================================================================
+Full license texts are available at the URLs listed above.
+This skill toolkit itself is released under the MIT License.
