@@ -1,70 +1,236 @@
-# Data Visualization Kit
+# Data Visualization Kit - The Workflow-First Portfolio Kit for Codex
 
-Workflow-first open-source kit for Codex agents. User clones the repo, runs a `$dv-*` entrypoint, and gets or updates a project workspace under `projects/<project-slug>/`.
+<p align="center">
+  <img src="https://img.shields.io/badge/Data%20Visualization-Kit-111827?style=for-the-badge&logo=openai&logoColor=white" alt="Data Visualization Kit" />
+  <img src="https://img.shields.io/badge/Runtime-Codex%20Agents-0f172a?style=for-the-badge" alt="Codex Agents" />
+</p>
 
-## What It Does
+<p align="center">
+  <img src="https://img.shields.io/badge/Commands-9-0ea5e9" alt="Commands" />
+  <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
+  <img src="https://img.shields.io/badge/Default%20Deploy-RAWGraphs-f59e0b" alt="RAWGraphs" />
+  <img src="https://img.shields.io/badge/License-MIT-black" alt="MIT License" />
+</p>
 
-- accepts `$dv-<workflow> <goal / task / brief>`
-- routes each request to one owner workflow
-- enforces mandatory hooks before deep execution
-- prepares docs-centric project workspaces
-- supports data preparation, visualization, publish, debug, and docs workflows
+Data Visualization Kit helps you build portfolio-grade data visualization projects with Codex in a more structured way.
+Instead of starting from a blank chat each time, you get a workflow-first kit that routes requests, prepares project workspaces, and keeps each project organized under its own folder.
 
-## Why This Shape
+## What Is This?
 
-- orchestration lives in workflows, not prompts
-- hooks block invalid runtime states before execution
-- agents are scoped executors
-- project artifacts stay compact under `projects/<slug>/docs/`
+Data Visualization Kit is a workflow-first kit for people who want professional data portfolio output from Codex without improvising the process every time.
 
-## Runtime Contract
+It gives you:
+- dedicated `$dv-*` workflows for project intake, data preparation, visualization, publish, debug, docs management, and runtime help
+- project workspaces under `projects/<project-slug>/`
+- a docs-centric project contract so each project keeps its own brief, plan, exports, and notes
+- a safer update path that preserves local `projects/` content
 
-- `npm run dv -- $dv-primary ...` runs repo-root preflight before workflow routing.
-- Non-interactive runs must provide `--project-context`, `--project-dataset`, and `--project-goals`; otherwise the CLI fails fast instead of guessing.
-- Hook gates are stage-triggered hard stops: `run-workflow-preflight` before routing, `workflow-routing-gate` after request normalization and intake resolution, `project-preflight` and `docs-output-gate` before writes, `privacy-block` before sensitive-file access, `provider-key-gate` before provider-dependent actions, and `subagent-init` before Codex handoff.
-- `npm run smoke` creates a disposable sample project, validates the generated output contract, then removes it.
+Whether you are building a portfolio for analytics, BI, product, marketing, or domain storytelling, this kit gives Codex a cleaner operating shape.
 
-## Quick Start
+## Any CLI
+
+### Install
+
+Use this when you want to work from terminal in a normal local git clone.
 
 ```bash
-npm run dv -- '$dv-help'
-npm run dv -- '$dv-primary'
+git clone https://github.com/young-lillo/data-visualization-skills.git
+cd data-visualization-skills
+codex
 ```
 
-## Update
+This repo currently runs as a local kit.
+It does not publish a separate global `codexkit`-style installer package.
 
-Use this after cloning from a git remote with `origin` configured.
+### Update
 
 ```bash
 npm run kit:update
 npm run kit:update:reset
 ```
 
-- `npm run kit:update` updates the core kit safely and preserves `projects/` user content
-- `npm run kit:update:reset` discards local core-kit changes and syncs to `origin/<current-branch>`, while still restoring `projects/`
-- both commands preserve everything inside `projects/` except `projects/README.md`, which stays core-kit owned
+- `npm run kit:update` updates the core kit safely
+- `npm run kit:update:reset` discards local core-kit changes and syncs to `origin/<current-branch>`
+- both commands preserve everything inside `projects/` except `projects/README.md`
 
-Non-interactive example:
+## Codex App
+
+### Install
+
+Use this when you want to work directly inside Codex App.
+
+1. Open Codex App.
+2. Click `Open in Terminal`.
+3. Move to the folder where you want to install the kit.
 
 ```bash
-npm run dv -- '$dv-primary' --slug ecommerce-churn-portfolio --project-context "E-commerce retention project" --project-dataset "Orders, customers, tickets" --project-goals "Show churn insights and technical workflow"
+cd <folder-where-you-want-to-install-the-kit>
 ```
+
+4. Clone the repo.
+
+```bash
+git clone https://github.com/young-lillo/data-visualization-skills.git
+```
+
+5. Wait for clone to finish.
+6. In Codex App, open the cloned folder.
+7. Start working from there.
+
+### Update
+
+Use this if you installed through Codex App.
+
+```bash
+npm run kit:update
+npm run kit:update:reset
+```
+
+## How to Use
+
+Data Visualization Kit is workflow-first, but the surface stays simple.
+Use the workflow pattern below when you already know the job:
+
+```text
+$dv-<workflow> <goal / task / brief>
+```
+
+If you do not know where to start, begin with:
+
+```text
+$dv-help
+$dv-primary
+```
+
+### Quick Start
+
+1. Ask for the command surface:
+
+```text
+$dv-help
+```
+
+2. Start with the main project conductor when the ask is broad:
+
+```text
+$dv-primary Build a churn-analysis portfolio project for an e-commerce dataset
+```
+
+3. Move to a specialist workflow when the job is already clear:
+
+```text
+$dv-data-visualize Rebuild visuals after source schema changed
+```
+
+### The Workflow Roster
+
+| Workflow | Command | Best for |
+|---|---|---|
+| Front Desk | `$dv-help` | Learn the kit fast and find the right starting point |
+| Project Conductor | `$dv-primary` | Start a project from context, dataset, and goals |
+| Data Preparation Desk | `$dv-data-preparation` | Ingest, clean, validate, and transform data |
+| Visualization Desk | `$dv-data-visualize` | Build or refresh visual outputs |
+| Publish Desk | `$dv-publish` | Make the project git-ready and deployable |
+| Debug Desk | `$dv-debug` | Diagnose failures in preparation, visualize, or publish flow |
+| Docs Desk | `$dv-document-management` | Keep project docs and assets compact and in the right place |
+| Orchestration Desk | `$dv-orchestration` | Inspect the agent-coordination workflow |
+| Hook Desk | `$dv-hook-workflow` | Inspect the runtime hook contract |
+
+### Natural Language
+
+You do not have to memorize commands.
+You can describe the project goal in normal language, and the runtime can normalize broad asks into the primary workflow.
+
+Examples:
+
+```text
+Build a customer churn portfolio project for e-commerce.
+Prepare a marketing dataset for dashboard-ready visualization.
+Refresh our visuals after the source schema changed.
+Make this project ready for git and deploy.
+```
+
+## Real-World Use Cases
+
+### Start a New Portfolio Project
+
+Turn a broad business question into a structured data project workspace.
+
+```text
+$dv-primary Build a portfolio project for customer churn analysis
+```
+
+### Prepare Messy Data
+
+Ingest and clean source data before visualization work begins.
+
+```text
+$dv-data-preparation Clean order, customer, and support data into chart-ready tables
+```
+
+### Refresh Visual Outputs
+
+Update charts and exports after a schema or business change.
+
+```text
+$dv-data-visualize Rebuild visuals after source schema changed
+```
+
+### Publish the Project
+
+Finish the project so it is ready to share and deploy.
+
+```text
+$dv-publish Make this project git-ready and deployable
+```
+
+### Debug the Workflow
+
+Find failures without manually retracing every step.
+
+```text
+$dv-debug Find why RAWGraphs export is failing
+```
+
+## Runtime Contract
+
+- `npm run dv -- '$dv-primary' ...` runs repo-root preflight before workflow routing
+- non-interactive runs must provide `--project-context`, `--project-dataset`, and `--project-goals`
+- hook gates stop execution when runtime state is invalid
+- generated project outputs stay under `projects/<project-slug>/docs/`
+- `npm run smoke` creates a disposable sample project, validates it, then removes it
 
 ## Commands
 
-- `npm run dv -- '$dv-help'`
-- `npm run dv -- '$dv-primary'`
-- `npm run dv -- '$dv-data-preparation' --slug <project-slug> --brief "<task>"`
-- `npm run dv -- '$dv-data-visualize' --slug <project-slug> --brief "<task>"`
-- `npm run dv -- '$dv-publish' --slug <project-slug> --brief "<task>"`
-- `npm run dv -- '$dv-debug' --slug <project-slug> --brief "<task>"`
-- `npm run dv -- '$dv-document-management' --slug <project-slug> --brief "<task>"`
-- `npm run dv -- '$dv-orchestration'`
-- `npm run dv -- '$dv-hook-workflow'`
-- `npm run smoke`
-- `npm test`
+```text
+$dv-help
+$dv-primary
+$dv-data-preparation
+$dv-data-visualize
+$dv-publish
+$dv-debug
+$dv-document-management
+$dv-orchestration
+$dv-hook-workflow
+```
 
-## Generated Project Structure
+Equivalent local commands:
+
+```bash
+npm run dv -- '$dv-help'
+npm run dv -- '$dv-primary'
+npm run dv -- '$dv-data-preparation' --slug <project-slug> --brief "<task>"
+npm run dv -- '$dv-data-visualize' --slug <project-slug> --brief "<task>"
+npm run dv -- '$dv-publish' --slug <project-slug> --brief "<task>"
+npm run dv -- '$dv-debug' --slug <project-slug> --brief "<task>"
+npm run dv -- '$dv-document-management' --slug <project-slug> --brief "<task>"
+npm run dv -- '$dv-orchestration'
+npm run dv -- '$dv-hook-workflow'
+```
+
+## Project Workspaces
+
+Live project work is organized per project:
 
 ```text
 projects/<project-slug>/
@@ -82,7 +248,28 @@ projects/<project-slug>/
     assets/
 ```
 
+The root repo stays the core kit.
+Each generated project keeps its own working context under `projects/`.
+
 ## Deploy Guidance
 
-- `RAWGraphs` is the free-deploy default because it fits static portfolio publishing better
-- `Apache Superset` stays available for BI-style dashboards, but not as the recommended Netlify Free path
+- `RAWGraphs` is the free-deploy default because it maps better to static portfolio publishing
+- `Apache Superset` stays available for BI-style dashboards, but it is not the preferred free-host path
+
+## License
+
+This project is licensed under the MIT License.
+See [LICENSE](./LICENSE).
+
+## The Point
+
+Data Visualization Kit is meant to feel less like one generic assistant and more like a practical project kit inside Codex.
+
+One moment you need intake.
+Then data cleanup.
+Then visualization.
+Then publish preparation.
+
+That is the point of the kit.
+You bring the context, dataset, and goals.
+The kit gives Codex a cleaner system for getting the project done.
