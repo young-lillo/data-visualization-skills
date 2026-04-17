@@ -11,10 +11,9 @@ async function findRepoRoot(startPath) {
 
   while (true) {
     const requiredPaths = [
-      path.join(currentPath, "KIT-ARCHITECTURE.md"),
-      path.join(currentPath, "plans"),
-      path.join(currentPath, "docs"),
       path.join(currentPath, "package.json"),
+      path.join(currentPath, "projects"),
+      path.join(currentPath, "scripts"),
     ];
 
     const matches = await Promise.all(requiredPaths.map((target) => pathExists(target)));

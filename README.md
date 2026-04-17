@@ -86,10 +86,3 @@ projects/<project-slug>/
 
 - `RAWGraphs` is the free-deploy default because it fits static portfolio publishing better
 - `Apache Superset` stays available for BI-style dashboards, but not as the recommended Netlify Free path
-
-## Repo Guides
-
-- [Project Overview](docs/project-overview-pdr.md)
-- [System Architecture](docs/system-architecture.md)
-- [Code Standards](docs/code-standards.md)
-- [Design Doc](docs/portfolio-data-visualization-kit-design.md)
