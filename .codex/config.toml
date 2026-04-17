@@ -1,0 +1,12 @@
+[dv]
+name = "data-visualization-kit"
+default_entrypoint = "$dv-primary"
+help_entrypoint = "$dv-help"
+
+[paths]
+prompts = ".codex/prompts"
+workflows = ".codex/workflows"
+agents = ".codex/agents"
+skills = ".agents/skills"
+hooks = "scripts/hooks"
+projects = "projects"

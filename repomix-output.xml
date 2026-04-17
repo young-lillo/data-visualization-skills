@@ -1,0 +1,3869 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.agents/skills/portfolio-data-visualization/SKILL.md
+.codex/agents/framework-selector-agent.toml
+.codex/agents/intake-agent.toml
+.codex/agents/project-generator-agent.toml
+.codex/agents/project-planner-agent.toml
+.codex/agents/reviewer-agent.toml
+.codex/config.toml
+.codex/prompts/kit-help.md
+.codex/prompts/kit-portfolio.md
+.codex/prompts/kit.md
+.codex/workflows/help-workflow.md
+.codex/workflows/hook-runtime-contract.md
+.codex/workflows/orchestration-protocol.md
+.codex/workflows/portfolio-workflow.md
+.codex/workflows/primary-workflow.md
+.codex/workflows/umbrella-workflow.md
+.gitignore
+docs/code-standards.md
+docs/codebase-summary.md
+docs/development-roadmap.md
+docs/portfolio-data-visualization-kit-design.md
+docs/project-changelog.md
+docs/project-overview-pdr.md
+docs/system-architecture.md
+KIT-ARCHITECTURE.md
+package.json
+plans/260417-1518-codex-agents-portfolio-kit/phase-01-repo-runtime-foundation.md
+plans/260417-1518-codex-agents-portfolio-kit/phase-02-entrypoints-hooks-and-routing.md
+plans/260417-1518-codex-agents-portfolio-kit/phase-03-portfolio-workflow-and-agent-contracts.md
+plans/260417-1518-codex-agents-portfolio-kit/phase-04-project-generator-and-template-assets.md
+plans/260417-1518-codex-agents-portfolio-kit/phase-05-framework-layer-and-tool-selection.md
+plans/260417-1518-codex-agents-portfolio-kit/phase-06-validation-tests-and-docs.md
+plans/260417-1518-codex-agents-portfolio-kit/plan.md
+projects/demo-ecommerce-churn-portfolio/.gitignore
+projects/demo-ecommerce-churn-portfolio/assets/data/.gitkeep
+projects/demo-ecommerce-churn-portfolio/assets/python/01-analysis.py
+projects/demo-ecommerce-churn-portfolio/assets/sql/01-analysis.sql
+projects/demo-ecommerce-churn-portfolio/assets/visuals/.gitkeep
+projects/demo-ecommerce-churn-portfolio/docs/project-intake.md
+projects/demo-ecommerce-churn-portfolio/docs/project-overview.md
+projects/demo-ecommerce-churn-portfolio/docs/requirements-rationale-tools.md
+projects/demo-ecommerce-churn-portfolio/plans/phase-01-intake.md
+projects/demo-ecommerce-churn-portfolio/plans/phase-02-data-work.md
+projects/demo-ecommerce-churn-portfolio/plans/phase-03-visualization.md
+projects/demo-ecommerce-churn-portfolio/plans/phase-04-publishing.md
+projects/demo-ecommerce-churn-portfolio/plans/plan.md
+projects/demo-ecommerce-churn-portfolio/plans/reports/.gitkeep
+projects/demo-ecommerce-churn-portfolio/README.md
+projects/README.md
+projects/sales-insight-demo/.gitignore
+projects/sales-insight-demo/assets/data/.gitkeep
+projects/sales-insight-demo/assets/python/01-analysis.py
+projects/sales-insight-demo/assets/sql/01-analysis.sql
+projects/sales-insight-demo/assets/visuals/.gitkeep
+projects/sales-insight-demo/docs/project-intake.md
+projects/sales-insight-demo/docs/project-overview.md
+projects/sales-insight-demo/docs/requirements-rationale-tools.md
+projects/sales-insight-demo/plans/phase-01-intake.md
+projects/sales-insight-demo/plans/phase-02-data-work.md
+projects/sales-insight-demo/plans/phase-03-visualization.md
+projects/sales-insight-demo/plans/phase-04-publishing.md
+projects/sales-insight-demo/plans/plan.md
+projects/sales-insight-demo/plans/reports/.gitkeep
+projects/sales-insight-demo/README.md
+projects/sample-marketing-portfolio/.gitignore
+projects/sample-marketing-portfolio/assets/data/.gitkeep
+projects/sample-marketing-portfolio/assets/python/01-analysis.py
+projects/sample-marketing-portfolio/assets/sql/01-analysis.sql
+projects/sample-marketing-portfolio/assets/visuals/.gitkeep
+projects/sample-marketing-portfolio/docs/project-intake.md
+projects/sample-marketing-portfolio/docs/project-overview.md
+projects/sample-marketing-portfolio/docs/requirements-rationale-tools.md
+projects/sample-marketing-portfolio/plans/phase-01-intake.md
+projects/sample-marketing-portfolio/plans/phase-02-data-work.md
+projects/sample-marketing-portfolio/plans/phase-03-visualization.md
+projects/sample-marketing-portfolio/plans/phase-04-publishing.md
+projects/sample-marketing-portfolio/plans/plan.md
+projects/sample-marketing-portfolio/plans/reports/.gitkeep
+projects/sample-marketing-portfolio/README.md
+README.md
+scripts/hooks/privacy-block.cjs
+scripts/hooks/project-preflight.cjs
+scripts/hooks/provider-key-gate.cjs
+scripts/hooks/run-workflow-preflight.cjs
+scripts/hooks/subagent-init.cjs
+scripts/lib/cli.cjs
+scripts/lib/fs-utils.cjs
+scripts/lib/portfolio-workflow.cjs
+scripts/lib/project-generator.cjs
+scripts/lib/project-plan-templates.cjs
+scripts/lib/project-templates.cjs
+scripts/lib/project-validator.cjs
+scripts/lib/router.cjs
+scripts/lib/selector.cjs
+scripts/run-kit.cjs
+scripts/smoke-test.cjs
+tests/project-generator.test.cjs
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".agents/skills/portfolio-data-visualization/SKILL.md">
+# Portfolio Data Visualization
+
+Use this skill when creating or refining portfolio projects generated by the Codex data visualization kit.
+
+## Use For
+
+- clarifying portfolio project goals
+- shaping SQL and Python work
+- explaining why a framework or visualization tool was selected
+- improving generated project docs
+
+## Do Not Use For
+
+- top-level routing
+- bypassing hooks
+- generating projects outside `projects/<project-slug>/`
+
+## Required Inputs
+
+- project context
+- project dataset
+- project goals
+
+## Required Outputs
+
+- concise rationale
+- portfolio-focused next steps
+- unresolved questions at the end
+</file>
+
+<file path=".codex/agents/framework-selector-agent.toml">
+name = "framework-selector-agent"
+role = "Pick the primary project methodology."
+input = "Normalized intake."
+output = "CRISP-DM or Data Pipeline Framework with rationale."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+</file>
+
+<file path=".codex/agents/intake-agent.toml">
+name = "intake-agent"
+role = "Normalize project intake for one portfolio project."
+input = "Raw user brief or interactive answers."
+output = "Clean intake with context, dataset, goals, slug candidate."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+</file>
+
+<file path=".codex/agents/project-generator-agent.toml">
+name = "project-generator-agent"
+role = "Create the project folder and starter files."
+input = "Target slug, decisions, and output paths."
+output = "Git-ready project workspace."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+</file>
+
+<file path=".codex/agents/project-planner-agent.toml">
+name = "project-planner-agent"
+role = "Write the generated project plan."
+input = "Intake plus framework, layer, and tool decisions."
+output = "Project plan files in the target workspace."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+</file>
+
+<file path=".codex/agents/reviewer-agent.toml">
+name = "reviewer-agent"
+role = "Review generated output for completeness and contract compliance."
+input = "Generated project workspace."
+output = "Findings and approval status."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+</file>
+
+<file path=".codex/config.toml">
+[kit]
+name = "codex-data-visualization-kit"
+default_entrypoint = "$kit"
+portfolio_entrypoint = "$kit-portfolio"
+
+[paths]
+prompts = ".codex/prompts"
+workflows = ".codex/workflows"
+agents = ".codex/agents"
+skills = ".agents/skills"
+hooks = "scripts/hooks"
+projects = "projects"
+</file>
+
+<file path=".codex/prompts/kit-help.md">
+# $kit-help
+
+Use this prompt when the user needs onboarding, usage examples, or command discovery.
+
+## Commands
+
+- `$kit-help`
+- `$kit-portfolio`
+
+## Expected Output
+
+- quick-start command
+- folder layout summary
+- explanation of generated project outputs
+</file>
+
+<file path=".codex/prompts/kit-portfolio.md">
+# $kit-portfolio
+
+Use this prompt when the user wants a new data visualization portfolio project.
+
+## Mandatory Intake
+
+- project context
+- project dataset
+- project goals
+
+## Output Contract
+
+- generate one project folder in `projects/<project-slug>/`
+- write docs, plans, and starter assets
+- explain framework, layer, and tool choices
+</file>
+
+<file path=".codex/prompts/kit.md">
+# $kit
+
+Thin public entrypoint for the Codex data visualization kit.
+
+## Responsibilities
+
+- normalize user input
+- route to one owner workflow
+- never own orchestration logic
+
+## Routes
+
+- help and discovery -> `help-workflow`
+- portfolio project generation -> `portfolio-workflow`
+- ambiguous requests -> `umbrella-workflow`
+</file>
+
+<file path=".codex/workflows/help-workflow.md">
+# Help Workflow
+
+Use for:
+- onboarding
+- command discovery
+- explanation of generated output
+
+Do not generate projects here.
+</file>
+
+<file path=".codex/workflows/hook-runtime-contract.md">
+# Hook Runtime Contract
+
+## Required Hooks
+
+- `run-workflow-preflight`
+- `project-preflight`
+- `subagent-init`
+- `privacy-block`
+- `provider-key-gate`
+
+## Hook Rule
+
+If a hook blocks, execution stops.
+</file>
+
+<file path=".codex/workflows/orchestration-protocol.md">
+# Orchestration Protocol
+
+## Rules
+
+- one request, one owner workflow
+- route before execution
+- pass minimal context to agents
+- parallelize only when ownership is explicit
+
+## Agent Status
+
+- `DONE`
+- `DONE_WITH_CONCERNS`
+- `BLOCKED`
+- `NEEDS_CONTEXT`
+</file>
+
+<file path=".codex/workflows/portfolio-workflow.md">
+# Portfolio Workflow
+
+## Owner
+
+This workflow owns all portfolio project generation requests.
+
+## Stages
+
+1. intake
+2. validation
+3. framework selection
+4. visualization-layer selection
+5. tool selection
+6. project generation
+7. validation and review
+
+## Mandatory Intake
+
+- `project context`
+- `project dataset`
+- `project goals`
+
+## Output Paths
+
+- `projects/<project-slug>/docs/`
+- `projects/<project-slug>/plans/`
+- `projects/<project-slug>/assets/`
+
+## Stop Conditions
+
+- preflight hook failure
+- invalid project slug
+- blocked secret access
+- target project path exists and force is not enabled
+</file>
+
+<file path=".codex/workflows/primary-workflow.md">
+# Primary Workflow
+
+The runtime default is:
+
+1. run preflight hooks
+2. route to one owner workflow
+3. delegate scoped work to agents
+4. generate outputs in the project workspace
+5. validate before finalize
+</file>
+
+<file path=".codex/workflows/umbrella-workflow.md">
+# Umbrella Workflow
+
+Use for ambiguous requests only.
+
+## Rule
+
+- do not execute deep work here
+- classify the request
+- route to `help-workflow` or `portfolio-workflow`
+</file>
+
+<file path=".gitignore">
+node_modules/
+coverage/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+
+projects/*/.netlify/
+projects/*/.cache/
+projects/*/dist/
+projects/*/build/
+projects/*/.python-version
+projects/*/.venv/
+projects/.smoke/
+projects/smoke-*/
+</file>
+
+<file path="docs/development-roadmap.md">
+# Development Roadmap
+
+## Current Milestones
+
+- [x] design doc approved
+- [x] implementation plan created
+- [x] runtime scaffold implemented
+- [x] generator validated
+- [x] docs finalized for open-source use
+
+## Next Focus
+
+- keep the runtime small
+- make generated output useful on day one
+- keep deploy story honest
+</file>
+
+<file path="docs/portfolio-data-visualization-kit-design.md">
+# Portfolio Data Visualization Kit Design
+
+## Overview
+
+Open-source kit. User clones repo, runs a thin entrypoint, gets one isolated project folder per portfolio project.
+
+Primary goal:
+- help users build professional data portfolio projects
+- show technical knowledge
+- show domain knowledge
+- keep project generation workflow-first
+- keep outputs git-ready
+
+Non-goals:
+- not a general BI platform
+- not a hosted multi-tenant SaaS
+- not a full Superset deployment framework on Netlify free
+
+## Source Constraints
+
+Architecture baseline comes from [KIT-ARCHITECTURE.md](../KIT-ARCHITECTURE.md).
+
+Must keep:
+- thin entrypoint
+- one owner workflow per request
+- hooks before stateful or sensitive actions
+- dynamic project context
+- project-scoped outputs
+
+## Core Product Decision
+
+Use a `hybrid-selector` kit.
+
+Reason:
+- `CRISP-DM` alone is good for business narrative, weaker for engineering showcase
+- `Data Pipeline Framework` alone is good for technical showcase, weaker for domain narrative
+- portfolio use case needs both, so the kit should ask intake questions first, then choose the framework per project
+
+## Runtime Model
+
+```text
+User request
+-> thin entrypoint
+-> preflight hooks
+-> portfolio-workflow
+-> intake stage
+-> framework selector
+-> visualization-layer selector
+-> tool selector
+-> project doc + plan generation
+-> project folder output
+```
+
+## Mandatory Intake
+
+Every project must start with exactly these questions:
+- `Project context`
+- `Project dataset`
+- `Project goals`
+
+These are mandatory. No project generation before all 3 exist.
+
+## Framework Selection Rule
+
+### Option 1: CRISP-DM
+
+Use when goals emphasize:
+- business problem framing
+- insight generation
+- stakeholder recommendations
+- domain storytelling
+- decision support
+
+### Option 2: Data Pipeline Framework
+
+Use when goals emphasize:
+- ingestion and transformation
+- data quality
+- reproducible SQL and Python workflow
+- pipeline thinking
+- modeling and intermediate marts
+
+### Selection Heuristic
+
+- If goals are insight-first, prefer `CRISP-DM`
+- If goals are engineering-first, prefer `Data Pipeline Framework`
+- If goals mention both technical showcase and business insight, choose the dominant one and explicitly note the trade-off in the generated doc
+
+Reason:
+- one project should have one primary framework owner
+- mixed methodology without a primary owner becomes muddy fast
+
+## Visualization Layers
+
+Each project selects exactly **one** layer.
+
+### Basic
+
+Purpose:
+- quick, credible portfolio piece
+
+Requirements:
+- SQL required
+- Python optional
+
+Typical outputs:
+- data profiling
+- KPI summary
+- trend and ranking charts
+- 1 simple dashboard or chart set
+
+### Pro
+
+Purpose:
+- balanced business + technical showcase
+
+Requirements:
+- SQL required
+- Python required
+
+Typical outputs:
+- data cleaning and joins
+- segment, cohort, funnel, anomaly, retention analysis
+- stronger metric definitions
+- more polished narrative
+
+### Advanced
+
+Purpose:
+- strongest showcase for hiring or consulting
+
+Requirements:
+- SQL required
+- Python required
+
+Typical outputs:
+- reproducible transformation workflow
+- advanced analytical views
+- scenario analysis, forecasting-lite, network, geo, or multistep storytelling
+- explicit assumptions and data caveats
+
+## Visualization Tool Rule
+
+Each project selects exactly **one** visualization tool.
+
+### Apache Superset
+
+Strengths:
+- SQL-first
+- powerful dashboards
+- strong professional BI signal
+
+Weaknesses:
+- server app, not static
+- operational overhead
+- poor fit for `Netlify Free`
+
+Use when:
+- user prioritizes BI-style dashboards
+- deployment target is not Netlify free
+- local or self-hosted demo is acceptable
+
+### RAWGraphs
+
+Strengths:
+- browser-first workflow
+- strong custom visual storytelling
+- easier path to static export and portfolio embedding
+- much better fit for free static hosting
+
+Weaknesses:
+- weaker as a full dashboard product
+- less BI credibility than Superset for some audiences
+
+Use when:
+- deploy-free priority is high
+- portfolio artifact should be easy to publish
+- project needs standout custom visuals over multi-page BI dashboards
+
+## Free Deployment Decision
+
+If free deployment is priority, default recommendation should be `RAWGraphs`.
+
+Reason:
+- `Netlify Free` is built for static deploys
+- RAWGraphs is browser-oriented and easier to wrap into a static portfolio flow
+- Superset needs a running backend and is not a clean match for Netlify free hosting
+
+Operational truth:
+- `RAWGraphs` is easy to publish as part of a static portfolio site
+- `Superset` is better treated as local demo, self-hosted app, or non-Netlify deployment
+
+## Recommended Default Policy
+
+Default generation policy:
+- ask 3 intake questions
+- choose 1 framework
+- choose 1 visualization layer
+- choose 1 visualization tool
+- prefer `RAWGraphs` when free deployment matters
+- require SQL and/or Python in every generated plan
+
+## Output Contract
+
+The kit root is reusable template space.
+Each generated project lives in its own folder.
+
+```text
+projects/<project-slug>/
+  README.md
+  .gitignore
+  docs/
+    project-overview.md
+    project-intake.md
+    requirements-rationale-tools.md
+  plans/
+    plan.md
+    phase-01-intake.md
+    phase-02-data-work.md
+    phase-03-visualization.md
+    phase-04-publishing.md
+  assets/
+    data/
+    sql/
+    python/
+    visuals/
+```
+
+Git-ready means:
+- folder names stable and kebab-case
+- docs generated
+- plan generated
+- `.gitignore` present
+- no secrets
+- initial README present
+- project folder can be committed immediately
+
+## Required Generated Markdown
+
+For each project, always generate:
+- requirements
+- rationale for chosen framework
+- rationale for chosen layer
+- rationale for chosen visualization tool
+- tools used
+- delivery steps
+- unresolved questions
+
+Recommended file:
+- `projects/<project-slug>/docs/requirements-rationale-tools.md`
+
+## Required Project Build Steps
+
+The generated workflow must always contain data work with SQL and/or Python.
+
+Minimum step pattern:
+1. capture project context, dataset, goals
+2. inspect dataset
+3. choose framework
+4. choose layer
+5. choose visualization tool
+6. write SQL transformations or analytical queries
+7. write Python for cleaning, feature work, or advanced analysis when needed
+8. generate visuals
+9. package project docs
+10. make project folder ready for git commit and push
+
+Rule:
+- `Basic` can be SQL-only
+- `Pro` and `Advanced` must use both SQL and Python
+
+## Workflow Flow
+
+```text
+Start
+-> Ask: project context
+-> Ask: project dataset
+-> Ask: project goals
+-> Validate inputs
+-> Select framework: CRISP-DM or Data Pipeline Framework
+-> Select layer: Basic / Pro / Advanced
+-> Select visualization tool: Superset or RAWGraphs
+-> Generate requirements-rationale-tools.md
+-> Generate plan.md + phase files
+-> Create project folder structure
+-> End with git-ready project workspace
+```
+
+## Example Flow
+
+### Example Input
+
+- Project context: e-commerce business wants to reduce customer churn
+- Project dataset: orders, customers, support tickets, marketing touchpoints
+- Project goals: show churn risk insight, customer segments, and technical transformation workflow
+
+### Example Decision
+
+- Framework: `CRISP-DM`
+  - reason: business problem is primary, insight story matters most
+- Layer: `Pro`
+  - reason: need both business insight and technical proof
+- Visualization tool: `RAWGraphs`
+  - reason: free deployment priority, portfolio publishing easier
+
+### Example Generated Work
+
+1. create `projects/ecommerce-churn-portfolio/`
+2. write intake and overview docs
+3. generate SQL tasks:
+   - build customer order aggregates
+   - derive recency, frequency, monetary features
+   - segment customers
+4. generate Python tasks:
+   - clean nulls and categorical values
+   - compute churn-risk helper metrics
+   - export chart-ready tables
+5. generate visualization tasks:
+   - retention trend
+   - customer segment comparison
+   - churn-risk distribution
+6. write `requirements-rationale-tools.md`
+7. finalize `README.md` and `.gitignore`
+
+End state:
+- project folder can be committed and pushed
+- user has a clear narrative and artifact set
+
+## Trade-Off Summary
+
+### Recommended default
+
+- framework chosen dynamically per project
+- one visualization layer only
+- one visualization tool only
+- `RAWGraphs` as default when free deploy matters
+
+### Why not Superset as default
+
+- better dashboarding
+- worse zero-cost deployment path
+- heavier ops burden for open-source users cloning the kit
+
+### Why not force CRISP-DM always
+
+- some users want to show data engineering depth first
+- forcing CRISP-DM would undersell pipeline-heavy projects
+
+## Risks
+
+- users may expect one-click hosted dashboards from Superset on Netlify free; that expectation is wrong
+- users may confuse framework selection with tool selection; docs must separate them clearly
+- if generated docs are too generic, portfolio output will feel templated and weak
+
+## Success Criteria
+
+- clone kit
+- answer 3 intake questions
+- get one isolated project folder
+- framework decision is explicit
+- layer decision is explicit
+- visualization tool decision is explicit
+- project includes SQL and/or Python steps per rules
+- project folder is ready to commit and push
+
+## References
+
+- Apache Superset docs: https://superset.apache.org/
+- Superset configuration docs: https://superset.apache.org/admin-docs/configuration/configuring-superset/
+- RAWGraphs: https://www.rawgraphs.io/
+- RAWGraphs Core installation: https://rawgraphs.github.io/rawgraphs-core/docs/installation/
+- Netlify static deploy overview: https://www.netlify.com/
+
+## Unresolved Questions
+
+- Should kit support a third free-first publishing target like GitHub Pages or Cloudflare Pages besides Netlify?
+- Should `Superset` remain an offered option in v1, or be moved to a later advanced profile?
+</file>
+
+<file path="docs/project-changelog.md">
+# Project Changelog
+
+## 2026-04-17
+
+### Added
+
+- initial design doc for the Codex portfolio kit
+- implementation plan for the workflow-first runtime
+- Node CLI runtime, hooks, workflows, and agent contracts
+- project generator with sample generated workspaces
+- tests and smoke validation for generated project output
+</file>
+
+<file path="KIT-ARCHITECTURE.md">
+# Workflow-First AI Kit Architecture
+
+## Goal
+
+Build a reusable workflow-first AI kit inspired by CodexKit.
+
+This kit must use:
+- workflows as the orchestration layer
+- agents as scoped executors
+- skills as reusable capabilities
+- hooks as mandatory runtime gates
+
+The kit must be dynamic.
+It must read project context from the user's workspace and must never hardcode business values, brand values, or project-specific logic into the kit itself.
+
+## Core Runtime Model
+
+The runtime architecture must follow this chain:
+
+```text
+User Request
+-> Thin Entrypoint
+-> Mandatory Hooks
+-> Owner Workflow
+-> Scoped Agents
+-> Stage-Specific Skills
+-> Outputs in Project Workspace
+```
+
+### Non-negotiable rule
+
+One request must have one owner workflow.
+
+Routing must happen before deep execution.
+
+Workflows own orchestration.
+Agents execute scoped work.
+Skills support execution only.
+Hooks can block execution.
+
+## Layer Responsibilities
+
+## 1. Entrypoints
+
+Entrypoints are the public command surface.
+
+They must:
+- be thin
+- not contain orchestration logic
+- normalize the user request
+- route into the correct workflow
+
+Canonical command format:
+- `$kit`
+- `$kit-help`
+- `$kit-<workflow> <goal / task / brief>`
+
+Examples:
+- `$kit`
+- `$kit-help`
+- `$kit-content Create a 30-day content plan for our SaaS`
+- `$kit-analytics Analyze last month's performance and recommend actions`
+
+### Entrypoint rule
+
+Prompts are not the architecture.
+They are only the public interface.
+
+## 2. Workflows
+
+Workflows are the source of truth for runtime behavior.
+
+Each workflow must own:
+- intake rules
+- routing rules
+- planning logic
+- delegation rules
+- skill activation policy
+- output contract
+- review and quality gates
+- stop conditions
+
+### Workflow rule
+
+Skills and agents must not create alternate routing trees outside workflow docs.
+
+### Workflow families
+
+Recommended structure:
+- umbrella workflow
+- help and discovery workflow
+- domain workflows
+- operational workflows
+
+Example:
+- `main-workflow` or `umbrella-workflow` as umbrella router
+- `help-workflow`
+- `content-workflow`
+- `campaign-workflow`
+- `analytics-workflow`
+- `seo-workflow`
+- `brand-workflow`
+- `integration-workflow`
+
+### Owner workflow rule
+
+A broad or ambiguous request goes to the umbrella workflow first.
+A clear domain request routes directly to the matching domain workflow.
+
+## 3. Agents
+
+Agents are role-based executors.
+
+They do not own routing.
+They execute well-scoped tasks inside a workflow stage.
+
+Each agent should have:
+- a clear role
+- a clear input contract
+- a clear output contract
+- defined ownership boundaries
+- allowed skills
+- completion statuses
+
+### Required completion statuses
+
+Every agent should report one of these:
+- `DONE`
+- `DONE_WITH_CONCERNS`
+- `BLOCKED`
+- `NEEDS_CONTEXT`
+
+### Agent rule
+
+Agents must receive only the context they need.
+Do not pass full conversation history.
+Pass a task summary, relevant files, constraints, acceptance criteria, and output paths.
+
+### Delegation patterns
+
+Use:
+- sequential chaining when outputs depend on previous work
+- parallel execution only for independent scopes
+
+Parallel delegation is allowed only if:
+- file and path ownership is explicit
+- outputs do not overlap
+- integration order is defined
+- a final reviewer is defined
+
+## 4. Skills
+
+Skills are reusable capability modules.
+
+They support execution at the workflow or agent stage level.
+
+A skill may include:
+- a `SKILL.md`
+- scripts
+- templates
+- references
+- assets
+- checklists
+
+Each skill must define:
+- when to use it
+- when not to use it
+- expected inputs
+- expected outputs
+- dependencies
+- constraints
+
+### Skill rule
+
+Skills must not become top-level routers.
+They are support modules, not orchestration owners.
+
+### Activation rule
+
+Activate only the minimum set of skills needed for the current stage.
+
+Do not globally activate all skills.
+
+## 5. Hooks
+
+Hooks are mandatory runtime gates.
+
+Hooks run before sensitive or stateful execution steps.
+
+Hooks must be able to:
+- validate project and workspace context
+- validate required docs and runtime state
+- initialize subagent handoff context
+- block access to secrets
+- block missing provider and API setup
+- stop execution when prerequisites fail
+
+### Hook authority
+
+If a hook blocks, execution must stop until the blocker is resolved.
+
+### Required hooks
+
+At minimum implement:
+
+#### `run-workflow-preflight`
+
+Purpose:
+- ensure a valid workspace exists
+- ensure a project is selected
+- ensure runtime can continue
+
+#### `project-preflight`
+
+Purpose:
+- confirm project docs are present and valid
+- confirm project context is ready before planning or output generation
+
+#### `subagent-init`
+
+Purpose:
+- inject stable context into subagent handoff
+- include project paths, report paths, plan paths, naming rules, and constraints
+
+#### `privacy-block`
+
+Purpose:
+- check before reading `.env`, secrets, credentials, auth material, tokens, or private config
+
+#### `provider-key-gate`
+
+Purpose:
+- check required API keys before provider-dependent features run
+
+## Directory Architecture
+
+Use this structure:
+
+```text
+kit-root/
+|-- .codex/
+|   |-- config.toml
+|   |-- prompts/
+|   |   |-- kit.md
+|   |   |-- kit-help.md
+|   |   |-- kit-content.md
+|   |   `-- kit-analytics.md
+|   |-- workflows/
+|   |   |-- primary-workflow.md
+|   |   |-- orchestration-protocol.md
+|   |   |-- hook-runtime-contract.md
+|   |   |-- help-workflow.md
+|   |   |-- umbrella-workflow.md
+|   |   |-- content-workflow.md
+|   |   |-- analytics-workflow.md
+|   |   `-- ...
+|   `-- agents/
+|       |-- account_manager.toml
+|       |-- researcher.toml
+|       |-- planner.toml
+|       |-- reviewer.toml
+|       `-- ...
+|-- .agents/
+|   `-- skills/
+|       |-- content-strategy/
+|       |   |-- SKILL.md
+|       |   |-- scripts/
+|       |   `-- references/
+|       |-- seo-audit/
+|       `-- ...
+|-- scripts/
+|   `-- hooks/
+|       |-- run-workflow-preflight.cjs
+|       |-- project-preflight.cjs
+|       |-- subagent-init.cjs
+|       |-- privacy-block.cjs
+|       `-- provider-key-gate.cjs
+|-- docs/
+|   `-- ...
+`-- projects/
+    `-- <project-slug>/
+        |-- docs/
+        |-- plans/
+        `-- assets/
+```
+
+## Runtime Context Rules
+
+The kit must separate template context from live project context.
+
+### Template space
+
+Root `docs/` is template, example, and reference space only.
+
+### Live execution space
+
+All real execution must happen inside:
+
+```text
+projects/<project-slug>/
+  docs/
+  plans/
+  assets/
+```
+
+### Runtime docs contract
+
+The kit must read live context only from project workspace docs.
+
+Example:
+
+```text
+projects/<project-slug>/docs/project-overview.md
+projects/<project-slug>/docs/brand-guidelines.md
+projects/<project-slug>/docs/strategy.md
+```
+
+### Dynamic context rule
+
+Never hardcode:
+- colors
+- fonts
+- company voice
+- goals
+- audience
+- ICP
+- messaging
+- business rules
+
+Always read them from project docs or derive them from user-provided workspace files.
+
+## Relationship Model
+
+Use this relationship model:
+
+### Entrypoint -> Workflow
+
+Entrypoints select or route to the owner workflow.
+
+### Workflow -> Agents
+
+Workflow delegates scoped work to agents by stage.
+
+### Agents -> Skills
+
+Agents activate only the skills needed to complete their current task.
+
+### Hooks -> Workflow and Agents
+
+Hooks run before planning, delegation, secret access, or provider-dependent execution.
+
+### Workspace -> All runtime execution
+
+Workflows, agents, and skills must read and write from the active project workspace.
+
+## Activation Model
+
+Activation should work like this:
+
+## 1. Entrypoint activation
+
+A user invokes:
+- `$kit`
+- `$kit-help`
+- `$kit-<workflow>`
+
+This activates the public runtime surface.
+
+## 2. Hook activation
+
+Before workflow intake:
+- run preflight hooks
+- validate project and workspace
+- stop if blocked
+
+## 3. Workflow activation
+
+The system chooses one owner workflow:
+- umbrella workflow for ambiguous requests
+- direct domain workflow for clear requests
+
+## 4. Agent activation
+
+The workflow activates the smallest useful set of agents for the current stage.
+
+Examples:
+- intake agent
+- researcher
+- planner
+- executor
+- reviewer
+
+## 5. Skill activation
+
+Each agent activates only the stage-specific skills it needs.
+
+Examples:
+- research skill during discovery
+- writing skill during content generation
+- review skill during quality gate
+
+## 6. Review activation
+
+Before finalizing, activate the correct review layer:
+- content reviewer
+- campaign reviewer
+- code reviewer
+- QA reviewer
+
+Use the reviewer that matches the artifact type.
+
+## Routing Rules
+
+The system must route like this:
+
+### Broad request
+
+Broad, ambiguous, or cross-domain request
+-> umbrella workflow
+
+### Clear request
+
+Clear domain-specific request
+-> domain workflow
+
+### Help request
+
+Help, usage, discovery, or onboarding
+-> help workflow
+
+### Operational request
+
+Storage, MCP, integrations, dashboard, or toolkit maintenance
+-> operational workflow
+
+### Routing rule
+
+Do not let agents guess routing after execution has already started.
+Route first.
+
+## Output Rules
+
+All outputs must go to the active project workspace.
+
+### Plans
+
+Write to:
+
+```text
+projects/<project-slug>/plans/
+```
+
+### Deliverables
+
+Write to:
+
+```text
+projects/<project-slug>/assets/
+```
+
+### Live docs
+
+Write to:
+
+```text
+projects/<project-slug>/docs/
+```
+
+### Root docs rule
+
+Do not treat root `docs/` as runtime output space unless the task is explicitly about editing templates.
+
+## Orchestration Rules
+
+## Sequential chaining
+
+Use when one step depends on previous outputs.
+
+Example:
+- intake
+- research
+- planning
+- execution
+- review
+
+## Parallel execution
+
+Use only when tasks are independent.
+
+Before parallel execution define:
+- ownership per agent
+- output paths
+- constraints
+- integration order
+- final reviewer
+
+### Conflict prevention
+
+If two agents need the same file or output path, do not run them in parallel.
+
+## Quality Gate
+
+A task is complete only when:
+1. the correct outputs exist in the correct workspace paths
+2. required validation and review passes
+3. unresolved questions are explicitly listed
+4. the final summary includes changed files, output paths, and next actions if needed
+
+## Design Principles
+
+The kit must follow:
+- YAGNI
+- KISS
+- DRY
+
+Also enforce:
+- dynamic context only
+- workflow-first orchestration
+- minimal skill activation
+- explicit ownership boundaries
+- hook-enforced safety
+- predictable output locations
+
+## Anti-Patterns To Avoid
+
+Do not:
+- put orchestration logic in prompts
+- let skills behave like workflows
+- let agents invent new routing trees
+- hardcode project values
+- use root docs as live context
+- bypass hooks
+- delegate without ownership boundaries
+- activate every skill just in case
+- continue execution after a hook blocks
+
+## Minimal Example Runtime
+
+```text
+User:
+$kit-content Create a 2-week launch content plan for our product
+
+System:
+1. Run run-workflow-preflight
+2. Run project-preflight
+3. Activate content-workflow
+4. Delegate:
+   - account-manager for normalized brief
+   - researcher for context
+   - content-creator for draft outputs
+   - copywriter for messaging refinement
+   - content-reviewer for quality gate
+5. Activate only relevant skills:
+   - content strategy
+   - copywriting
+   - brand guidelines
+6. Save outputs to:
+   - projects/<project-slug>/plans/...
+   - projects/<project-slug>/assets/content/...
+7. Finalize only after review passes
+```
+
+## Build Instruction For AI
+
+Build this kit as a workflow-first system.
+
+Requirements:
+- create thin public entrypoints
+- create a workflow layer as the orchestration source of truth
+- create role-based agents with clear contracts
+- create reusable skills with `SKILL.md`
+- create mandatory hooks for preflight, project validation, subagent init, privacy blocking, and provider key gating
+- enforce dynamic project context from `projects/<project-slug>/docs/`
+- keep root `docs/` as template-only space
+- enforce output placement into `projects/<project-slug>/plans`, `projects/<project-slug>/assets`, and `projects/<project-slug>/docs`
+- support sequential and parallel delegation safely
+- implement strict stop behavior when hooks block
+- keep activation minimal and stage-specific
+</file>
+
+<file path="package.json">
+{
+  "name": "codex-data-visualization-kit",
+  "version": "0.1.0",
+  "description": "Workflow-first open-source kit for Codex agents to generate data visualization portfolio projects.",
+  "private": true,
+  "bin": {
+    "kit": "./scripts/run-kit.cjs"
+  },
+  "scripts": {
+    "kit": "node scripts/run-kit.cjs",
+    "smoke": "node scripts/smoke-test.cjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-01-repo-runtime-foundation.md">
+# Phase 01 Repo Runtime Foundation
+
+## Context Links
+
+- [KIT-ARCHITECTURE.md](../../KIT-ARCHITECTURE.md)
+- [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+- [plan.md](plan.md)
+
+## Overview
+
+- Priority: critical
+- Status: completed
+- Goal: create the repo-level structure and runtime contracts for a workflow-first Codex kit
+
+## Key Insights
+
+- Repo is currently near-empty, so structure decisions now will lock future maintainability
+- The kit must separate template space from live generated project space
+- Codex-specific runtime docs matter more than generic prompt files
+
+## Requirements
+
+- add root structure for `.codex/`, `.agents/`, `scripts/hooks/`, `docs/`, `projects/`
+- keep runtime outputs in `projects/<project-slug>/`
+- define minimal evergreen docs for architecture and usage
+- keep file names self-documenting and kebab-case
+
+## Architecture
+
+- `.codex/` holds entrypoints, workflows, and agent definitions
+- `.agents/skills/` holds reusable capability modules
+- `scripts/hooks/` holds runtime gates
+- `projects/` holds generated project workspaces only
+
+## Related Code Files
+
+- Files to modify: repo root structure, root docs
+- Files to create: `.codex/*`, `scripts/hooks/*`, `projects/.gitkeep`, docs baseline
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. create base directories and placeholder runtime files
+2. document the separation between template space and live project space
+3. define naming and output placement rules for generated projects
+4. add root README with quick start and open-source usage path
+
+## Todo List
+
+- [x] create Codex runtime directory structure
+- [x] create project workspace root
+- [x] document runtime boundaries
+- [x] add contributor-facing root README
+
+## Success Criteria
+
+- repo structure matches architecture direction
+- generated projects have a predictable home
+- open-source user can understand where kit code ends and project outputs begin
+
+## Risk Assessment
+
+- risk: mixing template docs and generated docs
+- mitigation: explicit directory contract and examples
+
+## Security Considerations
+
+- no secrets in templates
+- no generated project should include credentials by default
+
+## Next Steps
+
+- unblock entrypoint and hook implementation in Phase 02
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-02-entrypoints-hooks-and-routing.md">
+# Phase 02 Entrypoints Hooks And Routing
+
+## Context Links
+
+- [plan.md](plan.md)
+- [KIT-ARCHITECTURE.md](../../KIT-ARCHITECTURE.md)
+
+## Overview
+
+- Priority: critical
+- Status: completed
+- Goal: implement the public entry surface and mandatory runtime gates before any workflow execution
+
+## Key Insights
+
+- thin entrypoints prevent orchestration logic from leaking into prompts
+- hooks are mandatory because project generation is stateful
+- routing must happen before deep execution
+
+## Requirements
+
+- define a public command surface for Codex usage
+- add hooks for preflight, project validation, subagent init, privacy, provider keys
+- route ambiguous requests to umbrella or help flow only if needed
+- route portfolio creation requests directly to `portfolio-workflow`
+
+## Architecture
+
+- entrypoints normalize user request only
+- hooks validate prerequisites
+- workflow becomes the single owner after routing succeeds
+
+## Related Code Files
+
+- Files to modify: `.codex/config.*` or equivalent runtime config
+- Files to create: prompt entrypoints, hook scripts, routing docs
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. define commands such as `$kit` and `$kit-portfolio`
+2. implement `run-workflow-preflight`
+3. implement `project-preflight`
+4. implement `subagent-init`
+5. implement `privacy-block`
+6. implement `provider-key-gate`
+7. wire routing rules into the entry layer
+
+## Todo List
+
+- [x] add entrypoint command docs
+- [x] add preflight hooks
+- [x] add hook stop conditions
+- [x] add routing contract docs
+
+## Success Criteria
+
+- portfolio requests route before execution
+- blocked hooks stop execution cleanly
+- subagent handoffs receive stable project context
+
+## Risk Assessment
+
+- risk: hooks become too smart and steal workflow logic
+- mitigation: keep hooks as validators and blockers only
+
+## Security Considerations
+
+- privacy hook must guard `.env`, tokens, secrets, auth files
+- provider-key gate must fail closed
+
+## Next Steps
+
+- unblock workflow and agent contract design in Phase 03
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-03-portfolio-workflow-and-agent-contracts.md">
+# Phase 03 Portfolio Workflow And Agent Contracts
+
+## Context Links
+
+- [plan.md](plan.md)
+- [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+
+## Overview
+
+- Priority: critical
+- Status: completed
+- Goal: define one owner workflow and a small set of Codex agents with explicit responsibilities
+
+## Key Insights
+
+- user asked specifically for a kit that uses Codex agents
+- agents must be scoped executors, not freeform routers
+- completion statuses must be standardized
+
+## Requirements
+
+- define `portfolio-workflow` as owner workflow
+- intake stage must ask 3 required questions
+- agent prompts must include work context, reports path, plans path
+- all agent outputs must end with `DONE`, `DONE_WITH_CONCERNS`, `BLOCKED`, or `NEEDS_CONTEXT`
+
+## Architecture
+
+Suggested agent set:
+- intake agent
+- framework selector agent
+- planner agent
+- project generator agent
+- reviewer agent
+
+Delegation pattern:
+- sequential by default
+- parallel only for non-overlapping doc or asset generation
+
+## Related Code Files
+
+- Files to modify: workflow docs, agent configs
+- Files to create: `.codex/workflows/portfolio-workflow.md`, `.codex/agents/*.toml`
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. write workflow stages and stop conditions
+2. write intake contract and required questions
+3. define each agent's scope, inputs, outputs, and allowed skills
+4. define subagent context template for Codex runtime
+5. define review gate before project finalization
+
+## Todo List
+
+- [x] define workflow stages
+- [x] define agent list
+- [x] define status protocol
+- [x] define handoff contract
+
+## Success Criteria
+
+- one request maps to one owner workflow
+- each agent owns a narrow stage
+- handoffs are deterministic and minimal
+
+## Risk Assessment
+
+- risk: agent overlap causes routing drift
+- mitigation: explicit ownership and stage-only delegation
+
+## Security Considerations
+
+- agents should never read secrets unless privacy gate approved
+- context passed to agents should exclude unnecessary private files
+
+## Next Steps
+
+- unblock project generation in Phase 04
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-04-project-generator-and-template-assets.md">
+# Phase 04 Project Generator And Template Assets
+
+## Context Links
+
+- [plan.md](plan.md)
+- [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+
+## Overview
+
+- Priority: high
+- Status: completed
+- Goal: generate one isolated, git-ready project folder for each user project
+
+## Key Insights
+
+- open-source adoption depends on usable generated output, not just a clever workflow
+- the generated project must be ready to commit without manual cleanup
+- docs and plans are first-class outputs, not side effects
+
+## Requirements
+
+- create `projects/<project-slug>/`
+- generate `README.md`, `.gitignore`, `docs/`, `plans/`, `assets/`
+- include placeholders or starter files for `sql/`, `python/`, and `visuals/`
+- produce project docs without hardcoding domain values
+
+## Architecture
+
+Generated structure:
+- `docs/` for project docs
+- `plans/` for project implementation plan
+- `assets/data/`, `assets/sql/`, `assets/python/`, `assets/visuals/`
+
+## Related Code Files
+
+- Files to modify: generator scripts, workflow output wiring
+- Files to create: templates for README, docs, plan files, `.gitignore`
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. define slug generation and path creation rules
+2. create reusable markdown templates
+3. create folder creation logic
+4. write generated docs into the new project workspace
+5. verify clean git-ready state for generated output
+
+## Todo List
+
+- [x] create project folder template
+- [x] create generated README template
+- [x] create generated `.gitignore`
+- [x] create docs and plan templates
+
+## Success Criteria
+
+- generated project is isolated and self-contained
+- generated files are immediately committable
+- output paths match architecture contract
+
+## Risk Assessment
+
+- risk: generic templates feel fake or repetitive
+- mitigation: generate rationale from intake rather than static text blobs
+
+## Security Considerations
+
+- generated `.gitignore` must exclude secrets and local artifacts
+- no sample API keys or credentials in templates
+
+## Next Steps
+
+- unblock decision logic for framework, layer, and tool in Phase 05
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-05-framework-layer-and-tool-selection.md">
+# Phase 05 Framework Layer And Tool Selection
+
+## Context Links
+
+- [plan.md](plan.md)
+- [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+
+## Overview
+
+- Priority: high
+- Status: completed
+- Goal: implement the selection rules that shape each generated portfolio project
+
+## Key Insights
+
+- framework selection and visualization-tool selection are different decisions
+- free deployment priority changes the default tool recommendation
+- one framework owner, one visualization layer, one visualization tool keeps project scope readable
+
+## Requirements
+
+- ask mandatory intake questions
+- choose `CRISP-DM` or `Data Pipeline Framework`
+- choose one layer: `Basic`, `Pro`, `Advanced`
+- choose one tool: `RAWGraphs` or `Apache Superset`
+- always generate explicit rationale for choices
+- enforce SQL/Python rules by selected layer
+
+## Architecture
+
+Decision chain:
+1. capture intake
+2. infer dominant project goal
+3. select framework
+4. select visualization layer
+5. select visualization tool
+6. generate `requirements-rationale-tools.md`
+
+## Related Code Files
+
+- Files to modify: workflow decision stage, generated doc templates
+- Files to create: selector logic, rationale templates
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. encode framework heuristics from design doc
+2. encode layer rules and SQL/Python requirements
+3. encode deploy-aware tool recommendation rules
+4. generate rationale markdown from decisions
+5. add examples for common project types
+
+## Todo List
+
+- [x] implement framework selector
+- [x] implement layer selector
+- [x] implement tool selector
+- [x] generate rationale doc
+
+## Success Criteria
+
+- every generated project has explicit decisions with reasons
+- free-deploy projects default to `RAWGraphs`
+- `Basic` can be SQL-only
+- `Pro` and `Advanced` require SQL and Python
+
+## Risk Assessment
+
+- risk: heuristic chooses wrong framework for edge cases
+- mitigation: generated doc must show rationale and unresolved questions
+
+## Security Considerations
+
+- none beyond standard input validation and path safety
+
+## Next Steps
+
+- unblock validation and release-readiness work in Phase 06
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/phase-06-validation-tests-and-docs.md">
+# Phase 06 Validation Tests And Docs
+
+## Context Links
+
+- [plan.md](plan.md)
+- [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+
+## Overview
+
+- Priority: high
+- Status: completed
+- Goal: prove the kit works end-to-end and is understandable for open-source users
+
+## Key Insights
+
+- a kit without smoke validation will rot fast
+- open-source users need a minimal onboarding path, not tribal knowledge
+- docs must explain both how the kit works and how generated projects should be used
+
+## Requirements
+
+- add smoke test or verification flow for project generation
+- validate output structure and required docs
+- document free deploy trade-offs clearly
+- document Codex-agent operating model
+
+## Architecture
+
+Validation layers:
+- runtime validation
+- generated-output validation
+- docs validation
+
+## Related Code Files
+
+- Files to modify: root README, docs, validation scripts
+- Files to create: smoke test script, checklist docs, example generated project snapshot if needed
+- Files to delete: none planned
+
+## Implementation Steps
+
+1. create a smoke path that simulates one portfolio project generation
+2. verify generated files and directories
+3. document usage for clone -> run -> generate -> commit
+4. document tool trade-offs, especially Superset vs RAWGraphs
+5. add contribution guidance for future skill and workflow changes
+
+## Todo List
+
+- [x] add generation smoke test
+- [x] add output validation checklist
+- [x] add user quick start docs
+- [x] add contributor notes for Codex agents
+
+## Success Criteria
+
+- one documented flow proves the kit can generate a project workspace
+- repo has enough docs for external users
+- validation catches broken output contracts early
+
+## Risk Assessment
+
+- risk: docs drift from runtime behavior
+- mitigation: keep docs tied to actual generated examples and test checks
+
+## Security Considerations
+
+- validation must confirm secrets are not generated
+- example files must not include real private data
+
+## Next Steps
+
+- after this phase, implementation can move to cook/execution
+</file>
+
+<file path="plans/260417-1518-codex-agents-portfolio-kit/plan.md">
+---
+status: completed
+created: 2026-04-17
+owner: codex
+slug: codex-agents-portfolio-kit
+---
+
+# Codex Agents Portfolio Kit Plan
+
+## Overview
+
+Build an open-source workflow-first kit for Codex agents. User clones repo, runs a thin entrypoint, answers 3 intake questions, and gets one git-ready portfolio project folder under `projects/<project-slug>/`.
+
+Primary constraints:
+- architecture follows [KIT-ARCHITECTURE.md](../../KIT-ARCHITECTURE.md)
+- direction follows [portfolio-data-visualization-kit-design.md](../../docs/portfolio-data-visualization-kit-design.md)
+- one owner workflow per request
+- output must be project-scoped
+- free-deploy priority defaults to `RAWGraphs`
+- every generated project must include SQL and/or Python work
+- kit must be designed for Codex agent runtime, not generic LLM prompts
+
+## Phases
+
+| Phase | Status | Goal |
+|---|---|---|
+| [Phase 01](phase-01-repo-runtime-foundation.md) | completed | Establish repo layout, runtime contracts, and Codex-facing conventions |
+| [Phase 02](phase-02-entrypoints-hooks-and-routing.md) | completed | Add thin entrypoints, mandatory hooks, and owner-workflow routing |
+| [Phase 03](phase-03-portfolio-workflow-and-agent-contracts.md) | completed | Define the portfolio workflow, agent roles, handoff contracts, and status rules |
+| [Phase 04](phase-04-project-generator-and-template-assets.md) | completed | Generate project folders, docs, plans, and git-ready assets |
+| [Phase 05](phase-05-framework-layer-and-tool-selection.md) | completed | Implement framework selection, visualization-layer rules, and tool policy |
+| [Phase 06](phase-06-validation-tests-and-docs.md) | completed | Validate generated output, document usage, and make repo safe to share |
+
+## Key Decisions
+
+- Runtime owner workflow: `portfolio-workflow`
+- Mandatory intake: `project context`, `project dataset`, `project goals`
+- Framework selector: `CRISP-DM` or `Data Pipeline Framework`
+- Exactly one visualization layer per project: `Basic`, `Pro`, `Advanced`
+- Exactly one visualization tool per project: `RAWGraphs` or `Apache Superset`
+- Free deploy preference: `RAWGraphs`
+- Generated project path: `projects/<project-slug>/`
+- Generated rationale doc: `projects/<project-slug>/docs/requirements-rationale-tools.md`
+
+## Dependencies
+
+- Phase 01 before all others
+- Phase 02 before workflow execution
+- Phase 03 before generator wiring
+- Phase 04 depends on Phases 01-03
+- Phase 05 depends on Phases 03-04
+- Phase 06 depends on all previous phases
+
+## Success Criteria
+
+- Codex can trigger one clear entrypoint and route to one owner workflow
+- Hooks can block missing workspace, missing docs, and secret access
+- Workflow can ask intake questions and generate a project-specific brief
+- Generated project contains docs, plan files, assets folders, README, `.gitignore`
+- Framework, layer, and visualization-tool choices are explicit in output docs
+- Generated plan enforces SQL and/or Python according to layer rules
+- Repo is understandable for open-source users and ready for git push
+
+## Implementation Order
+
+1. lock runtime structure and contracts
+2. implement entrypoints and hook gates
+3. implement workflow and agents
+4. implement project generator
+5. implement framework/layer/tool selectors
+6. add validation, docs, and smoke tests
+
+## Notes For Codex-Agent Operation
+
+- workflows own orchestration
+- agents get minimal scoped context only
+- skills support execution only, never top-level routing
+- all generated artifacts must live in the project workspace
+- reports should be concise and list unresolved questions at end
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/.gitignore">
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/assets/data/.gitkeep">
+
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/assets/python/01-analysis.py">
+"""Starter Python for the generated portfolio project."""
+
+def describe_project():
+    return {
+        "context": "E-commerce retention analysis for a portfolio case study.",
+        "dataset": "Orders, customers, support tickets, and campaign touchpoints.",
+        "next_step": "Implement cleaning, feature work, or advanced analysis here.",
+    }
+
+
+if __name__ == "__main__":
+    print(describe_project())
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/assets/sql/01-analysis.sql">
+-- Starter SQL for the generated portfolio project
+-- Context: E-commerce retention analysis for a portfolio case study.
+-- Dataset: Orders, customers, support tickets, and campaign touchpoints.
+
+select *
+from your_source_table
+limit 100;
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/assets/visuals/.gitkeep">
+
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/docs/project-intake.md">
+# Project Intake
+
+## Project
+
+- Slug: demo-ecommerce-churn-portfolio
+- Context: E-commerce retention analysis for a portfolio case study.
+- Dataset: Orders, customers, support tickets, and campaign touchpoints.
+- Goals: Show churn insight, segmentation, and a reproducible technical workflow.
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/docs/project-overview.md">
+# Project Overview
+
+## Summary
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Why
+
+- Framework: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/docs/requirements-rationale-tools.md">
+# Requirements Rationale Tools
+
+## Requirements
+
+- Project context: E-commerce retention analysis for a portfolio case study.
+- Project dataset: Orders, customers, support tickets, and campaign touchpoints.
+- Project goals: Show churn insight, segmentation, and a reproducible technical workflow.
+- Prefer free deploy: Yes
+
+## Thinking
+
+- Framework chosen: CRISP-DM
+  - Why: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer chosen: Pro
+  - Why: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool chosen: RAWGraphs
+  - Why: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+  - Deploy note: RAWGraphs fits static portfolio publishing much better than Superset.
+
+## Tools
+
+- SQL: Required
+- Python: Required
+- Visualization: RAWGraphs
+
+## Delivery Steps
+
+1. inspect dataset and define data quality risks
+2. write SQL transformations and analysis queries
+3. add Python work when the selected layer requires it
+4. build chart-ready tables
+5. create portfolio visuals with RAWGraphs
+6. document trade-offs and unresolved questions
+
+## Unresolved Questions
+
+- What dataset shape and row volume should the project target first?
+- Does the user want a static storytelling page in addition to the generated workspace?
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/phase-01-intake.md">
+# Phase 01 Intake
+
+## Inputs
+
+- Context: E-commerce retention analysis for a portfolio case study.
+- Dataset: Orders, customers, support tickets, and campaign touchpoints.
+- Goals: Show churn insight, segmentation, and a reproducible technical workflow.
+
+## Tasks
+
+1. confirm data shape and quality risks
+2. list target questions
+3. confirm the audience for the portfolio piece
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/phase-02-data-work.md">
+# Phase 02 Data Work
+
+## Tasks
+
+1. write SQL profiling queries
+2. write SQL transformations for chart-ready tables
+3. write Python helpers for cleaning, feature work, or advanced analysis
+4. verify assumptions and caveats
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/phase-03-visualization.md">
+# Phase 03 Visualization
+
+## Tasks
+
+1. prepare visual data tables
+2. create visuals with RAWGraphs
+3. make sure output matches the Pro scope
+4. note what the charts prove and what they do not prove
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/phase-04-publishing.md">
+# Phase 04 Publishing
+
+## Tasks
+
+1. finalize README and rationale docs
+2. package visual assets
+3. document deploy trade-offs for RAWGraphs
+4. make the project folder commit-ready
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/plan.md">
+---
+status: pending
+---
+
+# Project Plan
+
+## Decisions
+
+- Framework: CRISP-DM
+- Layer: Pro
+- Tool: RAWGraphs
+
+## Phases
+
+1. intake and profiling
+2. SQL and Python work
+3. visualization build
+4. publishing and review
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/plans/reports/.gitkeep">
+
+</file>
+
+<file path="projects/demo-ecommerce-churn-portfolio/README.md">
+# demo-ecommerce-churn-portfolio
+
+Generated by the Codex Data Visualization Kit.
+
+## Intake
+
+- Context: E-commerce retention analysis for a portfolio case study.
+- Dataset: Orders, customers, support tickets, and campaign touchpoints.
+- Goals: Show churn insight, segmentation, and a reproducible technical workflow.
+
+## Decisions
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Project Layout
+
+- `docs/`: project narrative and rationale
+- `plans/`: execution plan
+- `assets/sql/`: starter SQL work
+- `assets/python/`: starter Python work
+- `assets/visuals/`: exported visuals
+</file>
+
+<file path="projects/README.md">
+# Generated Projects
+
+Each generated portfolio project lives in its own folder here.
+
+Example:
+
+```text
+projects/ecommerce-churn-portfolio/
+projects/marketing-campaign-portfolio/
+```
+
+These folders are meant to be commit-ready.
+</file>
+
+<file path="projects/sales-insight-demo/.gitignore">
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+</file>
+
+<file path="projects/sales-insight-demo/assets/data/.gitkeep">
+
+</file>
+
+<file path="projects/sales-insight-demo/assets/python/01-analysis.py">
+"""Starter Python for the generated portfolio project."""
+
+def describe_project():
+    return {
+        "context": "Sales performance analysis",
+        "dataset": "Orders and sales reps",
+        "next_step": "Implement cleaning, feature work, or advanced analysis here.",
+    }
+
+
+if __name__ == "__main__":
+    print(describe_project())
+</file>
+
+<file path="projects/sales-insight-demo/assets/sql/01-analysis.sql">
+-- Starter SQL for the generated portfolio project
+-- Context: Sales performance analysis
+-- Dataset: Orders and sales reps
+
+select *
+from your_source_table
+limit 100;
+</file>
+
+<file path="projects/sales-insight-demo/assets/visuals/.gitkeep">
+
+</file>
+
+<file path="projects/sales-insight-demo/docs/project-intake.md">
+# Project Intake
+
+## Project
+
+- Slug: sales-insight-demo
+- Context: Sales performance analysis
+- Dataset: Orders and sales reps
+- Goals: Show sales insight and technical workflow
+</file>
+
+<file path="projects/sales-insight-demo/docs/project-overview.md">
+# Project Overview
+
+## Summary
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Why
+
+- Framework: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+</file>
+
+<file path="projects/sales-insight-demo/docs/requirements-rationale-tools.md">
+# Requirements Rationale Tools
+
+## Requirements
+
+- Project context: Sales performance analysis
+- Project dataset: Orders and sales reps
+- Project goals: Show sales insight and technical workflow
+- Prefer free deploy: Yes
+
+## Thinking
+
+- Framework chosen: CRISP-DM
+  - Why: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer chosen: Pro
+  - Why: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool chosen: RAWGraphs
+  - Why: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+  - Deploy note: RAWGraphs fits static portfolio publishing much better than Superset.
+
+## Tools
+
+- SQL: Required
+- Python: Required
+- Visualization: RAWGraphs
+
+## Delivery Steps
+
+1. inspect dataset and define data quality risks
+2. write SQL transformations and analysis queries
+3. add Python work when the selected layer requires it
+4. build chart-ready tables
+5. create portfolio visuals with RAWGraphs
+6. document trade-offs and unresolved questions
+
+## Unresolved Questions
+
+- What dataset shape and row volume should the project target first?
+- Does the user want a static storytelling page in addition to the generated workspace?
+</file>
+
+<file path="projects/sales-insight-demo/plans/phase-01-intake.md">
+# Phase 01 Intake
+
+## Inputs
+
+- Context: Sales performance analysis
+- Dataset: Orders and sales reps
+- Goals: Show sales insight and technical workflow
+
+## Tasks
+
+1. confirm data shape and quality risks
+2. list target questions
+3. confirm the audience for the portfolio piece
+</file>
+
+<file path="projects/sales-insight-demo/plans/phase-02-data-work.md">
+# Phase 02 Data Work
+
+## Tasks
+
+1. write SQL profiling queries
+2. write SQL transformations for chart-ready tables
+3. write Python helpers for cleaning, feature work, or advanced analysis
+4. verify assumptions and caveats
+</file>
+
+<file path="projects/sales-insight-demo/plans/phase-03-visualization.md">
+# Phase 03 Visualization
+
+## Tasks
+
+1. prepare visual data tables
+2. create visuals with RAWGraphs
+3. make sure output matches the Pro scope
+4. note what the charts prove and what they do not prove
+</file>
+
+<file path="projects/sales-insight-demo/plans/phase-04-publishing.md">
+# Phase 04 Publishing
+
+## Tasks
+
+1. finalize README and rationale docs
+2. package visual assets
+3. document deploy trade-offs for RAWGraphs
+4. make the project folder commit-ready
+</file>
+
+<file path="projects/sales-insight-demo/plans/plan.md">
+---
+status: pending
+---
+
+# Project Plan
+
+## Decisions
+
+- Framework: CRISP-DM
+- Layer: Pro
+- Tool: RAWGraphs
+
+## Phases
+
+1. intake and profiling
+2. SQL and Python work
+3. visualization build
+4. publishing and review
+</file>
+
+<file path="projects/sales-insight-demo/plans/reports/.gitkeep">
+
+</file>
+
+<file path="projects/sales-insight-demo/README.md">
+# sales-insight-demo
+
+Generated by the Codex Data Visualization Kit.
+
+## Intake
+
+- Context: Sales performance analysis
+- Dataset: Orders and sales reps
+- Goals: Show sales insight and technical workflow
+
+## Decisions
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Project Layout
+
+- `docs/`: project narrative and rationale
+- `plans/`: execution plan
+- `assets/sql/`: starter SQL work
+- `assets/python/`: starter Python work
+- `assets/visuals/`: exported visuals
+</file>
+
+<file path="projects/sample-marketing-portfolio/.gitignore">
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+</file>
+
+<file path="projects/sample-marketing-portfolio/assets/data/.gitkeep">
+
+</file>
+
+<file path="projects/sample-marketing-portfolio/assets/python/01-analysis.py">
+"""Starter Python for the generated portfolio project."""
+
+def describe_project():
+    return {
+        "context": "Marketing funnel analysis for an open-source portfolio",
+        "dataset": "Sessions, leads, campaigns, and conversions",
+        "next_step": "Implement cleaning, feature work, or advanced analysis here.",
+    }
+
+
+if __name__ == "__main__":
+    print(describe_project())
+</file>
+
+<file path="projects/sample-marketing-portfolio/assets/sql/01-analysis.sql">
+-- Starter SQL for the generated portfolio project
+-- Context: Marketing funnel analysis for an open-source portfolio
+-- Dataset: Sessions, leads, campaigns, and conversions
+
+select *
+from your_source_table
+limit 100;
+</file>
+
+<file path="projects/sample-marketing-portfolio/assets/visuals/.gitkeep">
+
+</file>
+
+<file path="projects/sample-marketing-portfolio/docs/project-intake.md">
+# Project Intake
+
+## Project
+
+- Slug: sample-marketing-portfolio
+- Context: Marketing funnel analysis for an open-source portfolio
+- Dataset: Sessions, leads, campaigns, and conversions
+- Goals: Show conversion insights and technical workflow
+</file>
+
+<file path="projects/sample-marketing-portfolio/docs/project-overview.md">
+# Project Overview
+
+## Summary
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Why
+
+- Framework: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+</file>
+
+<file path="projects/sample-marketing-portfolio/docs/requirements-rationale-tools.md">
+# Requirements Rationale Tools
+
+## Requirements
+
+- Project context: Marketing funnel analysis for an open-source portfolio
+- Project dataset: Sessions, leads, campaigns, and conversions
+- Project goals: Show conversion insights and technical workflow
+- Prefer free deploy: Yes
+
+## Thinking
+
+- Framework chosen: CRISP-DM
+  - Why: Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.
+- Layer chosen: Pro
+  - Why: Goals need balanced domain insight and technical depth, which fits the middle tier best.
+- Tool chosen: RAWGraphs
+  - Why: Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.
+  - Deploy note: RAWGraphs fits static portfolio publishing much better than Superset.
+
+## Tools
+
+- SQL: Required
+- Python: Required
+- Visualization: RAWGraphs
+
+## Delivery Steps
+
+1. inspect dataset and define data quality risks
+2. write SQL transformations and analysis queries
+3. add Python work when the selected layer requires it
+4. build chart-ready tables
+5. create portfolio visuals with RAWGraphs
+6. document trade-offs and unresolved questions
+
+## Unresolved Questions
+
+- What dataset shape and row volume should the project target first?
+- Does the user want a static storytelling page in addition to the generated workspace?
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/phase-01-intake.md">
+# Phase 01 Intake
+
+## Inputs
+
+- Context: Marketing funnel analysis for an open-source portfolio
+- Dataset: Sessions, leads, campaigns, and conversions
+- Goals: Show conversion insights and technical workflow
+
+## Tasks
+
+1. confirm data shape and quality risks
+2. list target questions
+3. confirm the audience for the portfolio piece
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/phase-02-data-work.md">
+# Phase 02 Data Work
+
+## Tasks
+
+1. write SQL profiling queries
+2. write SQL transformations for chart-ready tables
+3. write Python helpers for cleaning, feature work, or advanced analysis
+4. verify assumptions and caveats
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/phase-03-visualization.md">
+# Phase 03 Visualization
+
+## Tasks
+
+1. prepare visual data tables
+2. create visuals with RAWGraphs
+3. make sure output matches the Pro scope
+4. note what the charts prove and what they do not prove
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/phase-04-publishing.md">
+# Phase 04 Publishing
+
+## Tasks
+
+1. finalize README and rationale docs
+2. package visual assets
+3. document deploy trade-offs for RAWGraphs
+4. make the project folder commit-ready
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/plan.md">
+---
+status: pending
+---
+
+# Project Plan
+
+## Decisions
+
+- Framework: CRISP-DM
+- Layer: Pro
+- Tool: RAWGraphs
+
+## Phases
+
+1. intake and profiling
+2. SQL and Python work
+3. visualization build
+4. publishing and review
+</file>
+
+<file path="projects/sample-marketing-portfolio/plans/reports/.gitkeep">
+
+</file>
+
+<file path="projects/sample-marketing-portfolio/README.md">
+# sample-marketing-portfolio
+
+Generated by the Codex Data Visualization Kit.
+
+## Intake
+
+- Context: Marketing funnel analysis for an open-source portfolio
+- Dataset: Sessions, leads, campaigns, and conversions
+- Goals: Show conversion insights and technical workflow
+
+## Decisions
+
+- Framework: CRISP-DM
+- Visualization layer: Pro
+- Visualization tool: RAWGraphs
+
+## Project Layout
+
+- `docs/`: project narrative and rationale
+- `plans/`: execution plan
+- `assets/sql/`: starter SQL work
+- `assets/python/`: starter Python work
+- `assets/visuals/`: exported visuals
+</file>
+
+<file path="README.md">
+# Codex Data Visualization Kit
+
+Workflow-first open-source kit for Codex agents. User clones the repo, runs a thin entrypoint, answers a small intake, and gets one git-ready portfolio project folder under `projects/<project-slug>/`.
+
+## What It Does
+
+- asks for `project context`, `project dataset`, `project goals`
+- selects `CRISP-DM` or `Data Pipeline Framework`
+- selects one visualization layer: `Basic`, `Pro`, or `Advanced`
+- selects one visualization tool: `RAWGraphs` or `Apache Superset`
+- writes project docs, plans, starter SQL/Python files, and asset folders
+
+## Why This Shape
+
+- orchestration lives in workflows, not prompts
+- agents have explicit ownership and output contracts
+- hooks block invalid runtime states before execution
+- generated output is isolated in `projects/`
+
+## Quick Start
+
+```bash
+npm run kit -- help
+npm run kit -- portfolio
+```
+
+Non-interactive example:
+
+```bash
+npm run kit -- portfolio --slug ecommerce-churn-portfolio --project-context "E-commerce retention project" --project-dataset "Orders, customers, tickets" --project-goals "Show churn insights and technical workflow"
+```
+
+## Commands
+
+- `npm run kit -- help`
+- `npm run kit -- portfolio`
+- `npm run smoke`
+- `npm test`
+
+## Generated Project Structure
+
+```text
+projects/<project-slug>/
+  README.md
+  .gitignore
+  docs/
+  plans/
+  assets/
+```
+
+## Deploy Guidance
+
+- `RAWGraphs` is the free-deploy default because it fits static portfolio publishing better
+- `Apache Superset` stays available for BI-style dashboards, but not as the recommended Netlify Free path
+
+## Repo Guides
+
+- [Project Overview](docs/project-overview-pdr.md)
+- [System Architecture](docs/system-architecture.md)
+- [Code Standards](docs/code-standards.md)
+- [Design Doc](docs/portfolio-data-visualization-kit-design.md)
+</file>
+
+<file path="scripts/hooks/privacy-block.cjs">
+const path = require("node:path");
+
+function privacyBlock(filePath) {
+  const blockedNames = [".env", ".env.local", ".env.production", "secrets.json", "id_rsa"];
+  const baseName = path.basename(filePath).toLowerCase();
+  const blocked = blockedNames.includes(baseName) || baseName.includes("token");
+
+  return {
+    blocked,
+    reason: blocked ? `Sensitive file access blocked: ${filePath}` : "ok",
+  };
+}
+
+if (require.main === module) {
+  console.log(JSON.stringify(privacyBlock(process.argv[2] || ""), null, 2));
+}
+
+module.exports = {
+  privacyBlock,
+};
+</file>
+
+<file path="scripts/hooks/project-preflight.cjs">
+const path = require("node:path");
+const { ensureDir, pathExists, slugify } = require("../lib/fs-utils.cjs");
+
+async function projectPreflight({ repoRoot, projectSlug, targetPath, force }) {
+  const projectsRoot = path.join(repoRoot, "projects");
+  await ensureDir(projectsRoot);
+
+  if (!projectSlug) {
+    throw new Error("Project slug resolved to an empty value. Provide clearer goals or an explicit slug.");
+  }
+
+  if (slugify(projectSlug) !== projectSlug) {
+    throw new Error(`Project slug must already be kebab-case: ${projectSlug}`);
+  }
+
+  const relative = path.relative(projectsRoot, targetPath);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error(`Target project path must stay inside projects/: ${targetPath}`);
+  }
+
+  const exists = await pathExists(targetPath);
+  if (exists && !force) {
+    throw new Error(`Target project already exists. Use --force=true to overwrite: ${targetPath}`);
+  }
+
+  return { ok: true, projectsRoot };
+}
+
+if (require.main === module) {
+  projectPreflight({
+    repoRoot: process.cwd(),
+    projectSlug: process.argv[2],
+    targetPath: process.argv[3],
+    force: process.argv[4] === "true",
+  })
+    .then((result) => console.log(JSON.stringify(result, null, 2)))
+    .catch((error) => {
+      console.error(error.message);
+      process.exitCode = 1;
+    });
+}
+
+module.exports = {
+  projectPreflight,
+};
+</file>
+
+<file path="scripts/hooks/provider-key-gate.cjs">
+function providerKeyGate(requiredProviders) {
+  const missing = [];
+
+  for (const provider of requiredProviders) {
+    const envName = `${provider.toUpperCase().replace(/[^A-Z0-9]+/g, "_")}_API_KEY`;
+    if (!process.env[envName]) {
+      missing.push(envName);
+    }
+  }
+
+  return {
+    ok: missing.length === 0,
+    missing,
+  };
+}
+
+if (require.main === module) {
+  const providers = process.argv.slice(2);
+  const result = providerKeyGate(providers);
+  if (!result.ok) {
+    console.error(JSON.stringify(result, null, 2));
+    process.exitCode = 1;
+  } else {
+    console.log(JSON.stringify(result, null, 2));
+  }
+}
+
+module.exports = {
+  providerKeyGate,
+};
+</file>
+
+<file path="scripts/hooks/run-workflow-preflight.cjs">
+const path = require("node:path");
+const { pathExists } = require("../lib/fs-utils.cjs");
+
+async function runWorkflowPreflight({ cwd }) {
+  const repoRoot = await findRepoRoot(cwd);
+  return { ok: true, repoRoot };
+}
+
+async function findRepoRoot(startPath) {
+  let currentPath = path.resolve(startPath);
+
+  while (true) {
+    const requiredPaths = [
+      path.join(currentPath, "KIT-ARCHITECTURE.md"),
+      path.join(currentPath, "plans"),
+      path.join(currentPath, "docs"),
+      path.join(currentPath, "package.json"),
+    ];
+
+    const matches = await Promise.all(requiredPaths.map((target) => pathExists(target)));
+    if (matches.every(Boolean)) {
+      return currentPath;
+    }
+
+    const parentPath = path.dirname(currentPath);
+    if (parentPath === currentPath) {
+      throw new Error(`Preflight failed. Could not locate repo root from: ${startPath}`);
+    }
+    currentPath = parentPath;
+  }
+}
+
+if (require.main === module) {
+  runWorkflowPreflight({ cwd: process.cwd() })
+    .then((result) => console.log(JSON.stringify(result, null, 2)))
+    .catch((error) => {
+      console.error(error.message);
+      process.exitCode = 1;
+    });
+}
+
+module.exports = {
+  findRepoRoot,
+  runWorkflowPreflight,
+};
+</file>
+
+<file path="scripts/hooks/subagent-init.cjs">
+const path = require("node:path");
+
+function subagentInit({ repoRoot, projectSlug }) {
+  const workContext = path.join(repoRoot, "projects", projectSlug);
+  return {
+    workContext,
+    reportsPath: path.join(workContext, "plans", "reports"),
+    plansPath: path.join(workContext, "plans"),
+    naming: "kebab-case, project-scoped outputs, concise reports",
+  };
+}
+
+if (require.main === module) {
+  console.log(JSON.stringify(subagentInit({ repoRoot: process.cwd(), projectSlug: process.argv[2] }), null, 2));
+}
+
+module.exports = {
+  subagentInit,
+};
+</file>
+
+<file path="scripts/lib/cli.cjs">
+const readline = require("node:readline/promises");
+const { stdin, stdout } = require("node:process");
+
+function parseArgs(argv) {
+  const flags = {};
+  const positional = [];
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (!arg.startsWith("--")) {
+      positional.push(arg);
+      continue;
+    }
+
+    const [rawKey, inlineValue] = arg.slice(2).split("=");
+    const nextValue = inlineValue ?? argv[index + 1];
+    const value = inlineValue ?? (nextValue && !nextValue.startsWith("--") ? nextValue : "true");
+    if (inlineValue === undefined && value === nextValue && value !== "true") {
+      index += 1;
+    }
+    flags[rawKey] = value;
+  }
+
+  return {
+    command: positional[0] ?? "help",
+    flags,
+  };
+}
+
+function printHelp() {
+  const lines = [
+    "Codex Data Visualization Kit",
+    "",
+    "Commands:",
+    "  portfolio   Generate a new portfolio project",
+    "  help        Show this message",
+    "",
+    "Examples:",
+    '  npm run kit -- portfolio',
+    '  npm run kit -- portfolio --slug ecommerce-churn --project-context "E-commerce analysis" --project-dataset "Orders and customers" --project-goals "Show churn insights"',
+  ];
+  console.log(lines.join("\n"));
+}
+
+async function collectPortfolioInput(flags, options = {}) {
+  const interactive = options.interactive ?? stdin.isTTY;
+
+  if (
+    hasTextValue(flags["project-context"]) &&
+    hasTextValue(flags["project-dataset"]) &&
+    hasTextValue(flags["project-goals"])
+  ) {
+    return {
+      projectContext: flags["project-context"],
+      projectDataset: flags["project-dataset"],
+      projectGoals: flags["project-goals"],
+      preferFreeDeploy: resolveBoolean(flags["prefer-free-deploy"], true),
+      slug: flags.slug,
+    };
+  }
+
+  if (!interactive) {
+    throw new Error("Missing required intake values for non-interactive execution.");
+  }
+
+  const rl = readline.createInterface({ input: stdin, output: stdout });
+  try {
+    const projectContext = hasTextValue(flags["project-context"])
+      ? flags["project-context"]
+      : await rl.question("Project context: ");
+    const projectDataset = hasTextValue(flags["project-dataset"])
+      ? flags["project-dataset"]
+      : await rl.question("Project dataset: ");
+    const projectGoals = hasTextValue(flags["project-goals"])
+      ? flags["project-goals"]
+      : await rl.question("Project goals: ");
+    const deployAnswer =
+      flags["prefer-free-deploy"] ??
+      await rl.question("Prefer free static deployment by default? [Y/n]: ");
+    const slug = flags.slug ?? await rl.question("Project slug (optional): ");
+
+    return {
+      projectContext,
+      projectDataset,
+      projectGoals,
+      preferFreeDeploy: resolveBoolean(deployAnswer, true),
+      slug,
+    };
+  } finally {
+    rl.close();
+  }
+}
+
+function resolveBoolean(value, fallback) {
+  if (value === undefined || value === "") {
+    return fallback;
+  }
+  return !["false", "0", "n", "no"].includes(String(value).trim().toLowerCase());
+}
+
+function hasTextValue(value) {
+  return typeof value === "string" && value.trim() !== "" && value !== "true";
+}
+
+module.exports = {
+  collectPortfolioInput,
+  hasTextValue,
+  parseArgs,
+  printHelp,
+  resolveBoolean,
+};
+</file>
+
+<file path="scripts/lib/fs-utils.cjs">
+const fs = require("node:fs/promises");
+const path = require("node:path");
+
+async function ensureDir(targetPath) {
+  await fs.mkdir(targetPath, { recursive: true });
+}
+
+async function writeTextFile(filePath, content) {
+  await ensureDir(path.dirname(filePath));
+  await fs.writeFile(filePath, content, "utf8");
+}
+
+async function writeMany(files) {
+  for (const [filePath, content] of Object.entries(files)) {
+    await writeTextFile(filePath, content);
+  }
+}
+
+function slugify(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-")
+    .slice(0, 60);
+}
+
+async function pathExists(targetPath) {
+  try {
+    await fs.access(targetPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function safeRemoveDir(targetPath, rootPath) {
+  const relative = path.relative(rootPath, targetPath);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error(`Refusing to remove path outside root: ${targetPath}`);
+  }
+  await fs.rm(targetPath, { recursive: true, force: true });
+}
+
+module.exports = {
+  ensureDir,
+  pathExists,
+  safeRemoveDir,
+  slugify,
+  writeMany,
+  writeTextFile,
+};
+</file>
+
+<file path="scripts/lib/portfolio-workflow.cjs">
+const path = require("node:path");
+
+const { collectPortfolioInput } = require("./cli.cjs");
+const { slugify } = require("./fs-utils.cjs");
+const { generateProject } = require("./project-generator.cjs");
+const { validateGeneratedProject } = require("./project-validator.cjs");
+const { privacyBlock } = require("../hooks/privacy-block.cjs");
+const { providerKeyGate } = require("../hooks/provider-key-gate.cjs");
+const { projectPreflight } = require("../hooks/project-preflight.cjs");
+const { subagentInit } = require("../hooks/subagent-init.cjs");
+
+async function runPortfolioWorkflow({ flags, repoRoot }) {
+  const intake = await collectPortfolioInput(flags);
+  const slug = intake.slug?.trim() ? slugify(intake.slug) : slugify(intake.projectGoals);
+  if (!slug) {
+    throw new Error("Could not derive a valid project slug. Use clearer goals or pass --slug.");
+  }
+  const projectPath = path.join(repoRoot, "projects", slug);
+  const privacyCheck = privacyBlock(projectPath);
+  if (privacyCheck.blocked) {
+    throw new Error(privacyCheck.reason);
+  }
+  const providerCheck = providerKeyGate([]);
+  if (!providerCheck.ok) {
+    throw new Error(`Provider key gate failed: ${providerCheck.missing.join(", ")}`);
+  }
+
+  await projectPreflight({
+    repoRoot,
+    projectSlug: slug,
+    targetPath: projectPath,
+    force: flags.force === "true",
+  });
+
+  const result = await generateProject({
+    repoRoot,
+    outputPath: path.join(repoRoot, "projects", slug),
+    intake,
+    slug,
+    preferFreeDeploy: intake.preferFreeDeploy,
+    force: flags.force === "true",
+  });
+
+  const handoff = subagentInit({
+    repoRoot,
+    projectSlug: result.slug,
+  });
+  const validation = await validateGeneratedProject(result.projectRoot);
+
+  console.log(`Created project: ${result.projectRoot}`);
+  console.log(`Framework: ${result.decisions.framework.name}`);
+  console.log(`Layer: ${result.decisions.layer.name}`);
+  console.log(`Tool: ${result.decisions.tool.name}`);
+  console.log(`Validation: checked ${validation.checked} required paths`);
+  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+}
+
+module.exports = {
+  runPortfolioWorkflow,
+};
+</file>
+
+<file path="scripts/lib/project-generator.cjs">
+const path = require("node:path");
+
+const { buildDecisionBundle } = require("./selector.cjs");
+const { pathExists, safeRemoveDir, slugify, writeMany } = require("./fs-utils.cjs");
+const {
+  renderIntakeDoc,
+  renderOverviewDoc,
+  renderProjectGitignore,
+  renderProjectReadme,
+  renderRequirementsDoc,
+} = require("./project-templates.cjs");
+const {
+  renderPhaseDataWork,
+  renderPhaseIntake,
+  renderPhasePublishing,
+  renderPhaseVisualization,
+  renderPlan,
+} = require("./project-plan-templates.cjs");
+
+async function generateProject(options) {
+  const slug = options.slug && options.slug.trim() ? slugify(options.slug) : slugify(options.intake.projectGoals);
+  if (!slug) {
+    throw new Error("Project slug resolved to an empty value. Provide an explicit slug or clearer goals.");
+  }
+
+  const projectRoot = options.outputPath ?? path.join(options.repoRoot, "projects", slug);
+  const projectsRoot = path.join(options.repoRoot, "projects");
+  const relative = path.relative(projectsRoot, projectRoot);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error(`Project output path must stay inside projects/: ${projectRoot}`);
+  }
+  const exists = await pathExists(projectRoot);
+
+  if (exists && !options.force) {
+    throw new Error(`Project path already exists: ${projectRoot}`);
+  }
+  if (exists && options.force) {
+    await safeRemoveDir(projectRoot, projectsRoot);
+  }
+
+  const decisions = buildDecisionBundle({
+    projectGoals: options.intake.projectGoals,
+    preferFreeDeploy: options.preferFreeDeploy,
+  });
+
+  const files = {
+    [path.join(projectRoot, "README.md")]: renderProjectReadme({ slug, intake: options.intake, decisions }),
+    [path.join(projectRoot, ".gitignore")]: renderProjectGitignore(),
+    [path.join(projectRoot, "docs", "project-intake.md")]: renderIntakeDoc(options.intake, slug),
+    [path.join(projectRoot, "docs", "project-overview.md")]: renderOverviewDoc(decisions),
+    [path.join(projectRoot, "docs", "requirements-rationale-tools.md")]: renderRequirementsDoc({
+      intake: options.intake,
+      decisions,
+      preferFreeDeploy: options.preferFreeDeploy,
+    }),
+    [path.join(projectRoot, "plans", "plan.md")]: renderPlan(decisions),
+    [path.join(projectRoot, "plans", "phase-01-intake.md")]: renderPhaseIntake(options.intake),
+    [path.join(projectRoot, "plans", "phase-02-data-work.md")]: renderPhaseDataWork(decisions),
+    [path.join(projectRoot, "plans", "phase-03-visualization.md")]: renderPhaseVisualization(decisions),
+    [path.join(projectRoot, "plans", "phase-04-publishing.md")]: renderPhasePublishing(decisions),
+    [path.join(projectRoot, "plans", "reports", ".gitkeep")]: "",
+    [path.join(projectRoot, "assets", "data", ".gitkeep")]: "",
+    [path.join(projectRoot, "assets", "visuals", ".gitkeep")]: "",
+    [path.join(projectRoot, "assets", "sql", "01-analysis.sql")]: buildSqlStarter(options.intake),
+  };
+
+  if (decisions.layer.requiresPython) {
+    files[path.join(projectRoot, "assets", "python", "01-analysis.py")] = buildPythonStarter(options.intake);
+  } else {
+    files[path.join(projectRoot, "assets", "python", ".gitkeep")] = "";
+  }
+
+  await writeMany(files);
+  return { decisions, projectRoot, slug };
+}
+
+function buildSqlStarter(intake) {
+  const context = flattenLine(intake.projectContext);
+  const dataset = flattenLine(intake.projectDataset);
+  return `-- Starter SQL for the generated portfolio project
+-- Context: ${context}
+-- Dataset: ${dataset}
+
+select *
+from your_source_table
+limit 100;
+`;
+}
+
+function buildPythonStarter(intake) {
+  const context = toPythonStringLiteral(intake.projectContext);
+  const dataset = toPythonStringLiteral(intake.projectDataset);
+  return `"""Starter Python for the generated portfolio project."""
+
+def describe_project():
+    return {
+        "context": ${context},
+        "dataset": ${dataset},
+        "next_step": "Implement cleaning, feature work, or advanced analysis here.",
+    }
+
+
+if __name__ == "__main__":
+    print(describe_project())
+`;
+}
+
+function flattenLine(value) {
+  return String(value).replace(/\s+/g, " ").trim();
+}
+
+function toPythonStringLiteral(value) {
+  return JSON.stringify(String(value));
+}
+
+module.exports = {
+  generateProject,
+};
+</file>
+
+<file path="scripts/lib/project-plan-templates.cjs">
+function renderPlan(decisions) {
+  return `---
+status: pending
+---
+
+# Project Plan
+
+## Decisions
+
+- Framework: ${decisions.framework.name}
+- Layer: ${decisions.layer.name}
+- Tool: ${decisions.tool.name}
+
+## Phases
+
+1. intake and profiling
+2. SQL and Python work
+3. visualization build
+4. publishing and review
+`;
+}
+
+function renderPhaseIntake(intake) {
+  return `# Phase 01 Intake
+
+## Inputs
+
+- Context: ${intake.projectContext}
+- Dataset: ${intake.projectDataset}
+- Goals: ${intake.projectGoals}
+
+## Tasks
+
+1. confirm data shape and quality risks
+2. list target questions
+3. confirm the audience for the portfolio piece
+`;
+}
+
+function renderPhaseDataWork(decisions) {
+  const pythonLine = decisions.layer.requiresPython
+    ? "3. write Python helpers for cleaning, feature work, or advanced analysis"
+    : "3. Python is optional for this layer";
+  return `# Phase 02 Data Work
+
+## Tasks
+
+1. write SQL profiling queries
+2. write SQL transformations for chart-ready tables
+${pythonLine}
+4. verify assumptions and caveats
+`;
+}
+
+function renderPhaseVisualization(decisions) {
+  return `# Phase 03 Visualization
+
+## Tasks
+
+1. prepare visual data tables
+2. create visuals with ${decisions.tool.name}
+3. make sure output matches the ${decisions.layer.name} scope
+4. note what the charts prove and what they do not prove
+`;
+}
+
+function renderPhasePublishing(decisions) {
+  return `# Phase 04 Publishing
+
+## Tasks
+
+1. finalize README and rationale docs
+2. package visual assets
+3. document deploy trade-offs for ${decisions.tool.name}
+4. make the project folder commit-ready
+`;
+}
+
+module.exports = {
+  renderPhaseDataWork,
+  renderPhaseIntake,
+  renderPhasePublishing,
+  renderPhaseVisualization,
+  renderPlan,
+};
+</file>
+
+<file path="scripts/lib/project-templates.cjs">
+function renderProjectReadme({ slug, intake, decisions }) {
+  return `# ${slug}
+
+Generated by the Codex Data Visualization Kit.
+
+## Intake
+
+- Context: ${intake.projectContext}
+- Dataset: ${intake.projectDataset}
+- Goals: ${intake.projectGoals}
+
+## Decisions
+
+- Framework: ${decisions.framework.name}
+- Visualization layer: ${decisions.layer.name}
+- Visualization tool: ${decisions.tool.name}
+
+## Project Layout
+
+- \`docs/\`: project narrative and rationale
+- \`plans/\`: execution plan
+- \`assets/sql/\`: starter SQL work
+- \`assets/python/\`: starter Python work
+- \`assets/visuals/\`: exported visuals
+`;
+}
+
+function renderProjectGitignore() {
+  return `.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+`;
+}
+
+function renderIntakeDoc(intake, slug) {
+  return `# Project Intake
+
+## Project
+
+- Slug: ${slug}
+- Context: ${intake.projectContext}
+- Dataset: ${intake.projectDataset}
+- Goals: ${intake.projectGoals}
+`;
+}
+
+function renderOverviewDoc(decisions) {
+  return `# Project Overview
+
+## Summary
+
+- Framework: ${decisions.framework.name}
+- Visualization layer: ${decisions.layer.name}
+- Visualization tool: ${decisions.tool.name}
+
+## Why
+
+- Framework: ${decisions.framework.reason}
+- Layer: ${decisions.layer.reason}
+- Tool: ${decisions.tool.reason}
+`;
+}
+
+function renderRequirementsDoc({ intake, decisions, preferFreeDeploy }) {
+  const pythonRule = decisions.layer.requiresPython ? "Required" : "Optional";
+  return `# Requirements Rationale Tools
+
+## Requirements
+
+- Project context: ${intake.projectContext}
+- Project dataset: ${intake.projectDataset}
+- Project goals: ${intake.projectGoals}
+- Prefer free deploy: ${preferFreeDeploy ? "Yes" : "No"}
+
+## Thinking
+
+- Framework chosen: ${decisions.framework.name}
+  - Why: ${decisions.framework.reason}
+- Layer chosen: ${decisions.layer.name}
+  - Why: ${decisions.layer.reason}
+- Tool chosen: ${decisions.tool.name}
+  - Why: ${decisions.tool.reason}
+  - Deploy note: ${decisions.tool.deployNote}
+
+## Tools
+
+- SQL: Required
+- Python: ${pythonRule}
+- Visualization: ${decisions.tool.name}
+
+## Delivery Steps
+
+1. inspect dataset and define data quality risks
+2. write SQL transformations and analysis queries
+3. add Python work when the selected layer requires it
+4. build chart-ready tables
+5. create portfolio visuals with ${decisions.tool.name}
+6. document trade-offs and unresolved questions
+
+## Unresolved Questions
+
+- What dataset shape and row volume should the project target first?
+- Does the user want a static storytelling page in addition to the generated workspace?
+`;
+}
+
+module.exports = {
+  renderIntakeDoc,
+  renderOverviewDoc,
+  renderProjectGitignore,
+  renderProjectReadme,
+  renderRequirementsDoc,
+};
+</file>
+
+<file path="scripts/lib/project-validator.cjs">
+const fs = require("node:fs/promises");
+const path = require("node:path");
+
+async function validateGeneratedProject(projectRoot) {
+  const requiredPaths = [
+    "README.md",
+    ".gitignore",
+    "docs/project-intake.md",
+    "docs/project-overview.md",
+    "docs/requirements-rationale-tools.md",
+    "plans/plan.md",
+    "plans/phase-01-intake.md",
+    "plans/phase-02-data-work.md",
+    "plans/phase-03-visualization.md",
+    "plans/phase-04-publishing.md",
+    "plans/reports/.gitkeep",
+    "assets/data/.gitkeep",
+    "assets/sql/01-analysis.sql",
+    "assets/visuals/.gitkeep",
+  ];
+
+  for (const relativePath of requiredPaths) {
+    await fs.access(path.join(projectRoot, relativePath));
+  }
+
+  return {
+    ok: true,
+    checked: requiredPaths.length,
+  };
+}
+
+module.exports = {
+  validateGeneratedProject,
+};
+</file>
+
+<file path="scripts/lib/router.cjs">
+const { printHelp } = require("./cli.cjs");
+const { runPortfolioWorkflow } = require("./portfolio-workflow.cjs");
+
+async function routeCommand({ command, flags, repoRoot }) {
+  switch (command) {
+    case "$kit":
+    case "help":
+      printHelp();
+      return;
+    case "$kit-portfolio":
+    case "portfolio":
+      await runPortfolioWorkflow({ flags, repoRoot });
+      return;
+    default:
+      throw new Error(`Unknown command: ${command}`);
+  }
+}
+
+module.exports = {
+  routeCommand,
+};
+</file>
+
+<file path="scripts/lib/selector.cjs">
+function selectFramework(projectGoals) {
+  const goals = projectGoals.toLowerCase();
+  const pipelineKeywords = [
+    "pipeline",
+    "etl",
+    "warehouse",
+    "transformation",
+    "orchestration",
+    "data quality",
+    "modeling",
+  ];
+
+  const usePipeline = pipelineKeywords.some((keyword) => goals.includes(keyword));
+  return {
+    name: usePipeline ? "Data Pipeline Framework" : "CRISP-DM",
+    reason: usePipeline
+      ? "Goals are engineering-first, so the project should emphasize ingestion, transformation, and reproducibility."
+      : "Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.",
+  };
+}
+
+function selectLayer(projectGoals) {
+  const goals = projectGoals.toLowerCase();
+  const advancedKeywords = ["forecast", "geospatial", "network", "advanced", "senior", "scenario"];
+  const basicKeywords = ["quick", "simple", "intro", "basic"];
+
+  if (advancedKeywords.some((keyword) => goals.includes(keyword))) {
+    return {
+      name: "Advanced",
+      reason: "Goals suggest a deeper showcase with richer analysis and stronger technical proof.",
+      requiresPython: true,
+      requiresSql: true,
+    };
+  }
+
+  if (basicKeywords.some((keyword) => goals.includes(keyword))) {
+    return {
+      name: "Basic",
+      reason: "Goals suggest a lighter portfolio piece with fast delivery and lower scope.",
+      requiresPython: false,
+      requiresSql: true,
+    };
+  }
+
+  return {
+    name: "Pro",
+    reason: "Goals need balanced domain insight and technical depth, which fits the middle tier best.",
+    requiresPython: true,
+    requiresSql: true,
+  };
+}
+
+function selectVisualizationTool(projectGoals, preferFreeDeploy) {
+  const goals = projectGoals.toLowerCase();
+  const dashboardFirst = ["dashboard", "bi", "sql editor", "semantic layer"].some((keyword) =>
+    goals.includes(keyword),
+  );
+
+  if (!preferFreeDeploy && dashboardFirst) {
+    return {
+      name: "Apache Superset",
+      reason: "Goals lean toward BI dashboards and free static deploy is not the primary constraint.",
+      deployNote: "Superset is not the recommended Netlify Free path because it needs a running backend.",
+    };
+  }
+
+  return {
+    name: "RAWGraphs",
+    reason: "Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.",
+    deployNote: "RAWGraphs fits static portfolio publishing much better than Superset.",
+  };
+}
+
+function buildDecisionBundle({ projectGoals, preferFreeDeploy }) {
+  const framework = selectFramework(projectGoals);
+  const layer = selectLayer(projectGoals);
+  const tool = selectVisualizationTool(projectGoals, preferFreeDeploy);
+
+  return { framework, layer, tool };
+}
+
+module.exports = {
+  buildDecisionBundle,
+  selectFramework,
+  selectLayer,
+  selectVisualizationTool,
+};
+</file>
+
+<file path="scripts/run-kit.cjs">
+#!/usr/bin/env node
+
+const { parseArgs } = require("./lib/cli.cjs");
+const { routeCommand } = require("./lib/router.cjs");
+const { runWorkflowPreflight } = require("./hooks/run-workflow-preflight.cjs");
+
+async function main() {
+  const parsed = parseArgs(process.argv.slice(2));
+  const context = await runWorkflowPreflight({ cwd: process.cwd() });
+  await routeCommand({
+    command: parsed.command,
+    flags: parsed.flags,
+    repoRoot: context.repoRoot,
+  });
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});
+</file>
+
+<file path="scripts/smoke-test.cjs">
+#!/usr/bin/env node
+
+const path = require("node:path");
+const fs = require("node:fs/promises");
+const { execFile } = require("node:child_process");
+const { promisify } = require("node:util");
+const { validateGeneratedProject } = require("./lib/project-validator.cjs");
+
+const execFileAsync = promisify(execFile);
+
+async function main() {
+  const repoRoot = process.cwd();
+  const smokeSlug = "smoke-demo-ecommerce-churn-portfolio";
+  const smokePath = path.join(repoRoot, "projects", smokeSlug);
+
+  try {
+    const cliPath = path.join(repoRoot, "scripts", "run-kit.cjs");
+    await execFileAsync(process.execPath, [
+      cliPath,
+      "portfolio",
+      "--slug",
+      smokeSlug,
+      "--project-context",
+      "E-commerce retention analysis for a portfolio case study.",
+      "--project-dataset",
+      "Orders, customers, support tickets, and campaign touchpoints.",
+      "--project-goals",
+      "Show churn insight, segmentation, and a reproducible technical workflow.",
+      "--prefer-free-deploy=true",
+      "--force=true",
+    ], { cwd: repoRoot });
+
+    await validateGeneratedProject(smokePath);
+    console.log(`Generated smoke project at ${smokePath}`);
+  } finally {
+    await fs.rm(smokePath, { recursive: true, force: true });
+  }
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});
+</file>
+
+<file path="tests/project-generator.test.cjs">
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs/promises");
+const os = require("node:os");
+const path = require("node:path");
+
+const { collectPortfolioInput } = require("../scripts/lib/cli.cjs");
+const { generateProject } = require("../scripts/lib/project-generator.cjs");
+
+test("generateProject creates a git-ready project workspace", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const result = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Retention analysis",
+      projectDataset: "Orders and customers",
+      projectGoals: "Show churn insight and technical workflow",
+    },
+    slug: "retention-analysis",
+    preferFreeDeploy: true,
+  });
+
+  const files = [
+    "README.md",
+    ".gitignore",
+    "docs/project-intake.md",
+    "docs/requirements-rationale-tools.md",
+    "plans/plan.md",
+    "plans/reports/.gitkeep",
+    "assets/sql/01-analysis.sql",
+  ];
+
+  for (const relativePath of files) {
+    const target = path.join(result.projectRoot, relativePath);
+    await assert.doesNotReject(() => fs.access(target));
+  }
+
+  const rationale = await fs.readFile(
+    path.join(result.projectRoot, "docs", "requirements-rationale-tools.md"),
+    "utf8",
+  );
+  assert.match(rationale, /RAWGraphs/);
+  assert.match(rationale, /SQL: Required/);
+});
+
+test("generateProject escapes quoted intake values in the python starter", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const result = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: 'Portfolio for "quoted" context',
+      projectDataset: 'Dataset with "quotes"',
+      projectGoals: "Show advanced technical workflow",
+    },
+    slug: "quoted-intake",
+    preferFreeDeploy: true,
+  });
+
+  const pythonStarter = await fs.readFile(
+    path.join(result.projectRoot, "assets", "python", "01-analysis.py"),
+    "utf8",
+  );
+  assert.match(pythonStarter, /Portfolio for \\"quoted\\" context/);
+  assert.match(pythonStarter, /Dataset with \\"quotes\\"/);
+});
+
+test("generateProject rejects empty slugs and protects the projects root", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  await assert.rejects(
+    () =>
+      generateProject({
+        repoRoot,
+        intake: {
+          projectContext: "Invalid slug test",
+          projectDataset: "N/A",
+          projectGoals: "!!!",
+        },
+        preferFreeDeploy: true,
+      }),
+    /empty value/,
+  );
+});
+
+test("collectPortfolioInput rejects malformed non-interactive flags", async () => {
+  await assert.rejects(
+    () =>
+      collectPortfolioInput(
+        {
+          slug: "malformed-intake",
+          "project-context": "true",
+          "project-dataset": "true",
+          "project-goals": "true",
+        },
+        { interactive: false },
+      ),
+    /Missing required intake values/,
+  );
+});
+</file>
+
+<file path="docs/code-standards.md">
+# Code Standards
+
+## Principles
+
+- YAGNI
+- KISS
+- DRY
+
+## Runtime Rules
+
+- prefer small modules under 200 lines
+- use CommonJS for script compatibility
+- keep entrypoints thin
+- put orchestration in workflow docs and workflow code, not prompt text blobs
+
+## Output Rules
+
+- generated project files live only in `projects/<project-slug>/`
+- never write secrets into generated output
+- generated docs must explain decisions and unresolved questions
+
+## Testing Rules
+
+- use built-in Node test runner where possible
+- verify generated structure, rationale docs, and starter files
+</file>
+
+<file path="docs/codebase-summary.md">
+# Codebase Summary
+
+## Current Areas
+
+- `KIT-ARCHITECTURE.md`: architecture source for the kit
+- `docs/`: design and operating docs
+- `plans/`: implementation plans
+- `.codex/`: Codex runtime contracts
+- `scripts/`: executable runtime
+- `tests/`: smoke and unit validation
+- `projects/`: generated project workspaces
+
+## Main Runtime Entry
+
+- `scripts/run-kit.cjs`
+
+## Main Workflow Entry
+
+- `.codex/workflows/portfolio-workflow.md`
+</file>
+
+<file path="docs/project-overview-pdr.md">
+# Project Overview PDR
+
+## Overview
+
+Build an open-source kit for Codex agents that generates professional data visualization portfolio projects in isolated folders.
+
+## Product Goal
+
+- help users show domain knowledge
+- help users show technical knowledge
+- produce repeatable, git-ready project workspaces
+
+## Core User Flow
+
+1. clone repo
+2. run kit command
+3. answer intake questions
+4. receive generated project folder under `projects/`
+5. refine and commit the generated workspace
+
+## Core Requirements
+
+- workflow-first orchestration
+- thin entrypoints
+- mandatory hooks
+- agent-scoped execution
+- one framework owner per generated project
+- one visualization layer per generated project
+- one visualization tool per generated project
+
+## Constraints
+
+- default free-deploy path should prefer `RAWGraphs`
+- project outputs must include SQL and/or Python work
+- no hardcoded business values in the kit itself
+</file>
+
+<file path="docs/system-architecture.md">
+# System Architecture
+
+## Runtime Flow
+
+```text
+User request
+-> thin entrypoint
+-> preflight hooks
+-> portfolio-workflow
+-> scoped Codex agents
+-> selector logic
+-> project generator
+-> outputs in projects/<project-slug>/
+```
+
+## Repo Zones
+
+- `.codex/`: prompts, workflows, agent contracts
+- `.agents/skills/`: reusable support skills for Codex execution
+- `scripts/hooks/`: runtime gates
+- `scripts/lib/`: Node runtime implementation
+- `projects/`: generated portfolio workspaces
+
+## Key Decisions
+
+- one owner workflow per request
+- minimal skill activation
+- project-scoped outputs only
+- hooks stop execution on invalid state
+</file>
+
+</files>

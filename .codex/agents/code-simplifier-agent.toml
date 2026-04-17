@@ -1,0 +1,6 @@
+name = "code-simplifier"
+role = "Simplify implementation while preserving behavior."
+input = "Recently modified code and project standards."
+output = "Cleaner, more maintainable code with unchanged behavior."
+status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
+

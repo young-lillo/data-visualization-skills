@@ -1,0 +1,147 @@
+const path = require("node:path");
+
+const { buildDecisionBundle } = require("./selector.cjs");
+const { pathExists, safeRemoveDir, slugify, writeMany } = require("./fs-utils.cjs");
+const {
+  renderDataPreparationDoc,
+  renderDebugReportDoc,
+  renderDesignGuidelinesDoc,
+  renderProjectBriefDoc,
+  renderProjectGitignore,
+  renderProjectPlanDoc,
+  renderProjectReadme,
+  renderPublishDoc,
+  renderVisualizationDoc,
+} = require("./project-doc-templates.cjs");
+const { docsOutputGate } = require("../hooks/docs-output-gate.cjs");
+
+async function generateProject(options) {
+  const slug = options.slug && options.slug.trim() ? slugify(options.slug) : slugify(options.intake.projectGoals);
+  if (!slug) {
+    throw new Error("Project slug resolved to an empty value. Provide an explicit slug or clearer goals.");
+  }
+
+  const projectRoot = options.outputPath ?? path.join(options.repoRoot, "projects", slug);
+  const projectsRoot = path.join(options.repoRoot, "projects");
+  const relative = path.relative(projectsRoot, projectRoot);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error(`Project output path must stay inside projects/: ${projectRoot}`);
+  }
+  const exists = await pathExists(projectRoot);
+
+  if (exists && !options.force) {
+    throw new Error(`Project path already exists: ${projectRoot}`);
+  }
+  if (exists && options.force) {
+    await safeRemoveDir(projectRoot, projectsRoot);
+  }
+
+  const decisions = buildDecisionBundle({
+    projectGoals: options.intake.projectGoals,
+    preferFreeDeploy: options.preferFreeDeploy,
+  });
+
+  const docsRoot = path.join(projectRoot, "docs");
+  const docsFiles = {
+    projectBrief: path.join(docsRoot, "project-brief.md"),
+    projectPlan: path.join(docsRoot, "project-plan.md"),
+    dataPreparation: path.join(docsRoot, "data-preparation.md"),
+    visualization: path.join(docsRoot, "visualization.md"),
+    publish: path.join(docsRoot, "publish.md"),
+    debugReport: path.join(docsRoot, "debug-report.md"),
+    designGuidelines: path.join(docsRoot, "design-guidelines.md"),
+    documentManagement: path.join(docsRoot, "document-management.md"),
+    screenshots: path.join(docsRoot, "assets", "screenshots", ".gitkeep"),
+    userFiles: path.join(docsRoot, "assets", "user-files", ".gitkeep"),
+    exports: path.join(docsRoot, "assets", "exports", ".gitkeep"),
+  };
+
+  for (const target of Object.values(docsFiles)) {
+    docsOutputGate({
+      repoRoot: options.repoRoot,
+      projectSlug: slug,
+      targetPath: target,
+    });
+  }
+
+  const files = {
+    [path.join(projectRoot, "README.md")]: renderProjectReadme({
+      slug,
+      workflowSummary: {
+        ownerWorkflow: "primary",
+        tool: decisions.tool.name,
+        framework: decisions.framework.name,
+      },
+    }),
+    [path.join(projectRoot, ".gitignore")]: renderProjectGitignore(),
+    [docsFiles.projectBrief]: renderProjectBriefDoc({ slug, intake: options.intake }),
+    [docsFiles.projectPlan]: renderProjectPlanDoc({ decisions }),
+    [docsFiles.dataPreparation]: renderDataPreparationDoc({ intake: options.intake, decisions }),
+    [docsFiles.visualization]: renderVisualizationDoc({ decisions }),
+    [docsFiles.publish]: renderPublishDoc({
+      slug,
+      decisions,
+      preferFreeDeploy: options.preferFreeDeploy,
+    }),
+    [docsFiles.debugReport]: renderDebugReportDoc(),
+    [docsFiles.designGuidelines]: renderDesignGuidelinesDoc(),
+    [docsFiles.documentManagement]:
+      "# Document Management\n\nKeep plans, notes, screenshots, exports, and user files inside this docs tree only.\n",
+    [docsFiles.screenshots]: "",
+    [docsFiles.userFiles]: "",
+    [docsFiles.exports]: "",
+    [path.join(docsRoot, "assets", "exports", "01-analysis.sql")]: buildSqlStarter(options.intake),
+  };
+
+  if (decisions.layer.requiresPython) {
+    files[path.join(docsRoot, "assets", "exports", "01-analysis.py")] = buildPythonStarter(options.intake);
+  } else {
+    files[path.join(docsRoot, "assets", "exports", ".gitkeep")] = "";
+  }
+
+  await writeMany(files);
+  return { decisions, projectRoot, slug };
+}
+
+function buildSqlStarter(intake) {
+  const context = flattenLine(intake.projectContext);
+  const dataset = flattenLine(intake.projectDataset);
+  return `-- Starter SQL for the generated portfolio project
+-- Context: ${context}
+-- Dataset: ${dataset}
+
+select *
+from your_source_table
+limit 100;
+`;
+}
+
+function buildPythonStarter(intake) {
+  const context = toPythonStringLiteral(intake.projectContext);
+  const dataset = toPythonStringLiteral(intake.projectDataset);
+  return `"""Starter Python for the generated portfolio project."""
+
+def describe_project():
+    return {
+        "context": ${context},
+        "dataset": ${dataset},
+        "next_step": "Implement cleaning, feature work, or advanced analysis here.",
+    }
+
+
+if __name__ == "__main__":
+    print(describe_project())
+`;
+}
+
+function flattenLine(value) {
+  return String(value).replace(/\s+/g, " ").trim();
+}
+
+function toPythonStringLiteral(value) {
+  return JSON.stringify(String(value));
+}
+
+module.exports = {
+  generateProject,
+};
