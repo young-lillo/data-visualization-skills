@@ -9,6 +9,7 @@
   "scripts": {
     "dv": "node scripts/run-kit.cjs",
     "kit": "node scripts/run-kit.cjs",
+    "kit:hooks:install": "git config core.hooksPath .githooks",
     "kit:update": "node scripts/update-kit.mjs",
     "kit:update:reset": "node scripts/update-kit.mjs --reset",
     "smoke": "node scripts/smoke-test.cjs",
