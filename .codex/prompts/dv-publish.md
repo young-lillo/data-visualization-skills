@@ -12,4 +12,4 @@ Run the publish workflow.
 1. Follow `./.codex/workflows/publish-workflow.md` as process truth.
 2. Treat this prompt as a thin canonical entrypoint to publish readiness only.
 3. Keep publish notes under `projects/<slug>/docs/`.
-4. Prefer the free-deploy path when the project goals do not require a heavier BI stack.
+4. Prefer an open-source interactive dashboard deploy path, with `Metabase` for general BI and `Grafana` for operational dashboards.

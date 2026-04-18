@@ -93,7 +93,7 @@ function renderVisualizationDoc({ decisions }) {
 
 ## Goal
 
-Build visuals aligned to the project goals with ${decisions.tool.name}.
+Build an interactive dashboard aligned to the project goals with ${decisions.tool.name}.
 
 ## Decisions
 
@@ -104,7 +104,7 @@ Build visuals aligned to the project goals with ${decisions.tool.name}.
 ## Notes
 
 - Free deploy note: ${decisions.tool.deployNote}
-- Keep chart exports and screenshots in \`docs/assets/\`
+- Keep dashboard screenshots, exports, and setup notes in \`docs/assets/\`
 `;
 }
 
@@ -125,7 +125,7 @@ Make \`${slug}\` ready for git and deploy.
 
 1. validate docs completeness
 2. confirm project workspace is commit-ready
-3. document freehost vs self-hosted trade-offs
+3. document free-tier host vs self-hosted trade-offs for the interactive dashboard stack
 `;
 }
 

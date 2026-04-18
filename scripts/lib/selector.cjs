@@ -52,22 +52,58 @@ function selectLayer(projectGoals) {
 
 function selectVisualizationTool(projectGoals, preferFreeDeploy) {
   const goals = projectGoals.toLowerCase();
-  const dashboardFirst = ["dashboard", "bi", "sql editor", "semantic layer"].some((keyword) =>
-    goals.includes(keyword),
-  );
+  const grafanaKeywords = [
+    "grafana",
+    "monitoring",
+    "observability",
+    "metrics",
+    "logs",
+    "timeseries",
+    "time series",
+    "real-time",
+    "realtime",
+    "telemetry",
+    "infrastructure",
+    "ops",
+    "incident",
+    "sla",
+  ];
+  const metabaseKeywords = [
+    "metabase",
+    "dashboard",
+    "bi",
+    "analytics",
+    "cohort",
+    "retention",
+    "funnel",
+    "marketing",
+    "sales",
+    "product",
+    "finance",
+    "sql editor",
+    "semantic layer",
+  ];
 
-  if (!preferFreeDeploy && dashboardFirst) {
+  if (grafanaKeywords.some((keyword) => goals.includes(keyword))) {
     return {
-      name: "Apache Superset",
-      reason: "Goals lean toward BI dashboards and free static deploy is not the primary constraint.",
-      deployNote: "Superset is not the recommended Netlify Free path because it needs a running backend.",
+      name: "Grafana",
+      reason: "Goals lean toward operational or time-series dashboards, which fits Grafana better than a BI-first stack.",
+      deployNote: "Grafana is open-source and works best on free-tier VM/container hosting or self-hosted deployment, not static hosting.",
+    };
+  }
+
+  if (metabaseKeywords.some((keyword) => goals.includes(keyword)) || preferFreeDeploy) {
+    return {
+      name: "Metabase",
+      reason: "Goals need an interactive open-source dashboard with a simpler free-host or self-host deployment path.",
+      deployNote: "Metabase is the default interactive dashboard path for general BI portfolios and fits free-tier app hosting or self-hosted deployment.",
     };
   }
 
   return {
-    name: "RAWGraphs",
-    reason: "Free deployment is the priority, so a browser-first and static-friendly visualization path is the safer default.",
-    deployNote: "RAWGraphs fits static portfolio publishing much better than Superset.",
+    name: "Metabase",
+    reason: "General interactive analytics work fits Metabase as the default open-source dashboard stack.",
+    deployNote: "Metabase is the default open-source dashboard option unless the project is explicitly observability or time-series first.",
   };
 }
 

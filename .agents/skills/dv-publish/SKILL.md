@@ -11,5 +11,5 @@ Treat `$dv-publish` as the canonical publish wrapper.
 
 1. Follow `./.codex/workflows/publish-workflow.md` as the source of truth.
 2. Prepare the project folder so it is ready to commit and push.
-3. Prefer free deploy paths where possible, with `RAWGraphs` as the default freehost-friendly option.
+3. Prefer open-source interactive dashboard deploy paths where possible, with `Metabase` as the default general BI option and `Grafana` for operational dashboards.
 4. Preserve the project-local docs contract and avoid writing project deliverables outside the workspace.

@@ -8,7 +8,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Commands-10-0ea5e9" alt="Commands" />
   <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
-  <img src="https://img.shields.io/badge/Default%20Deploy-RAWGraphs-f59e0b" alt="RAWGraphs" />
+  <img src="https://img.shields.io/badge/Default%20Deploy-Metabase-f59e0b" alt="Metabase" />
+  <img src="https://img.shields.io/badge/Dashboard%20Mode-interactive-16a34a" alt="Interactive Dashboard" />
   <img src="https://img.shields.io/badge/License-MIT-black" alt="MIT License" />
 </p>
 
@@ -25,7 +26,7 @@ It gives you:
 - a docs-centric project contract so each project keeps its own brief, plan, exports, and notes
 - a safer update path that preserves local `projects/` content
 
-Whether you are building a portfolio for analytics, BI, product, marketing, or domain storytelling, this kit gives Codex a cleaner operating shape.
+Whether you are building a portfolio for analytics, BI, product, marketing, or operational dashboard storytelling, this kit gives Codex a cleaner operating shape.
 
 ## Any CLI
 
@@ -138,7 +139,7 @@ $dv-data-visualize Rebuild visuals after source schema changed
 | Project Conductor | `$dv-primary` | Start a project from context, dataset, and goals |
 | Cook Desk | `$dv-cook` | Execute the full post-intake workflow for an existing project |
 | Data Preparation Desk | `$dv-data-preparation` | Ingest, clean, validate, and transform data |
-| Visualization Desk | `$dv-data-visualize` | Build or refresh visual outputs |
+| Visualization Desk | `$dv-data-visualize` | Build or refresh interactive dashboard outputs |
 | Publish Desk | `$dv-publish` | Make the project git-ready and deployable |
 | Debug Desk | `$dv-debug` | Diagnose failures in preparation, visualize, or publish flow |
 | Docs Desk | `$dv-document-management` | Keep project docs and assets compact and in the right place |
@@ -155,7 +156,7 @@ Examples:
 ```text
 Build a customer churn portfolio project for e-commerce.
 Prepare a marketing dataset for dashboard-ready visualization.
-Refresh our visuals after the source schema changed.
+Refresh our dashboard after the source schema changed.
 Make this project ready for git and deploy.
 ```
 
@@ -185,9 +186,9 @@ Run the full post-intake project workflow after `$dv-primary` has already captur
 $dv-cook --slug customer-churn-analysis --brief "Execute the full portfolio workflow from the approved intake"
 ```
 
-### Refresh Visual Outputs
+### Refresh Interactive Dashboards
 
-Update charts and exports after a schema or business change.
+Update dashboard views and exports after a schema or business change.
 
 ```text
 $dv-data-visualize Rebuild visuals after source schema changed
@@ -206,7 +207,7 @@ $dv-publish Make this project git-ready and deployable
 Find failures without manually retracing every step.
 
 ```text
-$dv-debug Find why RAWGraphs export is failing
+$dv-debug Find why the Metabase dashboard build is failing
 ```
 
 ## Runtime Contract
@@ -274,8 +275,9 @@ Each generated project keeps its own working context under `projects/`.
 
 ## Deploy Guidance
 
-- `RAWGraphs` is the free-deploy default because it maps better to static portfolio publishing
-- `Apache Superset` stays available for BI-style dashboards, but it is not the preferred free-host path
+- `Metabase` is the default for general interactive BI dashboards because it is open-source and easier to run on free-tier app hosts or self-hosted infrastructure
+- `Grafana` is the preferred path for operational, observability, and time-series dashboards
+- `Power BI` and `Tableau` can still be considered when the user explicitly accepts proprietary tooling, but they are not the default kit path
 
 ## License
 

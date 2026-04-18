@@ -37,7 +37,7 @@ async function collectPrimaryInput(flags, options = {}) {
       : await rl.question("Project goals: ");
     const preferFreeDeploy =
       flags["prefer-free-deploy"] ??
-      await rl.question("Prefer free static deployment by default? [Y/n]: ");
+      await rl.question("Prefer free-tier or self-host-friendly open-source deployment by default? [Y/n]: ");
     const slug = flags.slug ?? await rl.question("Project slug (optional): ");
 
     return {

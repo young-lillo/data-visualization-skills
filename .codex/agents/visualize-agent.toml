@@ -1,5 +1,5 @@
 name = "visualize"
-role = "Build visuals with the selected open-source tool and prepare deployable presentation output."
+role = "Build interactive dashboards with the selected open-source tool and prepare deployable dashboard output."
 input = "Prepared data notes, visualization tool choice, and publish target."
 output = "Visualization docs, exports, and presentation notes in project docs."
 status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."

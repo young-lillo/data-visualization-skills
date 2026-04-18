@@ -49,9 +49,29 @@ test("generateProject creates a git-ready project workspace", async () => {
   await assert.rejects(() => fs.access(path.join(result.projectRoot, "assets")));
 
   const planDoc = await fs.readFile(path.join(result.projectRoot, "docs", "project-plan.md"), "utf8");
-  assert.match(planDoc, /RAWGraphs/);
+  assert.match(planDoc, /Metabase/);
   assert.match(planDoc, /Framework/);
   assert.match(planDoc, /\$dv-cook/);
+});
+
+test("generateProject selects Grafana for operational time-series goals", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const result = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Platform monitoring",
+      projectDataset: "Metrics, logs, and traces",
+      projectGoals: "Build a real-time observability dashboard for SLA metrics",
+    },
+    slug: "ops-monitoring",
+    preferFreeDeploy: true,
+  });
+
+  const planDoc = await fs.readFile(path.join(result.projectRoot, "docs", "project-plan.md"), "utf8");
+  assert.match(planDoc, /Grafana/);
 });
 
 test("generateProject escapes quoted intake values in the python starter", async () => {

@@ -1,15 +1,15 @@
 ---
 name: apache-superset
-description: Use when the selected visualization tool is Apache Superset for SQL-first dashboards and self-hosted deployment paths.
+description: Legacy Apache Superset skill. Use only when maintaining older projects that already selected Superset instead of the current Metabase or Grafana paths.
 ---
 
 # Apache Superset
 
-Use when the selected visualization tool is Apache Superset.
+Use only when maintaining an existing Apache Superset project.
 
 ## Use For
 
-- dashboard creation
-- SQL-first visualization workflows
-- self-hosted or non-free-static deploy paths
+- legacy dashboard maintenance
+- SQL-first visualization workflows in older projects
+- migration planning toward Metabase or Grafana when needed
 

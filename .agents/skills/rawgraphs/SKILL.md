@@ -1,15 +1,15 @@
 ---
 name: rawgraphs
-description: Use when the selected visualization tool is RAWGraphs for browser-first visual storytelling and freehost-friendly publishing.
+description: Legacy static storytelling skill for RAWGraphs. Use only when maintaining older projects that already selected RAWGraphs.
 ---
 
 # RAWGraphs
 
-Use when the selected visualization tool is RAWGraphs.
+Use only when maintaining an existing RAWGraphs project.
 
 ## Use For
 
-- browser-first visualization work
-- custom storytelling charts
-- freehost-friendly portfolio publishing
+- legacy static visualization maintenance
+- custom storytelling chart refreshes for older projects
+- migration planning away from RAWGraphs when interactive dashboards are now required
 
