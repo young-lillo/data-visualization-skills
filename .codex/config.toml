@@ -1,6 +1,6 @@
 [dv]
 name = "data-visualization-kit"
-default_entrypoint = "$dv-primary"
+default_entrypoint = "$dv"
 help_entrypoint = "$dv-help"
 
 [paths]

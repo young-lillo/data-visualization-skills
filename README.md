@@ -20,7 +20,7 @@ Instead of starting from a blank chat each time, you get a workflow-first kit th
 Data Visualization Kit is a workflow-first kit for people who want professional data portfolio output from Codex without improvising the process every time.
 
 It gives you:
-- dedicated `$dv-*` workflows for project intake, data preparation, visualization, publish, debug, docs management, and runtime help
+- canonical `$dv` and `$dv-*` skills/prompts for project intake, data preparation, visualization, publish, debug, docs management, and runtime help
 - project workspaces under `projects/<project-slug>/`
 - a docs-centric project contract so each project keeps its own brief, plan, exports, and notes
 - a safer update path that preserves local `projects/` content
@@ -98,6 +98,7 @@ $dv-<workflow> <goal / task / brief>
 If you do not know where to start, begin with:
 
 ```text
+$dv
 $dv-help
 $dv-primary
 ```
@@ -107,6 +108,7 @@ $dv-primary
 1. Ask for the command surface:
 
 ```text
+$dv
 $dv-help
 ```
 
@@ -203,6 +205,7 @@ $dv-debug Find why RAWGraphs export is failing
 ## Commands
 
 ```text
+$dv
 $dv-help
 $dv-primary
 $dv-data-preparation
@@ -217,6 +220,7 @@ $dv-hook-workflow
 Equivalent local commands:
 
 ```bash
+npm run dv -- '$dv'
 npm run dv -- '$dv-help'
 npm run dv -- '$dv-primary'
 npm run dv -- '$dv-data-preparation' --slug <project-slug> --brief "<task>"

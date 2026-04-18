@@ -1,14 +1,25 @@
-# $dv-primary
+---
+description: Main project conductor for broad or new data-visualization project requests
+argument-hint: [goal / task / brief]
+---
 
-Main project lifecycle entrypoint.
+Run the primary workflow.
 
-Use this command for:
-- new project creation
-- broad natural-language project briefs
-- requests that span multiple workflow areas
+<request>$ARGUMENTS</request>
 
-Responsibilities:
-- normalize intake
-- route into the primary workflow
-- never own orchestration logic directly
+## Workflow Contract
 
+1. Before deep execution, load the mandatory hook layer from `./.codex/workflows/hook-runtime-contract.md`.
+2. Normalize the request into:
+   - project context
+   - dataset
+   - project goals
+   - constraints
+3. Follow `./.codex/workflows/primary-workflow.md` as process truth.
+4. Route to exactly one owner workflow after intake normalization.
+5. Use a domain entrypoint directly when the owner workflow is already clear:
+   - `$dv-data-preparation`
+   - `$dv-data-visualize`
+   - `$dv-publish`
+   - `$dv-debug`
+   - `$dv-document-management`
