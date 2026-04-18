@@ -18,6 +18,7 @@ Run the primary workflow.
 3. Follow `./.codex/workflows/primary-workflow.md` as process truth.
 4. Route to exactly one owner workflow after intake normalization.
 5. Use a domain entrypoint directly when the owner workflow is already clear:
+   - `$dv-cook`
    - `$dv-data-preparation`
    - `$dv-data-visualize`
    - `$dv-publish`

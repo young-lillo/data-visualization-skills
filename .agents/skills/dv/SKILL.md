@@ -15,6 +15,7 @@ Treat `$dv` as the canonical public hub.
 4. If one owner workflow is already clear, route to exactly one canonical skill and prompt:
    - `$dv-help`
    - `$dv-primary`
+   - `$dv-cook`
    - `$dv-data-preparation`
    - `$dv-data-visualize`
    - `$dv-publish`

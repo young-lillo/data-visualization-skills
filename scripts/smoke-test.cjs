@@ -31,11 +31,11 @@ async function main() {
 
     await execFileAsync(process.execPath, [
       cliPath,
-      "$dv-data-visualize",
+      "$dv-cook",
       "--slug",
       smokeSlug,
       "--brief",
-      "Refresh visuals after smoke source update.",
+      "Run the full smoke workflow after intake approval.",
     ], { cwd: repoRoot });
 
     await execFileAsync(process.execPath, [cliPath, "$dv-orchestration"], { cwd: repoRoot });

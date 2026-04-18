@@ -18,6 +18,7 @@ Open the Data Visualization Kit hub.
 2. Follow `./.codex/workflows/help-workflow.md` when the user needs command discovery.
 3. If `$ARGUMENTS` contains a clear project goal or task, route the user to exactly one canonical workflow:
    - `$dv-primary`
+   - `$dv-cook`
    - `$dv-data-preparation`
    - `$dv-data-visualize`
    - `$dv-publish`

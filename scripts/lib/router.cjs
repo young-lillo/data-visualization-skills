@@ -1,5 +1,5 @@
 const { printHelp } = require("./cli.cjs");
-const { runPrimaryWorkflow, runProjectUpdateWorkflow } = require("./dv-workflows.cjs");
+const { runCookWorkflow, runPrimaryWorkflow, runProjectUpdateWorkflow } = require("./dv-workflows.cjs");
 const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
 const fs = require("node:fs/promises");
 const path = require("node:path");
@@ -16,6 +16,13 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
   switch (normalizedCommand) {
     case "$dv-primary":
       await runPrimaryWorkflow({ flags, repoRoot, briefText });
+      return;
+    case "$dv-cook":
+      await runCookWorkflow({
+        flags: withBrief(flags, briefText),
+        repoRoot,
+        briefText,
+      });
       return;
     case "$dv-data-preparation":
       await runProjectUpdateWorkflow({
@@ -119,6 +126,9 @@ function normalizeCommand(command) {
   }
   if (command === "primary") {
     return "$dv-primary";
+  }
+  if (command === "cook") {
+    return "$dv-cook";
   }
   if (command === "data-preparation") {
     return "$dv-data-preparation";

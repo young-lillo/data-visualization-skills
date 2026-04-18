@@ -10,6 +10,7 @@ test("canonical prompt hub and workflow prompts exist", async () => {
     ".codex/prompts/dv.md",
     ".codex/prompts/dv-help.md",
     ".codex/prompts/dv-primary.md",
+    ".codex/prompts/dv-cook.md",
     ".codex/prompts/dv-data-preparation.md",
     ".codex/prompts/dv-data-visualize.md",
     ".codex/prompts/dv-publish.md",
@@ -31,6 +32,7 @@ test("hub prompt exposes canonical $dv routing surface", async () => {
 
   assert.match(content, /\$dv-help/);
   assert.match(content, /\$dv-primary/);
+  assert.match(content, /\$dv-cook/);
   assert.match(content, /\$dv-data-preparation/);
   assert.match(content, /\$dv-data-visualize/);
 });
@@ -40,6 +42,7 @@ test("canonical skill hub and workflow wrappers exist", async () => {
     ".agents/skills/dv/SKILL.md",
     ".agents/skills/dv-help/SKILL.md",
     ".agents/skills/dv-primary/SKILL.md",
+    ".agents/skills/dv-cook/SKILL.md",
     ".agents/skills/dv-data-preparation/SKILL.md",
     ".agents/skills/dv-data-visualize/SKILL.md",
     ".agents/skills/dv-publish/SKILL.md",

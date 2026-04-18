@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Commands-9-0ea5e9" alt="Commands" />
+  <img src="https://img.shields.io/badge/Commands-10-0ea5e9" alt="Commands" />
   <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
   <img src="https://img.shields.io/badge/Default%20Deploy-RAWGraphs-f59e0b" alt="RAWGraphs" />
   <img src="https://img.shields.io/badge/License-MIT-black" alt="MIT License" />
@@ -20,7 +20,7 @@ Instead of starting from a blank chat each time, you get a workflow-first kit th
 Data Visualization Kit is a workflow-first kit for people who want professional data portfolio output from Codex without improvising the process every time.
 
 It gives you:
-- canonical `$dv` and `$dv-*` skills/prompts for project intake, data preparation, visualization, publish, debug, docs management, and runtime help
+- canonical `$dv` and `$dv-*` skills/prompts for project intake, end-to-end execution, data preparation, visualization, publish, debug, docs management, and runtime help
 - project workspaces under `projects/<project-slug>/`
 - a docs-centric project contract so each project keeps its own brief, plan, exports, and notes
 - a safer update path that preserves local `projects/` content
@@ -118,7 +118,13 @@ $dv-help
 $dv-primary Build a churn-analysis portfolio project for an e-commerce dataset
 ```
 
-3. Move to a specialist workflow when the job is already clear:
+3. After intake is complete, run the full project workflow:
+
+```text
+$dv-cook --slug churn-analysis --brief "Build the full project from the approved intake"
+```
+
+4. Move to a specialist workflow when the job is already clear:
 
 ```text
 $dv-data-visualize Rebuild visuals after source schema changed
@@ -130,6 +136,7 @@ $dv-data-visualize Rebuild visuals after source schema changed
 |---|---|---|
 | Front Desk | `$dv-help` | Learn the kit fast and find the right starting point |
 | Project Conductor | `$dv-primary` | Start a project from context, dataset, and goals |
+| Cook Desk | `$dv-cook` | Execute the full post-intake workflow for an existing project |
 | Data Preparation Desk | `$dv-data-preparation` | Ingest, clean, validate, and transform data |
 | Visualization Desk | `$dv-data-visualize` | Build or refresh visual outputs |
 | Publish Desk | `$dv-publish` | Make the project git-ready and deployable |
@@ -170,6 +177,14 @@ Ingest and clean source data before visualization work begins.
 $dv-data-preparation Clean order, customer, and support data into chart-ready tables
 ```
 
+### Cook the Full Project
+
+Run the full post-intake project workflow after `$dv-primary` has already captured context, dataset, and goals.
+
+```text
+$dv-cook --slug customer-churn-analysis --brief "Execute the full portfolio workflow from the approved intake"
+```
+
 ### Refresh Visual Outputs
 
 Update charts and exports after a schema or business change.
@@ -208,6 +223,7 @@ $dv-debug Find why RAWGraphs export is failing
 $dv
 $dv-help
 $dv-primary
+$dv-cook
 $dv-data-preparation
 $dv-data-visualize
 $dv-publish
@@ -223,6 +239,7 @@ Equivalent local commands:
 npm run dv -- '$dv'
 npm run dv -- '$dv-help'
 npm run dv -- '$dv-primary'
+npm run dv -- '$dv-cook' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-data-preparation' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-data-visualize' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-publish' --slug <project-slug> --brief "<task>"

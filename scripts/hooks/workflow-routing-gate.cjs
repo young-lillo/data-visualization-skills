@@ -1,5 +1,6 @@
 const knownWorkflows = new Set([
   "primary",
+  "cook",
   "data-preparation",
   "data-visualize",
   "publish",

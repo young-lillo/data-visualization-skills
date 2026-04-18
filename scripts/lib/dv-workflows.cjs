@@ -66,9 +66,131 @@ async function runProjectUpdateWorkflow({ flags, repoRoot, workflowName, title, 
     interactive: resolveInteractiveMode(flags),
   });
 
-  workflowRoutingGate({ workflowName, brief: input.brief });
+  const { slug, projectRoot, validation } = await updateProjectWorkflowDoc({
+    repoRoot,
+    workflowName,
+    fileName,
+    notesBuilder,
+    brief: input.brief,
+    rawSlug: input.slug,
+  });
 
-  const slug = slugify(input.slug);
+  const handoff = subagentInit({ repoRoot, projectSlug: slug });
+
+  console.log(`Updated project: ${projectRoot}`);
+  console.log(`Workflow: ${workflowName}`);
+  console.log(`Doc updated: ${path.join("docs", fileName)}`);
+  console.log(`Validation: checked ${validation.checked} required paths`);
+  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+}
+
+async function runCookWorkflow({ flags, repoRoot, briefText }) {
+  const input = await collectWorkflowUpdateInput(
+    {
+      ...flags,
+      brief: flags.brief ?? briefText,
+    },
+    { interactive: resolveInteractiveMode(flags) },
+  );
+
+  workflowRoutingGate({ workflowName: "cook", brief: input.brief });
+
+  const preTestStages = [
+    {
+      workflowName: "data-preparation",
+      fileName: "data-preparation.md",
+      notesBuilder: ({ brief }) =>
+        buildCookStageDoc({
+          title: "Data Preparation",
+          brief,
+          notes: "Triggered by `$dv-cook`. Record ingestion, cleaning, validation, and transformation work here.",
+        }),
+    },
+    {
+      workflowName: "data-visualize",
+      fileName: "visualization.md",
+      notesBuilder: ({ brief }) =>
+        buildCookStageDoc({
+          title: "Visualization",
+          brief,
+          notes: "Triggered by `$dv-cook`. Record chart choices, source changes, exports, and presentation updates here.",
+        }),
+    },
+  ];
+
+  const postTestStages = [
+    {
+      workflowName: "document-management",
+      fileName: "document-management.md",
+      notesBuilder: ({ brief }) =>
+        buildCookStageDoc({
+          title: "Document Management",
+          brief,
+          notes: "Triggered by `$dv-cook`. Record doc sync, asset placement, and workspace cleanup here.",
+        }),
+    },
+    {
+      workflowName: "publish",
+      fileName: "publish.md",
+      notesBuilder: ({ brief }) =>
+        buildCookStageDoc({
+          title: "Publish",
+          brief,
+          notes: "Triggered by `$dv-cook`. Capture git readiness, deployment choice, and final publish checks here.",
+        }),
+    },
+  ];
+
+  const updatedDocs = [];
+  let slug = "";
+  let projectRoot = "";
+
+  for (const stage of preTestStages) {
+    const result = await updateProjectWorkflowDoc({
+      repoRoot,
+      workflowName: stage.workflowName,
+      fileName: stage.fileName,
+      notesBuilder: stage.notesBuilder,
+      brief: input.brief,
+      rawSlug: input.slug,
+    });
+    slug = result.slug;
+    projectRoot = result.projectRoot;
+    updatedDocs.push(path.join("docs", stage.fileName));
+  }
+
+  const testValidation = await validateGeneratedProject(projectRoot);
+
+  for (const stage of postTestStages) {
+    const result = await updateProjectWorkflowDoc({
+      repoRoot,
+      workflowName: stage.workflowName,
+      fileName: stage.fileName,
+      notesBuilder: stage.notesBuilder,
+      brief: input.brief,
+      rawSlug: input.slug,
+    });
+    slug = result.slug;
+    projectRoot = result.projectRoot;
+    updatedDocs.push(path.join("docs", stage.fileName));
+  }
+
+  const finalValidation = await validateGeneratedProject(projectRoot);
+  const handoff = subagentInit({ repoRoot, projectSlug: slug });
+
+  console.log(`Updated project: ${projectRoot}`);
+  console.log("Workflow: cook");
+  console.log("Sequence: data-preparation -> data-visualize -> test -> document-management -> publish");
+  console.log(`Docs updated: ${updatedDocs.join(", ")}`);
+  console.log(`Test: project validation passed (${testValidation.checked} required paths)`);
+  console.log(`Final validation: checked ${finalValidation.checked} required paths`);
+  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+}
+
+async function updateProjectWorkflowDoc({ repoRoot, workflowName, fileName, notesBuilder, brief, rawSlug }) {
+  workflowRoutingGate({ workflowName, brief });
+
+  const slug = slugify(rawSlug);
   if (!slug) {
     throw new Error("Workflow update requires a valid project slug.");
   }
@@ -88,20 +210,31 @@ async function runProjectUpdateWorkflow({ flags, repoRoot, workflowName, title, 
   await writeTextFile(
     targetFile,
     notesBuilder({
-      brief: input.brief,
+      brief,
       workflowName,
       slug,
     }),
   );
 
   const validation = await validateGeneratedProject(projectRoot);
-  const handoff = subagentInit({ repoRoot, projectSlug: slug });
+  return { slug, projectRoot, validation };
+}
 
-  console.log(`Updated project: ${projectRoot}`);
-  console.log(`Workflow: ${workflowName}`);
-  console.log(`Doc updated: ${path.join("docs", fileName)}`);
-  console.log(`Validation: checked ${validation.checked} required paths`);
-  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+function buildCookStageDoc({ title, brief, notes }) {
+  return `# ${title}
+
+## Brief
+
+${brief}
+
+## Mode
+
+Triggered by \`$dv-cook\`
+
+## Notes
+
+${notes}
+`;
 }
 
 function resolveInteractiveMode(flags) {
@@ -113,6 +246,7 @@ function resolveInteractiveMode(flags) {
 
 module.exports = {
   resolveInteractiveMode,
+  runCookWorkflow,
   runPrimaryWorkflow,
   runProjectUpdateWorkflow,
 };

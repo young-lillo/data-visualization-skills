@@ -57,9 +57,9 @@ function renderProjectPlanDoc({ decisions }) {
 
 ## Recommended Flow
 
-1. run \`$dv-data-preparation\`
-2. run \`$dv-data-visualize\`
-3. run \`$dv-publish\`
+1. run \`$dv-cook\` for the full post-intake project workflow
+2. rerun \`$dv-data-preparation\` or \`$dv-data-visualize\` only for targeted refreshes
+3. run \`$dv-document-management\` when project docs need focused cleanup
 4. run \`$dv-debug\` only when needed
 `;
 }

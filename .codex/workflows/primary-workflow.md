@@ -15,6 +15,7 @@ Main project lifecycle workflow.
 
 ## Delegation
 
+- `cook`
 - `data-preparation`
 - `data-visualize`
 - `publish`

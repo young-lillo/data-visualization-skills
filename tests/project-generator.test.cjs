@@ -51,6 +51,7 @@ test("generateProject creates a git-ready project workspace", async () => {
   const planDoc = await fs.readFile(path.join(result.projectRoot, "docs", "project-plan.md"), "utf8");
   assert.match(planDoc, /RAWGraphs/);
   assert.match(planDoc, /Framework/);
+  assert.match(planDoc, /\$dv-cook/);
 });
 
 test("generateProject escapes quoted intake values in the python starter", async () => {
@@ -163,6 +164,7 @@ test("privacyBlock matches secret filenames without rejecting normal project slu
 test("printHelp reflects the current public command surface", () => {
   const output = captureConsoleLog(() => printHelp());
 
+  assert.match(output, /\$dv-cook <brief>/);
   assert.match(output, /\$dv-document-management <brief>/);
   assert.match(output, /\$dv-orchestration/);
   assert.match(output, /\$dv-hook-workflow/);
