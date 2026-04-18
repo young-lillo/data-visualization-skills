@@ -1,3 +1,8 @@
+---
+name: apache-superset
+description: Use when the selected visualization tool is Apache Superset for SQL-first dashboards and self-hosted deployment paths.
+---
+
 # Apache Superset
 
 Use when the selected visualization tool is Apache Superset.

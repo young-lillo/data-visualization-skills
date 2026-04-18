@@ -1,3 +1,8 @@
+---
+name: rawgraphs
+description: Use when the selected visualization tool is RAWGraphs for browser-first visual storytelling and freehost-friendly publishing.
+---
+
 # RAWGraphs
 
 Use when the selected visualization tool is RAWGraphs.
