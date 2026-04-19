@@ -52,6 +52,7 @@ test("generateProject creates a git-ready project workspace", async () => {
   assert.match(planDoc, /Metabase/);
   assert.match(planDoc, /Framework/);
   assert.match(planDoc, /\$dv-cook/);
+  assert.match(planDoc, /Goal Ladder Suggestions/);
 });
 
 test("generateProject selects Grafana for operational time-series goals", async () => {
@@ -184,8 +185,10 @@ test("privacyBlock matches secret filenames without rejecting normal project slu
 test("printHelp reflects the current public command surface", () => {
   const output = captureConsoleLog(() => printHelp());
 
+  assert.match(output, /\$dv-plan <brief>/);
   assert.match(output, /\$dv-cook <brief>/);
   assert.match(output, /\$dv-document-management <brief>/);
+  assert.doesNotMatch(output, /\$dv-primary <brief>/);
   assert.doesNotMatch(output, /\$dv-docs/);
   assert.doesNotMatch(output, /\$dv-hooks/);
   assert.doesNotMatch(output, /\$dv-hook-workflow/);

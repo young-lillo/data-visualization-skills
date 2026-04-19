@@ -17,7 +17,7 @@ async function main() {
     const cliPath = path.join(repoRoot, "scripts", "run-kit.cjs");
     await execFileAsync(process.execPath, [
       cliPath,
-      "$dv-primary",
+      "$dv-plan",
       "--slug",
       smokeSlug,
       "--project-context",
@@ -43,14 +43,14 @@ async function main() {
     );
 
     await expectFailure(
-      execFileAsync(process.execPath, [cliPath, "$dv-primary", "--slug", "missing-intake"], {
+      execFileAsync(process.execPath, [cliPath, "$dv-plan", "--slug", "missing-intake"], {
         cwd: repoRoot,
       }),
       /Missing required intake values/,
     );
 
     await expectFailure(
-      execFileAsync(process.execPath, [cliPath, "primary", "--slug", "missing-intake", "--non-interactive"], {
+      execFileAsync(process.execPath, [cliPath, "plan", "--slug", "missing-intake", "--non-interactive"], {
         cwd: repoRoot,
       }),
       /Missing required intake values/,

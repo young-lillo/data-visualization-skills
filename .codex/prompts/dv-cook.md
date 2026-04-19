@@ -1,5 +1,5 @@
 ---
-description: Run the end-to-end post-intake project workflow after `$dv-primary` has already locked context, dataset, and goals
+description: Run the end-to-end post-intake project workflow after `$dv-plan` has already locked context, dataset, and goals
 argument-hint: [goal / task / brief]
 ---
 

@@ -14,7 +14,7 @@ Treat `$dv` as the canonical public hub.
 3. If the request is broad, ambiguous, or starts a new project, route through `./.codex/workflows/primary-workflow.md`.
 4. If one owner workflow is already clear, route to exactly one canonical skill and prompt:
    - `$dv-help`
-   - `$dv-primary`
+   - `$dv-plan`
    - `$dv-cook`
    - `$dv-data-preparation`
    - `$dv-data-visualize`

@@ -88,12 +88,12 @@ test("runUserPromptSubmit includes usage summary in prompt context", async () =>
   const result = await runUserPromptSubmit({
     repoRoot: "D:\\repo",
     cwd: "D:\\repo",
-    command: "$dv-primary",
+    command: "$dv-plan",
     flags: {
       slug: "demo-project",
       "non-interactive": "true",
     },
-    rawText: "$dv-primary build a churn dashboard",
+    rawText: "$dv-plan build a churn dashboard",
     usageRunner: async () => ({
       ok: true,
       cacheStatus: "available",

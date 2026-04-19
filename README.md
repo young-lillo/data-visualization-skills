@@ -101,7 +101,7 @@ If you do not know where to start, begin with:
 ```text
 $dv
 $dv-help
-$dv-primary
+$dv-plan
 ```
 
 ### Quick Start
@@ -116,7 +116,7 @@ $dv-help
 2. Start with the main project conductor when the ask is broad:
 
 ```text
-$dv-primary Build a churn-analysis portfolio project for an e-commerce dataset
+$dv-plan Build a churn-analysis portfolio project for an e-commerce dataset
 ```
 
 3. After intake is complete, run the full project workflow:
@@ -136,7 +136,7 @@ $dv-data-visualize Rebuild visuals after source schema changed
 | Workflow | Command | Best for |
 |---|---|---|
 | Front Desk | `$dv-help` | Learn the kit fast and find the right starting point |
-| Project Conductor | `$dv-primary` | Start a project from context, dataset, and goals |
+| Planning Desk | `$dv-plan` | Start a project from context, dataset, goals, and one canonical plan |
 | Cook Desk | `$dv-cook` | Execute the full post-intake workflow for an existing project |
 | Data Preparation Desk | `$dv-data-preparation` | Ingest, clean, validate, and transform data |
 | Visualization Desk | `$dv-data-visualize` | Build or refresh interactive dashboard outputs |
@@ -147,7 +147,7 @@ $dv-data-visualize Rebuild visuals after source schema changed
 ### Natural Language
 
 You do not have to memorize commands.
-You can describe the project goal in normal language, and the runtime can normalize broad asks into the primary workflow.
+You can describe the project goal in normal language, and the runtime can normalize broad asks into the planning-first workflow.
 
 Examples:
 
@@ -165,7 +165,7 @@ Make this project ready for git and deploy.
 Turn a broad business question into a structured data project workspace.
 
 ```text
-$dv-primary Build a portfolio project for customer churn analysis
+$dv-plan Build a portfolio project for customer churn analysis
 ```
 
 ### Prepare Messy Data
@@ -178,7 +178,7 @@ $dv-data-preparation Clean order, customer, and support data into chart-ready ta
 
 ### Cook the Full Project
 
-Run the full post-intake project workflow after `$dv-primary` has already captured context, dataset, and goals.
+Run the full post-intake project workflow after `$dv-plan` has already captured context, dataset, and goals.
 
 ```text
 $dv-cook --slug customer-churn-analysis --brief "Execute the full portfolio workflow from the approved intake"
@@ -210,7 +210,7 @@ $dv-debug Find why the Metabase dashboard build is failing
 
 ## Runtime Contract
 
-- `npm run dv -- '$dv-primary' ...` runs repo-root preflight before workflow routing
+- `npm run dv -- '$dv-plan' ...` runs repo-root preflight before workflow routing
 - non-interactive runs must provide `--project-context`, `--project-dataset`, and `--project-goals`
 - hook gates stop execution when runtime state is invalid
 - generated project outputs stay under `projects/<project-slug>/docs/`
@@ -221,7 +221,7 @@ $dv-debug Find why the Metabase dashboard build is failing
 ```text
 $dv
 $dv-help
-$dv-primary
+$dv-plan
 $dv-cook
 $dv-data-preparation
 $dv-data-visualize
@@ -235,7 +235,7 @@ Equivalent local commands:
 ```bash
 npm run dv -- '$dv'
 npm run dv -- '$dv-help'
-npm run dv -- '$dv-primary'
+npm run dv -- '$dv-plan'
 npm run dv -- '$dv-cook' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-data-preparation' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-data-visualize' --slug <project-slug> --brief "<task>"

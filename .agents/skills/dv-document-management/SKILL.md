@@ -64,6 +64,6 @@ Use the project `docs/` tree as the source of truth for project-specific documen
 
 - Do not start product implementation when the task is strictly docs management
 - Prefer concise, current, project-scoped docs over broad generic documentation
-- Keep workflow notes aligned with `$dv-primary`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-debug`, and `$dv-publish`
+- Keep workflow notes aligned with `$dv-plan`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-debug`, and `$dv-publish`
 - If a doc references a selected visualization path, keep it consistent with the active tool choice
 - When docs are stale, update the smallest correct set instead of rewriting everything

@@ -9,7 +9,7 @@ test("canonical prompt hub and workflow prompts exist", async () => {
   const promptFiles = [
     ".codex/prompts/dv.md",
     ".codex/prompts/dv-help.md",
-    ".codex/prompts/dv-primary.md",
+    ".codex/prompts/dv-plan.md",
     ".codex/prompts/dv-cook.md",
     ".codex/prompts/dv-data-visualize.md",
     ".codex/prompts/dv-publish.md",
@@ -26,7 +26,7 @@ test("hub prompt exposes canonical $dv routing surface", async () => {
   const content = await fs.readFile(path.join(repoRoot, ".codex/prompts/dv.md"), "utf8");
 
   assert.match(content, /\$dv-help/);
-  assert.match(content, /\$dv-primary/);
+  assert.match(content, /\$dv-plan/);
   assert.match(content, /\$dv-cook/);
   assert.match(content, /\$dv-data-preparation/);
   assert.match(content, /\$dv-data-visualize/);
@@ -36,7 +36,7 @@ test("canonical skill hub and workflow wrappers exist", async () => {
   const skillFiles = [
     ".agents/skills/dv/SKILL.md",
     ".agents/skills/dv-help/SKILL.md",
-    ".agents/skills/dv-primary/SKILL.md",
+    ".agents/skills/plan/SKILL.md",
     ".agents/skills/dv-cook/SKILL.md",
     ".agents/skills/dv-data-preparation/SKILL.md",
     ".agents/skills/dv-data-visualize/SKILL.md",

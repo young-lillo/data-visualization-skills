@@ -1,12 +1,12 @@
 const { printHelp } = require("./cli.cjs");
-const { runCookWorkflow, runPrimaryWorkflow, runProjectUpdateWorkflow } = require("./dv-workflows.cjs");
+const { runCookWorkflow, runPlanWorkflow, runProjectUpdateWorkflow } = require("./dv-workflows.cjs");
 const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
 const fs = require("node:fs/promises");
 const path = require("node:path");
 
 async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext }) {
   const normalizedCommand = normalizeCommand(command);
-  const briefText = deriveBriefText(normalizedCommand, rawText);
+  const briefText = deriveBriefText(normalizedCommand, rawText, command);
 
   if (normalizedCommand === "$dv-help") {
     printHelp();
@@ -14,8 +14,8 @@ async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext 
   }
 
   switch (normalizedCommand) {
-    case "$dv-primary":
-      await runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName: normalizedCommand });
+    case "$dv-plan":
+      await runPlanWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName: normalizedCommand });
       return;
     case "$dv-cook":
       await runCookWorkflow({
@@ -113,12 +113,12 @@ async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext 
       return;
     default:
       if (!command.startsWith("$dv-") && hasNaturalLanguageFallback(normalizedCommand, rawText)) {
-        await runPrimaryWorkflow({
+        await runPlanWorkflow({
           flags,
           repoRoot,
           briefText: rawText,
           runtimeContext,
-          commandName: "$dv-primary",
+          commandName: "$dv-plan",
         });
         return;
       }
@@ -130,11 +130,14 @@ function normalizeCommand(command) {
   if (command === "$dv-docs") {
     return "$dv-document-management";
   }
+  if (command === "$dv-primary") {
+    return "$dv-plan";
+  }
   if (command === "help") {
     return "$dv-help";
   }
-  if (command === "primary") {
-    return "$dv-primary";
+  if (command === "primary" || command === "plan") {
+    return "$dv-plan";
   }
   if (command === "cook") {
     return "$dv-cook";
@@ -157,12 +160,15 @@ function normalizeCommand(command) {
   return command;
 }
 
-function deriveBriefText(normalizedCommand, rawText) {
+function deriveBriefText(normalizedCommand, rawText, originalCommand = normalizedCommand) {
   if (!rawText) {
     return "";
   }
   if (rawText.startsWith(normalizedCommand)) {
     return rawText.slice(normalizedCommand.length).trim();
+  }
+  if (rawText.startsWith(originalCommand)) {
+    return rawText.slice(originalCommand.length).trim();
   }
   return rawText;
 }

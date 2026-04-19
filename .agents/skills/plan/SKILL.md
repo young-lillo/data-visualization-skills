@@ -1,205 +1,121 @@
 ---
-name: plan
-description: "Plan implementations, design architectures, create technical roadmaps with detailed phases. Use for feature planning, system design, solution architecture, implementation strategy, phase documentation."
-argument-hint: "[task] OR [archive|red-team|validate]"
+name: dv-plan
+description: Start a new Data Visualization Kit project with structured intake and planning. Use when the user types `$dv-plan`, starts a new project, has a dataset but unclear scope, needs framework mapping, or needs one canonical project plan file before any downstream `$dv-*` workflow runs.
+argument-hint: "[goal / task / brief]"
 license: MIT
 metadata:
   author: data-visualization-kit
-  version: "1.0.0"
+  version: "2.0.0"
 ---
 
-# Planning
+# DV Plan
 
-## Codex Adaptation
+Production-ready intake and planning for Data Visualization Kit projects.
+This is the first project step and it must produce one canonical plan file that downstream skills and workflows can trust.
 
-- Replace legacy `AskUserQuestion` guidance with a direct concise user question only when required.
-- Replace legacy task-tool hydration with plan files under `plans/` plus `update_plan`.
-- Replace legacy cook-command examples with the active Data Visualization Kit workflow, usually `$dv-cook` after intake or the matching specialist `$dv-*` workflow.
-- Use repo-local paths under `.agents/skills/` and `projects/<slug>/docs/`; do not rely on legacy hidden-runtime paths.
+## Workflow Obligation
 
-Create detailed technical implementation plans through research, codebase analysis, solution design, and comprehensive documentation.
+This skill must follow:
 
-**IMPORTANT:** Before you start, scan unfinished plans in the current project at `./plans/` directory, read the `plan.md`, and update any relevant in-flight plan. If critical clarification is still missing, ask the user directly.
+- `./.codex/workflows/primary-workflow.md`
+- `./.codex/workflows/hook-runtime-contract.md`
 
-### Cross-Plan Dependency Detection
-
-During the pre-creation scan, detect and mark blocking relationships between plans:
-
-1. **Scan** — Read `plan.md` frontmatter of each unfinished plan (status != `completed`/`cancelled`)
-2. **Compare scope** — Check overlapping files, shared dependencies, same feature area
-3. **Classify relationship:**
-   - New plan needs output of existing plan → new plan `blockedBy: [existing-plan-dir]`
-   - New plan changes something existing plan depends on → existing plan `blockedBy: [new-plan-dir]`, new plan `blocks: [existing-plan-dir]`
-   - Mutual dependency → both plans reference each other in `blockedBy`/`blocks`
-4. **Bidirectional update** — When relationship detected, update BOTH `plan.md` files' frontmatter
-5. **Ambiguous?** → Ask the user directly which dependency relationship applies: `blocks`, `blockedBy`, or none.
-
-**Frontmatter fields** (relative plan dir paths):
-```yaml
-blockedBy: [260301-1200-auth-system]     # This plan waits on these plans
-blocks: [260228-0900-user-dashboard]     # This plan blocks these plans
-```
-
-**Status interaction:** A plan with `blockedBy` entries where ANY blocker is not `completed` → plan status should note `blocked` in its overview. When all blockers complete, the blocked plan becomes unblocked automatically on next scan.
-
-## Default (No Arguments)
-
-If invoked with a task description, proceed with planning workflow. If invoked without arguments or with unclear intent, ask the user directly which planning operation they want.
-
-| Operation | Description |
-|-----------|-------------|
-| `(default)` | Create implementation plan for a task |
-| `archive` | Write journal entry & archive plans |
-| `red-team` | Adversarial plan review |
-| `validate` | Critical questions interview |
-
-Use a short direct question such as: "Do you want a new plan, archive, red-team review, or validation?"
-
-## Workflow Modes
-
-Default: `--auto` (analyze task complexity and auto-pick mode).
-
-| Flag | Mode | Research | Red Team | Validation | Cook Flag |
-|------|------|----------|----------|------------|-----------|
-| `--auto` | Auto-detect | Follows mode | Follows mode | Follows mode | Follows mode |
-| `--fast` | Fast | Skip | Skip | Skip | `--auto` |
-| `--hard` | Hard | 2 researchers | Yes | Optional | (none) |
-| `--parallel` | Parallel | 2 researchers | Yes | Optional | `--parallel` |
-| `--two` | Two approaches | 2+ researchers | After selection | After selection | (none) |
-
-Add `--no-tasks` to skip task hydration in any mode.
-
-Load: `references/workflow-modes.md` for auto-detection logic, per-mode workflows, context reminders.
+If this skill and the workflow files disagree, follow the workflow files.
 
 ## When to Use
 
-- Planning new feature implementations
-- Architecting system designs
-- Evaluating technical approaches
-- Creating implementation roadmaps
-- Breaking down complex requirements
+- starting a new project from a broad business or portfolio brief
+- the user has a dataset but the problem framing is still weak
+- the user has context and dataset but goals are vague, missing, or underspecified
+- the project needs framework mapping before implementation begins
+- downstream `$dv-*` workflows need one canonical plan file first
 
-## Core Responsibilities & Rules
+## Intake Contract
 
-Always honoring **YAGNI**, **KISS**, and **DRY** principles.
-**Be honest, be brutal, straight to the point, and be concise.**
+This skill is responsible for collecting and clarifying:
 
-### 0. Scope Challenge
-Load: `references/scope-challenge.md`
-**Skip if:** `--fast` mode or trivial task (single file fix, <20 word description)
+- dataset context
+- dataset or source surface
+- project goals if the user already has them
+- constraints, assumptions, and output expectations when they materially affect the plan
 
-### 1. Research & Analysis
-Load: `references/research-phase.md`
-**Skip if:** Fast mode or provided with researcher reports
+If any of these are vague, ask direct clarification questions until the inputs are trustworthy enough to plan.
 
-### 2. Codebase Understanding
-Load: `references/codebase-understanding.md`
-**Skip if:** Provided with scout reports
+## Clarification Rules
 
-### 3. Solution Design
-Load: `references/solution-design.md`
+- clarify the business or portfolio context, not just the table names
+- clarify what the dataset actually contains, its likely grain, and any obvious trust gaps
+- clarify whether the user wants BI storytelling, operational monitoring, advanced analysis, or a pipeline-heavy portfolio case
+- if the user gives weak goals, translate them into sharper analytical questions before planning
+- do not pretend missing goals are already clear
 
-### 4. Plan Creation & Organization
-Load: `references/plan-organization.md`
+## Framework Mapping
 
-### 5. Task Breakdown & Output Standards
-Load: `references/output-standards.md`
+After clarification, map the project to the most suitable data framework.
 
-## Process Flow (Authoritative)
+**Prefer CRISP-DM when:**
+- the ask is insight-first
+- the user wants business understanding, analysis, explanation, and recommendations
+- the dataset is mainly a vehicle for analytical questions and portfolio storytelling
 
-```mermaid
-flowchart TD
-    A[Pre-Creation Check] --> B[Cross-Plan Scan]
-    B --> C[Scope Challenge]
-    C --> D[Mode Detection]
-    D -->|fast| E[Skip Research]
-    D -->|hard/parallel/two| F[Spawn Researchers]
-    E --> G[Codebase Analysis]
-    F --> G
-    G --> H[Write Plan via Planner]
-    H --> I{Red Team?}
-    I -->|Yes| J[Red Team Review]
-    I -->|No| K{Validate?}
-    J --> K
-    K -->|Yes| L[Validation Interview]
-    K -->|No| M[Hydrate Tasks]
-    L --> M
-    M --> N[Output Cook Command]
-    N --> O[Journal]
-```
+**Prefer a data-pipeline-first framework when:**
+- the ask is engineering-first
+- the user cares about ingestion, transformation, orchestration, data quality, reproducibility, or handoff between systems
+- the dataset story depends on reliable data movement as much as analysis
 
-**This diagram is the authoritative workflow.** Prose sections below provide detail for each node.
+Make the framework choice explicit in the plan with a short reason.
 
-## Workflow Process
+## Goal Ladder
 
-1. **Pre-Creation Check** → Check Plan Context for active/suggested/none
-1b. **Cross-Plan Scan** → Scan unfinished plans, detect `blockedBy`/`blocks` relationships, update both plans
-1c. **Scope Challenge** → Run Step 0 scope questions, select mode (see `references/scope-challenge.md`)
-    **Skip if:** `--fast` mode or trivial task
-2. **Mode Detection** → Auto-detect or use explicit flag (see `workflow-modes.md`)
-3. **Research Phase** → Spawn researchers (skip in fast mode)
-4. **Codebase Analysis** → Read docs, scout if needed
-5. **Plan Documentation** → Write comprehensive plan via planner subagent
-6. **Red Team Review** → Run the red-team review flow against `{plan-path}` (hard/parallel/two modes)
-7. **Post-Plan Validation** → Run the validation flow against `{plan-path}` (hard/parallel/two modes)
-8. **Hydrate Tasks** → Create tracked execution steps from phases (default on, `--no-tasks` to skip)
-9. **Context Reminder** → Output cook command with absolute path (MANDATORY)
-10. **Journal** → Use the `journal` skill to write a concise technical journal entry upon completion
+If goals are incomplete or underpowered, suggest them in three levels and ask the user to confirm or refine:
 
-## Output Requirements
-**IMPORTANT:** Invoke the `project-organization` skill to organize the outputs when needed.
+- `Basic`
+  - answer common descriptive questions
+  - profile and clean the dataset
+  - produce a lighter dashboard or portfolio outcome
+- `Pro`
+  - answer harder stakeholder questions
+  - explain drivers, segments, or relationships
+  - produce a stronger analytical story with more technical proof
+- `Advanced`
+  - answer high-difficulty questions
+  - include deeper methods such as scenario analysis, forecasting, anomaly analysis, root-cause analysis, or richer technical design
+  - make the dataset support a more senior portfolio narrative
 
-- DO NOT implement code - only create plans
-- Respond with plan file path and summary
-- Ensure self-contained plans with necessary context
-- Include code snippets/pseudocode when clarifying
-- Fully respect the `./docs/development-rules.md` file
+Do not stop at listing these tiers. Suggest concrete goal ideas based on the user's dataset and context.
 
-## Task Management
+## Output Requirement
 
-Plan files = persistent. Tasks = session-scoped. Hydration bridges the gap.
+After the inputs are clear enough, produce one canonical plan file:
 
-**Default:** Auto-hydrate tasks after plan files are written. Skip with `--no-tasks`.
-**3-Task Rule:** <3 phases → skip task creation.
-**Fallback:** If no task system is available, track status in the plan files and with `update_plan`. Plan files remain the source of truth; hydration is an optimization, not a requirement.
+- `projects/<slug>/docs/project-plan.md`
 
-Load: `references/task-management.md` for hydration pattern, TaskCreate patterns, cook handoff protocol.
+That plan file must be rich enough for downstream `$dv-*` workflows and skills to continue without guessing.
 
-### Hydration Workflow
-1. Write plan.md + phase files (persistent layer)
-2. Create one tracked step per phase in markdown and/or `update_plan`
-3. Add extra tracked steps only for critical or high-risk work
-4. Metadata: phase, priority, effort, planDir, phaseFile
-5. Execution resumes from the plan files and current runtime state
+## Plan File Must Contain
 
-## Active Plan State
+- user-provided context
+- user-provided dataset description
+- clarified interpretation of the problem
+- clarified or selected goals
+- suggested goal ladder with the chosen level called out
+- framework recommendation with reasoning
+- recommended visualization path
+- expected SQL/Python depth
+- suggested next workflows after planning
+- assumptions, risks, and open questions if any
 
-Check `## Plan Context` injected by hooks:
-- **"Plan: {path}"** → Active plan. Ask "Continue? [Y/n]"
-- **"Suggested: {path}"** → Branch hint only. Ask if activate or create new.
-- **"Plan: none"** → Create new using `Plan dir:` from `## Naming`
+## Handoff Rule
 
-After creating the plan, mark it as the active working plan in the runtime context you are using. Do not rely on legacy helper scripts.
-Reports: Active plans → plan-specific path. Suggested → default path.
+- `$dv-cook` should run after the plan is locked and the project workspace exists
+- `$dv-data-preparation` should use the plan file as its primary project contract
+- `$dv-data-visualize` should use the plan file as the starting project contract when visualization work begins
 
-### Important
-**DO NOT** create plans or reports in USER directory.
-**MUST** create plans or reports in **THE CURRENT WORKING PROJECT DIRECTORY**.
+## Common Pitfalls To Avoid
 
-## Subcommands
-
-| Subcommand | Reference | Purpose |
-|------------|-----------|---------|
-| `plan archive` | `references/archive-workflow.md` | Archive plans + write journal entries |
-| `plan red-team` | `references/red-team-workflow.md` | Adversarial plan review with hostile reviewers |
-| `plan validate` | `references/validate-workflow.md` | Validate plan with critical questions interview |
-
-## Quality Standards
-
-- Thorough and specific, consider long-term maintainability
-- Research thoroughly when uncertain
-- Address security and performance concerns
-- Detailed enough for junior developers
-- Validate against existing codebase patterns
-
-**Remember:** Plan quality determines implementation success. Be comprehensive and consider all solution aspects.
+1. turning intake into a shallow form-fill exercise
+2. accepting vague goals without sharpening them
+3. choosing a framework implicitly instead of documenting why
+4. producing a plan that downstream skills cannot actually use
+5. confusing "dataset description" with "analytical objective"
+6. making the plan generic enough to fit anything and guide nothing

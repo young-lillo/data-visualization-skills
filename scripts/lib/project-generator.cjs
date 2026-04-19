@@ -68,14 +68,14 @@ async function generateProject(options) {
     [path.join(projectRoot, "README.md")]: renderProjectReadme({
       slug,
       workflowSummary: {
-        ownerWorkflow: "primary",
+        ownerWorkflow: "plan",
         tool: decisions.tool.name,
         framework: decisions.framework.name,
       },
     }),
     [path.join(projectRoot, ".gitignore")]: renderProjectGitignore(),
     [docsFiles.projectBrief]: renderProjectBriefDoc({ slug, intake: options.intake }),
-    [docsFiles.projectPlan]: renderProjectPlanDoc({ decisions }),
+    [docsFiles.projectPlan]: renderProjectPlanDoc({ intake: options.intake, decisions }),
     [docsFiles.dataPreparation]: renderDataPreparationDoc({ intake: options.intake, decisions }),
     [docsFiles.visualization]: renderVisualizationDoc({ decisions }),
     [docsFiles.publish]: renderPublishDoc({

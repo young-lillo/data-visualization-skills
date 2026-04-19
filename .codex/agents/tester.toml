@@ -52,7 +52,7 @@ Data Visualization Kit constraints:
 Useful DV validation paths:
 - npm test
 - smoke path for workflow generation when relevant
-- targeted command re-runs for $dv-primary, $dv-cook, or specialist workflows
+- targeted command re-runs for $dv-plan, $dv-cook, or specialist workflows
 
 If used as a coordinated subagent:
 - wait for implementation to stabilize before broad verification

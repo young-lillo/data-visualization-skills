@@ -34,7 +34,7 @@ function printHelp() {
     "Data Visualization Kit",
     "",
     "Commands:",
-    "  $dv-primary <brief>",
+    "  $dv-plan <brief>",
     "  $dv-cook <brief>",
     "  $dv-data-preparation <brief>",
     "  $dv-data-visualize <brief>",
@@ -44,7 +44,7 @@ function printHelp() {
     "  $dv-help",
     "",
     "Examples:",
-    '  npm run dv -- \'$dv-primary\' --project-context "E-commerce analysis" --project-dataset "Orders and customers" --project-goals "Show churn insights"',
+    '  npm run dv -- \'$dv-plan\' --project-context "E-commerce analysis" --project-dataset "Orders and customers" --project-goals "Show churn insights"',
     '  npm run dv -- \'$dv-cook\' --slug ecommerce-churn --brief "Run the full project workflow after intake approval"',
     '  npm run dv -- \'$dv-data-visualize\' --slug ecommerce-churn --brief "Rebuild visuals after source schema changed"',
   ];

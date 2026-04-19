@@ -11,7 +11,7 @@ const { workflowRoutingGate } = require("../hooks/workflow-routing-gate.cjs");
 const { docsOutputGate } = require("../hooks/docs-output-gate.cjs");
 const { pathExists } = require("./fs-utils.cjs");
 
-async function runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName }) {
+async function runPlanWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName }) {
   const intake = await collectPrimaryInput(
     {
       ...flags,
@@ -20,7 +20,7 @@ async function runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, 
     { interactive: resolveInteractiveMode(flags) },
   );
 
-  workflowRoutingGate({ workflowName: "primary", brief: intake.projectGoals });
+  workflowRoutingGate({ workflowName: "plan", brief: intake.projectGoals });
 
   const slug = intake.slug?.trim() ? slugify(intake.slug) : slugify(intake.projectGoals);
   if (!slug) {
@@ -53,7 +53,7 @@ async function runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, 
   const handoff = subagentInit({
     repoRoot,
     projectSlug: result.slug,
-    workflowName: "primary",
+    workflowName: "plan",
     commandName,
     brief: intake.projectGoals,
     promptContext: runtimeContext?.promptContext,
@@ -61,7 +61,7 @@ async function runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, 
   });
 
   console.log(`Created project: ${result.projectRoot}`);
-  console.log(`Workflow: primary`);
+  console.log(`Workflow: plan`);
   console.log(`Framework: ${result.decisions.framework.name}`);
   console.log(`Layer: ${result.decisions.layer.name}`);
   console.log(`Tool: ${result.decisions.tool.name}`);
@@ -230,7 +230,7 @@ async function updateProjectWorkflowDoc({ repoRoot, workflowName, fileName, note
 
   const projectRoot = path.join(repoRoot, "projects", slug);
   if (!(await pathExists(projectRoot))) {
-    throw new Error(`Project does not exist: ${projectRoot}. Start with $dv-primary first.`);
+    throw new Error(`Project does not exist: ${projectRoot}. Start with $dv-plan first.`);
   }
 
   const targetFile = path.join(projectRoot, "docs", fileName);
@@ -280,6 +280,6 @@ function resolveInteractiveMode(flags) {
 module.exports = {
   resolveInteractiveMode,
   runCookWorkflow,
-  runPrimaryWorkflow,
+  runPlanWorkflow,
   runProjectUpdateWorkflow,
 };

@@ -43,17 +43,62 @@ function renderProjectBriefDoc({ slug, intake }) {
 `;
 }
 
-function renderProjectPlanDoc({ decisions }) {
+function renderProjectPlanDoc({ intake, decisions }) {
   const pythonRule = decisions.layer.requiresPython ? "required" : "optional";
+  const context = flattenLine(intake.projectContext);
+  const dataset = flattenLine(intake.projectDataset);
+  const goals = flattenLine(intake.projectGoals);
+  const goalTracks = buildGoalTracks({ context, dataset });
   return `# Project Plan
 
-## Decisions
+## Intake Summary
+
+- Context: ${context}
+- Dataset: ${dataset}
+- User goals: ${goals}
+
+## Clarified Working Interpretation
+
+- Business or portfolio frame: ${context}
+- Dataset surface to be explored: ${dataset}
+- Working analytical intent: ${goals}
+
+## Framework Recommendation
+
+- Recommended framework: ${decisions.framework.name}
+- Why this fits: ${decisions.framework.reason}
+
+## Goal Ladder Suggestions
+
+### Basic
+
+${goalTracks.basic}
+
+### Pro
+
+${goalTracks.pro}
+
+### Advanced
+
+${goalTracks.advanced}
+
+## Recommended Delivery Profile
 
 - Framework: ${decisions.framework.name}
+- Framework reason: ${decisions.framework.reason}
+- Goal tier recommendation: ${decisions.layer.name}
+- Goal tier reason: ${decisions.layer.reason}
 - Visualization layer: ${decisions.layer.name}
 - Visualization tool: ${decisions.tool.name}
+- Visualization tool reason: ${decisions.tool.reason}
 - SQL: required
 - Python: ${pythonRule}
+
+## Ready-For-Handoff Contract
+
+- This plan is the canonical project contract for downstream \`$dv-*\` workflows
+- Downstream skills should treat this file as the first planning source of truth
+- One selected visualization path should stay active per project unless explicitly changed
 
 ## Recommended Flow
 
@@ -62,6 +107,18 @@ function renderProjectPlanDoc({ decisions }) {
 3. run \`$dv-document-management\` when project docs need focused cleanup
 4. run \`$dv-debug\` only when needed
 `;
+}
+
+function flattenLine(value) {
+  return String(value).replace(/\s+/g, " ").trim();
+}
+
+function buildGoalTracks({ context, dataset }) {
+  return {
+    basic: `- Profile and clean ${dataset}\n- Answer the most common descriptive questions for ${context}\n- Produce a lighter dashboard with trusted baseline KPIs`,
+    pro: `- Explain segments, drivers, or relationships inside ${dataset}\n- Answer harder stakeholder questions for ${context}\n- Produce a stronger analytical narrative with richer SQL and dashboard logic`,
+    advanced: `- Push ${dataset} toward higher-difficulty questions such as scenarios, forecasting, anomaly analysis, or deeper root-cause work\n- Build a more senior portfolio case with stronger technical proof\n- Document assumptions, trade-offs, and extension paths explicitly`,
+  };
 }
 
 function renderDataPreparationDoc({ intake, decisions }) {

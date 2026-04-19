@@ -18,7 +18,7 @@ Every runtime request passes through this workflow contract before any specialis
 ## Core Rules
 
 - every request starts here, including direct specialist commands
-- broad asks route to `$dv-primary`; explicit specialist asks still do not skip hooks
+- broad asks route to `$dv-plan`; explicit specialist asks still do not skip hooks
 - one request has one owner workflow and one clear next step
 - all project work stays inside `projects/<project-slug>/`
 - all project docs and generated assets stay inside `projects/<project-slug>/docs/`
@@ -30,7 +30,7 @@ Every runtime request passes through this workflow contract before any specialis
 
 ### 1. Request Normalization
 
-- accept canonical commands such as `$dv-primary`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-publish`, `$dv-debug`, and `$dv-document-management`
+- accept canonical commands such as `$dv-plan`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-publish`, `$dv-debug`, and `$dv-document-management`
 - accept natural-language asks and normalize them into the closest canonical workflow
 - resolve project slug, project context, dataset scope, and goals before execution continues
 
