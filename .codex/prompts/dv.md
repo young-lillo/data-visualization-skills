@@ -25,5 +25,4 @@ Open the Data Visualization Kit hub.
    - `$dv-debug`
    - `$dv-document-management`
    - `$dv-orchestration`
-   - `$dv-hook-workflow`
 4. Keep this prompt thin. Do not duplicate business orchestration here.

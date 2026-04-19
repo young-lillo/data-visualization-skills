@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Commands-10-0ea5e9" alt="Commands" />
+  <img src="https://img.shields.io/badge/Commands-9-0ea5e9" alt="Commands" />
   <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
   <img src="https://img.shields.io/badge/Default%20Deploy-Metabase-f59e0b" alt="Metabase" />
   <img src="https://img.shields.io/badge/Dashboard%20Mode-interactive-16a34a" alt="Interactive Dashboard" />
@@ -144,7 +144,6 @@ $dv-data-visualize Rebuild visuals after source schema changed
 | Debug Desk | `$dv-debug` | Diagnose failures in preparation, visualize, or publish flow |
 | Docs Desk | `$dv-document-management` | Keep project docs and assets compact and in the right place |
 | Orchestration Desk | `$dv-orchestration` | Inspect the agent-coordination workflow |
-| Hook Desk | `$dv-hook-workflow` | Inspect the runtime hook contract |
 
 ### Natural Language
 
@@ -231,7 +230,6 @@ $dv-publish
 $dv-debug
 $dv-document-management
 $dv-orchestration
-$dv-hook-workflow
 ```
 
 Equivalent local commands:
@@ -247,7 +245,6 @@ npm run dv -- '$dv-publish' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-debug' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-document-management' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-orchestration'
-npm run dv -- '$dv-hook-workflow'
 ```
 
 ## Project Workspaces

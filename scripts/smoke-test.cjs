@@ -39,7 +39,6 @@ async function main() {
     ], { cwd: repoRoot });
 
     await execFileAsync(process.execPath, [cliPath, "$dv-orchestration"], { cwd: repoRoot });
-    await execFileAsync(process.execPath, [cliPath, "$dv-hook-workflow"], { cwd: repoRoot });
 
     await expectFailure(
       execFileAsync(process.execPath, [cliPath, "bogus-workflow"], { cwd: repoRoot }),

@@ -8,7 +8,6 @@ const knownWorkflows = new Set([
   "document-management",
   "help",
   "orchestration",
-  "hook-workflow",
 ]);
 
 function workflowRoutingGate({ workflowName, brief }) {

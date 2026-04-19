@@ -22,5 +22,4 @@ Treat `$dv` as the canonical public hub.
    - `$dv-debug`
    - `$dv-document-management`
    - `$dv-orchestration`
-   - `$dv-hook-workflow`
 5. Keep the hub thin. Do not perform deep project work here.

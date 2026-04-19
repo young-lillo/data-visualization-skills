@@ -42,7 +42,6 @@ function printHelp() {
     "  $dv-debug <brief>",
     "  $dv-document-management <brief>",
     "  $dv-orchestration",
-    "  $dv-hook-workflow",
     "  $dv-help",
     "",
     "Examples:",

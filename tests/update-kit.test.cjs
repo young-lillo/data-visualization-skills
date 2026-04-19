@@ -32,11 +32,11 @@ test("collectCoreChanges ignores user project paths but keeps core paths", () =>
     { code: " M", paths: ["README.md"] },
     { code: "??", paths: ["projects/demo-user/docs/project-plan.md"] },
     { code: " M", paths: ["projects/README.md"] },
-    { code: "??", paths: [".codex/workflows/hook-workflow.md"] },
+    { code: "??", paths: [".codex/workflows/primary-workflow.md"] },
   ]);
 
   assert.deepEqual(changes, [
-    ".codex/workflows/hook-workflow.md",
+    ".codex/workflows/primary-workflow.md",
     "README.md",
     "projects/README.md",
   ]);
