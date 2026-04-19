@@ -173,7 +173,7 @@ Before delivering final DDL:
 ## File Structure
 
 ```
-.agents/skills/databases/
+.agents/skills/dv-data-preparation/
 ├── SKILL.md                  # Skill description (entry + execution process + checklist)
 ├── db-design.md              # This file 
 ├── transactional.md          # OLTP design rules

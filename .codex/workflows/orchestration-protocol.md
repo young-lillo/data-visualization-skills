@@ -40,6 +40,12 @@ Support agents:
 - `debugger` for workflow, runtime, and validation failures
 - `mcp-manager` for narrow MCP-backed tasks inside the owner workflow
 
+Visualization-stage rules:
+- `visualize` must read project docs before changing dashboards
+- `visualize` must consume the prepared-data contract from `$dv-data-preparation`
+- `visualize` must stay on one selected tool path: `metabase`, `grafana`, or `apache-superset`
+- `tester` runs after `visualize` when the visualization stage changed
+
 ## Parallel Execution
 
 Use only when:

@@ -8,7 +8,8 @@ Own end-to-end project execution after intake is complete.
 
 - require an existing project created by `$dv-primary`
 - run data preparation first
-- run visualization second
-- validate project state as the test gate
+- run visualization second using the selected path from project docs
+- make visualization consume the cleaned outputs from `$dv-data-preparation`
+- validate the visualization pass with `test` or project validation before docs sync
 - sync docs before publish
 - finalize publish-ready project output
