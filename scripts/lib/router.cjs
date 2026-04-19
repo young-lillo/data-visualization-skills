@@ -4,7 +4,7 @@ const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
 const fs = require("node:fs/promises");
 const path = require("node:path");
 
-async function routeCommand({ command, flags, repoRoot, rawText }) {
+async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext }) {
   const normalizedCommand = normalizeCommand(command);
   const briefText = deriveBriefText(normalizedCommand, rawText);
 
@@ -15,19 +15,23 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
 
   switch (normalizedCommand) {
     case "$dv-primary":
-      await runPrimaryWorkflow({ flags, repoRoot, briefText });
+      await runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName: normalizedCommand });
       return;
     case "$dv-cook":
       await runCookWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
         briefText,
+        runtimeContext,
+        commandName: normalizedCommand,
       });
       return;
     case "$dv-data-preparation":
       await runProjectUpdateWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        runtimeContext,
+        commandName: normalizedCommand,
         workflowName: "data-preparation",
         title: "Data Preparation",
         fileName: "data-preparation.md",
@@ -43,6 +47,8 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
       await runProjectUpdateWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        runtimeContext,
+        commandName: normalizedCommand,
         workflowName: "data-visualize",
         title: "Visualization",
         fileName: "visualization.md",
@@ -58,6 +64,8 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
       await runProjectUpdateWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        runtimeContext,
+        commandName: normalizedCommand,
         workflowName: "publish",
         title: "Publish",
         fileName: "publish.md",
@@ -73,6 +81,8 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
       await runProjectUpdateWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        runtimeContext,
+        commandName: normalizedCommand,
         workflowName: "debug",
         title: "Debug Report",
         fileName: "debug-report.md",
@@ -88,6 +98,8 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
       await runProjectUpdateWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        runtimeContext,
+        commandName: normalizedCommand,
         workflowName: "document-management",
         title: "Document Management",
         fileName: "document-management.md",
@@ -107,7 +119,13 @@ async function routeCommand({ command, flags, repoRoot, rawText }) {
       return;
     default:
       if (!command.startsWith("$dv-") && hasNaturalLanguageFallback(normalizedCommand, rawText)) {
-        await runPrimaryWorkflow({ flags, repoRoot, briefText: rawText });
+        await runPrimaryWorkflow({
+          flags,
+          repoRoot,
+          briefText: rawText,
+          runtimeContext,
+          commandName: "$dv-primary",
+        });
         return;
       }
       throw new Error(`Unknown command: ${command}`);

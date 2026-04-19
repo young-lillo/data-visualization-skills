@@ -11,7 +11,7 @@ const { workflowRoutingGate } = require("../hooks/workflow-routing-gate.cjs");
 const { docsOutputGate } = require("../hooks/docs-output-gate.cjs");
 const { pathExists } = require("./fs-utils.cjs");
 
-async function runPrimaryWorkflow({ flags, repoRoot, briefText }) {
+async function runPrimaryWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName }) {
   const intake = await collectPrimaryInput(
     {
       ...flags,
@@ -50,7 +50,15 @@ async function runPrimaryWorkflow({ flags, repoRoot, briefText }) {
   });
 
   const validation = await validateGeneratedProject(result.projectRoot);
-  const handoff = subagentInit({ repoRoot, projectSlug: result.slug });
+  const handoff = subagentInit({
+    repoRoot,
+    projectSlug: result.slug,
+    workflowName: "primary",
+    commandName,
+    brief: intake.projectGoals,
+    promptContext: runtimeContext?.promptContext,
+    usage: runtimeContext?.usage,
+  });
 
   console.log(`Created project: ${result.projectRoot}`);
   console.log(`Workflow: primary`);
@@ -61,7 +69,16 @@ async function runPrimaryWorkflow({ flags, repoRoot, briefText }) {
   console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
 }
 
-async function runProjectUpdateWorkflow({ flags, repoRoot, workflowName, title, fileName, notesBuilder }) {
+async function runProjectUpdateWorkflow({
+  flags,
+  repoRoot,
+  workflowName,
+  title,
+  fileName,
+  notesBuilder,
+  runtimeContext,
+  commandName,
+}) {
   const input = await collectWorkflowUpdateInput(flags, {
     interactive: resolveInteractiveMode(flags),
   });
@@ -75,7 +92,15 @@ async function runProjectUpdateWorkflow({ flags, repoRoot, workflowName, title, 
     rawSlug: input.slug,
   });
 
-  const handoff = subagentInit({ repoRoot, projectSlug: slug });
+  const handoff = subagentInit({
+    repoRoot,
+    projectSlug: slug,
+    workflowName,
+    commandName,
+    brief: input.brief,
+    promptContext: runtimeContext?.promptContext,
+    usage: runtimeContext?.usage,
+  });
 
   console.log(`Updated project: ${projectRoot}`);
   console.log(`Workflow: ${workflowName}`);
@@ -84,7 +109,7 @@ async function runProjectUpdateWorkflow({ flags, repoRoot, workflowName, title, 
   console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
 }
 
-async function runCookWorkflow({ flags, repoRoot, briefText }) {
+async function runCookWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName }) {
   const input = await collectWorkflowUpdateInput(
     {
       ...flags,
@@ -176,7 +201,15 @@ async function runCookWorkflow({ flags, repoRoot, briefText }) {
   }
 
   const finalValidation = await validateGeneratedProject(projectRoot);
-  const handoff = subagentInit({ repoRoot, projectSlug: slug });
+  const handoff = subagentInit({
+    repoRoot,
+    projectSlug: slug,
+    workflowName: "cook",
+    commandName,
+    brief: input.brief,
+    promptContext: runtimeContext?.promptContext,
+    usage: runtimeContext?.usage,
+  });
 
   console.log(`Updated project: ${projectRoot}`);
   console.log("Workflow: cook");

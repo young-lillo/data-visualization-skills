@@ -1,6 +1,0 @@
-name = "ui-ux-designer"
-role = "Polish portfolio presentation, UX, and visual quality."
-input = "Visualization output, screenshots, and design goals."
-output = "Design improvements and updated design guidance."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

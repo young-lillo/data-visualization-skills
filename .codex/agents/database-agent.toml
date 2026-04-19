@@ -1,6 +1,0 @@
-name = "database"
-role = "Retrieve datasets from files, databases, APIs, and other sources, then clean and transform them."
-input = "Project slug, source details, and transformation goals."
-output = "Data-preparation notes and prepared-data details in project docs."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

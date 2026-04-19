@@ -1,6 +1,0 @@
-name = "planner"
-role = "Gather user context, clarify goals, and write the compact project plan in docs."
-input = "Project brief, user answers, and workflow context."
-output = "Project brief and project plan docs under projects/<slug>/docs/."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

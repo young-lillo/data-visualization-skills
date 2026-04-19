@@ -1,6 +1,0 @@
-name = "mcp-manager"
-role = "Discover and execute MCP capabilities while keeping main context clean."
-input = "Requested MCP task and project context."
-output = "MCP execution results."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

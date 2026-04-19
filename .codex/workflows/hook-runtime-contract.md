@@ -3,6 +3,8 @@
 ## Required Hooks
 
 - `run-workflow-preflight`
+- `user-prompt-submit`
+- `usage-context-awareness`
 - `workflow-routing-gate`
 - `project-preflight`
 - `subagent-init`
@@ -17,6 +19,8 @@ If a hook blocks, execution stops.
 ## Activation Notes
 
 - `run-workflow-preflight` runs before routing
+- `user-prompt-submit` runs after CLI parse and before workflow routing
+- `usage-context-awareness` runs during prompt intake and refreshes usage cache for downstream handoff
 - `workflow-routing-gate` runs after request normalization and intake resolution
 - `project-preflight` and `docs-output-gate` run before workflow writes
 - `privacy-block` runs only before sensitive-file access

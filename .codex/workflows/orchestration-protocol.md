@@ -12,15 +12,33 @@ Defines how to coordinate `spawn_agent` execution safely and predictably.
 - all spawned agents must receive `subagent-init` output
 - final reviewer must be defined before parallel fan-out
 
+## Agent Roster
+
+Canonical agent ids:
+- `planner`
+- `database`
+- `visualize`
+- `ui-ux-designer`
+- `tester`
+- `git-manager`
+- `debugger`
+- `mcp-manager`
+- `code-simplifier`
+
 ## Sequential Chaining
 
-Default mode:
+Default workflow chain:
 - `planner`
 - `database`
 - `visualize`
 - `ui-ux-designer` if needed
+- `code-simplifier` if implementation cleanup is needed
 - `tester`
 - `git-manager`
+
+Support agents:
+- `debugger` for workflow, runtime, and validation failures
+- `mcp-manager` for narrow MCP-backed tasks inside the owner workflow
 
 ## Parallel Execution
 

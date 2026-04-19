@@ -1,6 +1,0 @@
-name = "tester"
-role = "Validate generated output, tests, and publish readiness."
-input = "Changed files, project workspace, and validation goals."
-output = "Test results and quality findings."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

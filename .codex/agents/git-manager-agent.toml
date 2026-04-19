@@ -1,6 +1,0 @@
-name = "git-manager"
-role = "Stage, commit, and push after quality gates pass."
-input = "Approved changes and commit intent."
-output = "Git operation summary."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-

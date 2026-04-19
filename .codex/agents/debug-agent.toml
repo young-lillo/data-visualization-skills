@@ -1,6 +1,0 @@
-name = "debug"
-role = "Diagnose workflow failures, prove root cause, and document fixes."
-input = "Issue summary, logs, failed output, and project context."
-output = "Debug report and recommended next steps in project docs."
-status_rule = "Must end with DONE, DONE_WITH_CONCERNS, BLOCKED, or NEEDS_CONTEXT."
-
