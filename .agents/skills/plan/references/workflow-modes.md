@@ -30,7 +30,7 @@ No research. Analyze → Plan → Hydrate Tasks.
 1. Read codebase docs (`codebase-summary.md`, `code-standards.md`, `system-architecture.md`)
 2. Use `planner` subagent to create plan
 3. Hydrate tasks (unless `--no-tasks`)
-4. **Context reminder:** `/ck:cook --auto {absolute-plan-path}/plan.md`
+4. **Context reminder:** Open `{absolute-plan-path}/plan.md`, then continue with `$dv-cook`
 
 **Why `--auto` cook flag?** Fast planning pairs with fast execution — skip review gates.
 
@@ -39,12 +39,12 @@ No research. Analyze → Plan → Hydrate Tasks.
 Research → Scout → Plan → Red Team → Validate → Hydrate Tasks.
 
 1. Spawn max 2 `researcher` agents in parallel (different aspects, max 5 calls each)
-2. Read codebase docs; if stale/missing: run `/ck:scout` to search codebase
+2. Read codebase docs; if stale/missing: run `scout` to search codebase
 3. Gather research + scout report filepaths → pass to `planner` subagent
 4. Post-plan red team review (see Red Team Review section below)
 5. Post-plan validation (see Validation section below)
 6. Hydrate tasks (unless `--no-tasks`)
-7. **Context reminder:** `/ck:cook {absolute-plan-path}/plan.md`
+7. **Context reminder:** Open `{absolute-plan-path}/plan.md`, then continue with `$dv-cook`
 
 **Why no cook flag?** Thorough planning needs interactive review gates.
 
@@ -61,7 +61,7 @@ Research → Scout → Plan with file ownership → Red Team → Validate → Hy
 4. Hydrate tasks: `addBlockedBy` for sequential deps, no blockers for parallel groups
 5. Post-plan red team review
 6. Post-plan validation
-7. **Context reminder:** `/ck:cook --parallel {absolute-plan-path}/plan.md`
+7. **Context reminder:** Open `{absolute-plan-path}/plan.md`, then continue with `$dv-cook`
 
 ### Parallel Phase Requirements
 - Each phase self-contained, no runtime deps on other phases
@@ -81,7 +81,7 @@ Research → Scout → Plan 2 approaches → Compare → Hydrate Tasks.
 4. Post-plan red team review on selected approach
 5. Post-plan validation
 6. Hydrate tasks for selected approach (unless `--no-tasks`)
-7. **Context reminder:** `/ck:cook {absolute-plan-path}/plan.md`
+7. **Context reminder:** Open `{absolute-plan-path}/plan.md`, then continue with `$dv-cook`
 
 ## Task Hydration Per Mode
 
@@ -133,10 +133,10 @@ After plan creation, MUST output with **actual absolute path**:
 
 | Mode | Cook Command |
 |------|-----------------------------|
-| fast | `/ck:cook --auto {path}/plan.md` |
-| hard | `/ck:cook {path}/plan.md` |
-| parallel | `/ck:cook --parallel {path}/plan.md` |
-| two | `/ck:cook {path}/plan.md` |
+| fast | `Open {path}/plan.md, then run $dv-cook` |
+| hard | `Open {path}/plan.md, then run $dv-cook` |
+| parallel | `Open {path}/plan.md, then run $dv-cook` |
+| two | `Open {path}/plan.md, then run $dv-cook` |
 
 > **Best Practice:** Run `/clear` before implementing to reduce planning-context carryover.
 > Then run the cook command above.

@@ -8,7 +8,7 @@ You are a QA Lead performing systematic verification of code changes. You hunt f
 
 Required skill priorities:
 - test
-- debug when failures require root-cause analysis
+- dv-debug
 - security-scan for release, secret-exposure, or unsafe-pattern validation
 
 Core responsibilities:

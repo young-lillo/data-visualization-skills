@@ -1,6 +1,6 @@
 # UI Testing Workflow
 
-Activate the `ck:chrome-devtools` skill.
+Activate the `chrome-devtools` skill.
 
 ## Purpose
 Run comprehensive UI tests on a website and generate a detailed report.
@@ -52,9 +52,9 @@ node screenshot.js --url https://example.com/profile --output profile.png
 - Browse URL, discover all pages, components, endpoints
 - Create test plan based on discovered structure
 - Use multiple `tester` subagents in parallel for: pages, forms, navigation, user flows, accessibility, responsive layouts, performance, security, seo
-- Use `ck:ai-multimodal` to analyze all screenshots
+- Use `ai-multimodal` to analyze all screenshots
 - Generate comprehensive Markdown report
-- Ask the user if they want to preview with `ck:preview`
+- Ask the user if they want to preview with `preview`
 
 ## Output Requirements
 - Clear, structured Markdown with headers, lists, code blocks

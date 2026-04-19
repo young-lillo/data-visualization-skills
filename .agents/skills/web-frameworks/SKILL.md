@@ -239,7 +239,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 
 ```yaml
 # .github/workflows/ci.yml
-name: ck:CI
+name: CI
 on: [push, pull_request]
 
 jobs:

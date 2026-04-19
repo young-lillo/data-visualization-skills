@@ -14,7 +14,7 @@ metadata:
 
 - Replace legacy `AskUserQuestion` guidance with a direct concise user question only when required.
 - Replace legacy task-tool hydration with plan files under `plans/` plus `update_plan`.
-- Replace slash-command examples such as `/ck:cook` with the active Data Visualization Kit workflow, usually `$dv-cook` after intake or the matching specialist `$dv-*` workflow.
+- Replace legacy cook-command examples with the active Data Visualization Kit workflow, usually `$dv-cook` after intake or the matching specialist `$dv-*` workflow.
 - Use repo-local paths under `.agents/skills/` and `projects/<slug>/docs/`; do not rely on legacy hidden-runtime paths.
 
 Create detailed technical implementation plans through research, codebase analysis, solution design, and comprehensive documentation.
@@ -144,10 +144,10 @@ flowchart TD
 7. **Post-Plan Validation** → Run the validation flow against `{plan-path}` (hard/parallel/two modes)
 8. **Hydrate Tasks** → Create tracked execution steps from phases (default on, `--no-tasks` to skip)
 9. **Context Reminder** → Output cook command with absolute path (MANDATORY)
-10. **Journal** → Use the `ck:journal` skill to write a concise technical journal entry upon completion
+10. **Journal** → Use the `journal` skill to write a concise technical journal entry upon completion
 
 ## Output Requirements
-**IMPORTANT:** Invoke the `ck:project-organization` skill to organize the outputs when needed.
+**IMPORTANT:** Invoke the `project-organization` skill to organize the outputs when needed.
 
 - DO NOT implement code - only create plans
 - Respond with plan file path and summary

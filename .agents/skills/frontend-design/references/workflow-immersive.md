@@ -54,7 +54,7 @@ Add polish:
 - Scroll responses
 
 ### 6. Asset Generation
-Use `ck:ai-multimodal` skill:
+Use `ai-multimodal` skill:
 - Generate high-quality visuals
 - Create unique imagery
 - Verify asset quality

@@ -28,10 +28,10 @@ Use `ui-ux-designer` subagent directly:
 - Maintain quality despite speed
 
 ### 3. Generate Assets
-Use `ck:ai-multimodal` skill:
+Use `ai-multimodal` skill:
 - Generate required visuals
 - Verify quality quickly
-- Use `ck:media-processing` for adjustments
+- Use `media-processing` for adjustments
 
 ### 4. Report & Approve
 - Summarize changes briefly

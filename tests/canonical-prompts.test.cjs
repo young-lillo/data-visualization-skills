@@ -14,7 +14,6 @@ test("canonical prompt hub and workflow prompts exist", async () => {
     ".codex/prompts/dv-data-preparation.md",
     ".codex/prompts/dv-data-visualize.md",
     ".codex/prompts/dv-publish.md",
-    ".codex/prompts/dv-debug.md",
     ".codex/prompts/dv-document-management.md",
     ".codex/prompts/dv-orchestration.md",
     ".codex/prompts/dv-hook-workflow.md",

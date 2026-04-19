@@ -53,7 +53,7 @@ Remind user with absolute path:
 > **Best Practice:** Run `/clear` before implementing to start with fresh context.
 > Then run:
 > ```
-> /ck:cook --auto {ABSOLUTE_PATH_TO_PLAN_DIR}/plan.md
+> Open `{ABSOLUTE_PATH_TO_PLAN_DIR}/plan.md`, then continue with `$dv-cook`
 > ```
 > **Why `--auto`?** Plan was already validated — safe to skip review gates.
 > **Why absolute path?** After `/clear`, the new session loses previous context.
