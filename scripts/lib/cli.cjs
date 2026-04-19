@@ -41,7 +41,6 @@ function printHelp() {
     "  $dv-publish <brief>",
     "  $dv-debug <brief>",
     "  $dv-document-management <brief>",
-    "  $dv-orchestration",
     "  $dv-help",
     "",
     "Examples:",

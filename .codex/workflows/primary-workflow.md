@@ -30,7 +30,7 @@ Every runtime request passes through this workflow contract before any specialis
 
 ### 1. Request Normalization
 
-- accept canonical commands such as `$dv-primary`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-publish`, `$dv-debug`, `$dv-document-management`, and `$dv-orchestration`
+- accept canonical commands such as `$dv-primary`, `$dv-cook`, `$dv-data-preparation`, `$dv-data-visualize`, `$dv-publish`, `$dv-debug`, and `$dv-document-management`
 - accept natural-language asks and normalize them into the closest canonical workflow
 - resolve project slug, project context, dataset scope, and goals before execution continues
 

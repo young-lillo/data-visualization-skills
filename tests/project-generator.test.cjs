@@ -186,10 +186,10 @@ test("printHelp reflects the current public command surface", () => {
 
   assert.match(output, /\$dv-cook <brief>/);
   assert.match(output, /\$dv-document-management <brief>/);
-  assert.match(output, /\$dv-orchestration/);
   assert.doesNotMatch(output, /\$dv-docs/);
   assert.doesNotMatch(output, /\$dv-hooks/);
   assert.doesNotMatch(output, /\$dv-hook-workflow/);
+  assert.doesNotMatch(output, /\$dv-orchestration/);
   assert.doesNotMatch(output, /\$dv-orchestration <brief>/);
 });
 

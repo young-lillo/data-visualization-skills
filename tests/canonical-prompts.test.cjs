@@ -13,7 +13,6 @@ test("canonical prompt hub and workflow prompts exist", async () => {
     ".codex/prompts/dv-cook.md",
     ".codex/prompts/dv-data-visualize.md",
     ".codex/prompts/dv-publish.md",
-    ".codex/prompts/dv-orchestration.md",
   ];
 
   for (const relativePath of promptFiles) {
@@ -44,7 +43,6 @@ test("canonical skill hub and workflow wrappers exist", async () => {
     ".agents/skills/dv-publish/SKILL.md",
     ".agents/skills/dv-debug/SKILL.md",
     ".agents/skills/dv-document-management/SKILL.md",
-    ".agents/skills/dv-orchestration/SKILL.md",
   ];
 
   for (const relativePath of skillFiles) {

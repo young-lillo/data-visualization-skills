@@ -111,9 +111,6 @@ async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext 
           }),
       });
       return;
-    case "$dv-orchestration":
-      await printWorkflowReference(repoRoot, ".codex/workflows/orchestration-protocol.md");
-      return;
     default:
       if (!command.startsWith("$dv-") && hasNaturalLanguageFallback(normalizedCommand, rawText)) {
         await runPrimaryWorkflow({
@@ -156,9 +153,6 @@ function normalizeCommand(command) {
   }
   if (command === "docs" || command === "document-management") {
     return "$dv-document-management";
-  }
-  if (command === "orchestration") {
-    return "$dv-orchestration";
   }
   return command;
 }

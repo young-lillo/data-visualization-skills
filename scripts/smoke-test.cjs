@@ -37,9 +37,6 @@ async function main() {
       "--brief",
       "Run the full smoke workflow after intake approval.",
     ], { cwd: repoRoot });
-
-    await execFileAsync(process.execPath, [cliPath, "$dv-orchestration"], { cwd: repoRoot });
-
     await expectFailure(
       execFileAsync(process.execPath, [cliPath, "bogus-workflow"], { cwd: repoRoot }),
       /Unknown command/,

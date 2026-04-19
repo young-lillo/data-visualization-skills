@@ -24,5 +24,4 @@ Open the Data Visualization Kit hub.
    - `$dv-publish`
    - `$dv-debug`
    - `$dv-document-management`
-   - `$dv-orchestration`
 4. Keep this prompt thin. Do not duplicate business orchestration here.

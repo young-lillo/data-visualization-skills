@@ -1,81 +1,164 @@
 ---
 name: dv-data-visualize
-description: Visualization-build wrapper for Data Visualization Kit. Use when the user types `$dv-data-visualize`, needs to build or refresh charts, or needs to switch the selected open-source visualization path for an existing project.
+description: Build and refresh visualization layers for Data Visualization Kit projects. Use when the task is dashboard construction, chart refresh, visualization-path selection, dashboard QA, or project-scoped visualization delivery that must follow the kit visualization workflow and resolve to one selected tool path.
 license: MIT
 argument-hint: "[goal / task / brief]"
 metadata:
   author: data-visualization-kit
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # DV Data Visualize
 
-Treat `$dv-data-visualize` as the canonical visualization entrypoint and the canonical visualization orchestration skill for Data Visualization Kit.
+Production-ready visualization delivery for Data Visualization Kit projects, with project-doc-driven routing, one-path dashboard ownership, validation after visual changes, and explicit handoff from prepared data into dashboard outcomes.
 
-This is the main visualize skill. It owns the handoff from prepared data to dashboard delivery, keeps the project on one selected visualization path, and always validates the result after the visualization pass.
+## Workflow Obligation
 
-## Codex Adaptation
+This skill must follow `./.codex/workflows/data-visualize-workflow.md`.
 
-- Use this skill directly for `$dv-data-visualize`; keep the prompt and workflow files as thin runtime wrappers only.
-- Follow `./.codex/workflows/data-visualize-workflow.md` as the runtime contract.
-- Treat project docs as the first source of truth before building or refreshing visuals.
-- Pull from `$dv-data-preparation` outputs before touching dashboard logic.
-- Route to exactly one visualization domain skill for the current project:
-  - `metabase`
-  - `grafana`
-  - `apache-superset`
-- Run the `test` skill or project validation after visualization changes.
+That means:
 
-## Required Inputs
+- read project docs before changing dashboards
+- verify the prepared-data contract before visual work starts
+- resolve exactly one visualization path for the active project
+- build or refresh visuals on that path only
+- validate the visualization pass after changes
+- sync visualization notes and artifacts under the project docs tree
 
-Before visualizing, gather the current project state from:
+If this skill and the workflow file ever disagree, follow `./.codex/workflows/data-visualize-workflow.md`.
 
-- `projects/<slug>/README.md`
-- `projects/<slug>/docs/project-brief.md`
-- `projects/<slug>/docs/project-plan.md`
-- `projects/<slug>/docs/data-preparation.md`
-- `projects/<slug>/docs/visualization.md`
-- the current `$dv-data-visualize` brief
+## When to Use
 
-If these sources disagree, prefer the latest project docs and make the mismatch explicit in `visualization.md`.
+- building a new dashboard for an already prepared project
+- refreshing charts, panels, filters, drill paths, or dashboard structure after source changes
+- selecting or confirming the right visualization path for a project
+- reconciling dashboard outputs with the prepared-data contract
+- documenting visualization choices, scope changes, exports, screenshots, and validation status
 
-## Working Order
+## Visualization Path Guide
 
-1. Read project identity, business goal, and selected visualization path from project docs
-2. Read the latest cleaned-data contract from `$dv-data-preparation`
-3. Confirm the prepared dataset is trustworthy enough for visualization work
-4. Choose exactly one visualization skill:
-   - `metabase` for the default BI path
-   - `grafana` for operational, observability, or time-series dashboards
-   - `apache-superset` only for legacy projects that already selected Superset or when migration analysis is explicitly required
-5. Build or refresh the dashboard on that selected path only
-6. Update visualization notes, exports, and screenshot references under the project `docs/` tree
-7. Run `test` or project validation after the visualization pass
-8. Record remaining visualization risks, data assumptions, or follow-up work
+**Choose the selected path from project docs when it already exists.**
 
-## Routing Rules
+**Prefer Metabase when:**
+- the project is general interactive BI
+- stakeholders need accessible dashboard navigation and business-readable metrics
+- the kit needs its default general BI path
 
-- Do not mix multiple dashboard tools in one active project path unless the user explicitly changes the selected path
-- If the project was already initialized, preserve the chosen tool from project docs unless the user asks to switch
-- If the tool is missing or unclear:
-  - prefer `Metabase` for general BI
-  - prefer `Grafana` for operational or time-series asks
-  - use `Apache Superset` only for existing Superset estates
-- If cleaned data is not ready, route backward to `$dv-data-preparation` before continuing
+**Prefer Grafana when:**
+- the project is operational, observability-oriented, or time-series first
+- the user workflow is monitoring, incident review, or telemetry-heavy analysis
+- the dashboard depends on operational panels, variables, or alert context
 
-## Collaboration Contract
+**Use Apache Superset only when:**
+- the project already selected Superset
+- the estate is legacy and already depends on Superset datasets or dashboards
+- migration analysis is explicitly part of the task
 
-`$dv-data-visualize` should coordinate these skills:
+See: `./.codex/workflows/data-visualize-workflow.md`
 
-- `dv-data-preparation` to confirm the cleaned input surface
-- `metabase` when the selected path is Metabase
-- `grafana` when the selected path is Grafana
-- `apache-superset` when the selected path is Superset
-- `test` after visualization changes are complete
+## Visualization Mindset
+
+**The 10 Commandments of Visualization Delivery:**
+
+1. **The prepared-data contract comes before dashboard polish**
+2. **One selected tool path is better than a mixed dashboard stack**
+3. **Dashboards are decision surfaces, not report dumps**
+4. **Business meaning matters more than widget count**
+5. **A broken metric is a data-contract issue until proven otherwise**
+6. **Filters and navigation should match how users think**
+7. **Validation is mandatory after visual changes**
+8. **Project docs are part of the product, not afterthoughts**
+9. **Path switches must be explicit**
+10. **If the data is not trustworthy, route backward before decorating uncertainty**
+
+## Reference Navigation
+
+**Workflow Reference:**
+- `./.codex/workflows/data-visualize-workflow.md` - required visualization workflow contract, routing, validation, docs sync
+
+**Visualization Domain Skills:**
+- `metabase` - default general BI path
+- `grafana` - operational and time-series path
+- `apache-superset` - legacy Superset path only
+
+## Key Best Practices
+
+**Project Read and Routing:**
+- read `projects/<slug>/docs/project-brief.md`, `project-plan.md`, `data-preparation.md`, and `visualization.md` before changing dashboards
+- preserve the selected visualization path unless the user explicitly asks to switch
+- make path resolution explicit in project docs whenever the current state is unclear
+
+**Dashboard Construction:**
+- keep one dashboard path aligned with one prepared-data contract
+- prefer clean, audience-driven decision flow over dashboard sprawl
+- keep tool-specific behavior inside the selected domain skill instead of mixing patterns loosely
+
+**Validation and QA:**
+- validate dashboard behavior against the prepared-data contract and business goal
+- treat broken queries, empty states, mismatched metrics, and filter regressions as blocking issues
+- run the `test` skill or project validation after visualization changes
+
+**Docs and Handoff:**
+- keep `projects/<slug>/docs/visualization.md` as the canonical visualization record
+- store screenshots, exports, and visualization artifacts in `projects/<slug>/docs/assets/`
+- document assumptions, scope changes, path switches, and remaining risks
+
+## Quick Decision Matrix
+
+| Need | Choose |
+|------|--------|
+| Build or refresh a general BI dashboard | Metabase via DV Data Visualize |
+| Build or refresh an operational or time-series dashboard | Grafana via DV Data Visualize |
+| Maintain or extend a legacy Superset dashboard path | Apache Superset via DV Data Visualize |
+| Data cleanup or semantic repair before dashboard work | `$dv-data-preparation` |
+| Publish-ready deployment work | `$dv-publish` |
+
+## Implementation Checklist
+
+**Intake:**
+- confirm project identity, business goal, audience, and delivery expectations
+- read the selected visualization path from project docs if it already exists
+- confirm whether the task is build, refresh, migration, or repair
+
+**Prepared-Data Verification:**
+- read the latest output contract from `$dv-data-preparation`
+- confirm grain, keys, freshness, null policy, and trusted metrics are clear enough for dashboard work
+- route backward if the visualization layer would otherwise rely on guessed semantics
+
+**Path Resolution:**
+- choose exactly one domain skill: `metabase`, `grafana`, or `apache-superset`
+- preserve compatibility with the current project docs unless the requested scope changes
+
+**Visualization Build:**
+- build or refresh the dashboard on the selected path only
+- keep the dashboard aligned to one prepared-data contract and one tool path
+- avoid mixing patterns from other dashboard tools into the active path
+
+**Validation and Docs Sync:**
+- run `test` or project validation after visualization changes
+- update `projects/<slug>/docs/visualization.md` with tool choice, scope, changes made, validation status, and remaining risks
+- store screenshots, exports, and visualization artifacts in `projects/<slug>/docs/assets/`
+
+## Common Pitfalls to Avoid
+
+1. Mixing multiple dashboard tools in one active visualization pass
+2. Starting dashboard work before the prepared-data contract is actually trusted
+3. Treating mismatched numbers as design issues instead of data-contract problems
+4. Letting dashboard sprawl grow because no decision scope was enforced
+5. Switching visualization path implicitly without recording it in project docs
+6. Skipping validation after visual changes because the layout looks correct
+
+## Resources
+
+**Data Visualization Kit Context:**
+- This skill is the project-scoped visualization domain skill for Data Visualization Kit
+- The authoritative orchestration contract lives in `./.codex/workflows/data-visualize-workflow.md`
+- Use `metabase`, `grafana`, or `apache-superset` as the selected downstream domain skill, not as parallel active paths
 
 ## Output Rules
 
-- Keep project-scoped notes in `projects/<slug>/docs/`
-- Keep screenshots, exports, and visualization artifacts in `projects/<slug>/docs/assets/`
-- Keep `projects/<slug>/docs/visualization.md` as the canonical record of tool choice, dashboard scope, changes made, and validation status
-- Keep the visualization layer aligned with one prepared-data contract and one selected dashboard tool
+- keep project-scoped notes in `projects/<slug>/docs/`
+- keep visualization artifacts in `projects/<slug>/docs/assets/`
+- keep the active project on one selected visualization path
+- route backward to `$dv-data-preparation` if the data contract is not trustworthy enough
+- route forward to `$dv-publish` only after the visualization state is stable and validated

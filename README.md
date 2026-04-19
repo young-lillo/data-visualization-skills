@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Commands-9-0ea5e9" alt="Commands" />
+  <img src="https://img.shields.io/badge/Commands-8-0ea5e9" alt="Commands" />
   <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
   <img src="https://img.shields.io/badge/Default%20Deploy-Metabase-f59e0b" alt="Metabase" />
   <img src="https://img.shields.io/badge/Dashboard%20Mode-interactive-16a34a" alt="Interactive Dashboard" />
@@ -143,7 +143,6 @@ $dv-data-visualize Rebuild visuals after source schema changed
 | Publish Desk | `$dv-publish` | Make the project git-ready and deployable |
 | Debug Desk | `$dv-debug` | Diagnose failures in preparation, visualize, or publish flow |
 | Docs Desk | `$dv-document-management` | Keep project docs and assets compact and in the right place |
-| Orchestration Desk | `$dv-orchestration` | Inspect the agent-coordination workflow |
 
 ### Natural Language
 
@@ -229,7 +228,6 @@ $dv-data-visualize
 $dv-publish
 $dv-debug
 $dv-document-management
-$dv-orchestration
 ```
 
 Equivalent local commands:
@@ -244,7 +242,6 @@ npm run dv -- '$dv-data-visualize' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-publish' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-debug' --slug <project-slug> --brief "<task>"
 npm run dv -- '$dv-document-management' --slug <project-slug> --brief "<task>"
-npm run dv -- '$dv-orchestration'
 ```
 
 ## Project Workspaces
