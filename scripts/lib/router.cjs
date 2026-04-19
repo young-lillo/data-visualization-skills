@@ -1,15 +1,23 @@
-const { printHelp } = require("./cli.cjs");
-const { runCookWorkflow, runPlanWorkflow, runProjectUpdateWorkflow } = require("./dv-workflows.cjs");
+const {
+  runCookWorkflow,
+  runDocumentManagementWorkflow,
+  runHelpWorkflow,
+  runPlanWorkflow,
+  runProjectUpdateWorkflow,
+} = require("./dv-workflows.cjs");
 const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
-const fs = require("node:fs/promises");
-const path = require("node:path");
 
 async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext }) {
   const normalizedCommand = normalizeCommand(command);
   const briefText = deriveBriefText(normalizedCommand, rawText, command);
 
   if (normalizedCommand === "$dv-help") {
-    printHelp();
+    await runHelpWorkflow({
+      repoRoot,
+      briefText,
+      runtimeContext,
+      commandName: normalizedCommand,
+    });
     return;
   }
 
@@ -95,20 +103,12 @@ async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext 
       });
       return;
     case "$dv-document-management":
-      await runProjectUpdateWorkflow({
+      await runDocumentManagementWorkflow({
         flags: withBrief(flags, briefText),
         repoRoot,
+        briefText,
         runtimeContext,
         commandName: normalizedCommand,
-        workflowName: "document-management",
-        title: "Document Management",
-        fileName: "document-management.md",
-        notesBuilder: ({ brief }) =>
-          renderWorkflowUpdateDoc({
-            title: "Document Management",
-            brief,
-            notes: "Use this document to record doc sync actions, user assets, and compact workspace cleanup.",
-          }),
       });
       return;
     default:
@@ -182,11 +182,6 @@ function withBrief(flags, briefText) {
 
 function hasNaturalLanguageFallback(normalizedCommand, rawText) {
   return !normalizedCommand.startsWith("$dv-") && rawText.trim().includes(" ");
-}
-
-async function printWorkflowReference(repoRoot, relativePath) {
-  const content = await fs.readFile(path.join(repoRoot, relativePath), "utf8");
-  console.log(content);
 }
 
 module.exports = {

@@ -2,6 +2,7 @@ const path = require("node:path");
 
 const { slugify, writeTextFile } = require("./fs-utils.cjs");
 const { generateProject } = require("./project-generator.cjs");
+const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
 const { validateGeneratedProject } = require("./project-validator.cjs");
 const { collectPrimaryInput, collectWorkflowUpdateInput } = require("./workflow-inputs.cjs");
 const { providerKeyGate } = require("../hooks/provider-key-gate.cjs");
@@ -106,6 +107,65 @@ async function runProjectUpdateWorkflow({
   console.log(`Workflow: ${workflowName}`);
   console.log(`Doc updated: ${path.join("docs", fileName)}`);
   console.log(`Validation: checked ${validation.checked} required paths`);
+  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+}
+
+async function runDocumentManagementWorkflow({ flags, repoRoot, briefText, runtimeContext, commandName }) {
+  const input = await collectWorkflowUpdateInput(
+    {
+      ...flags,
+      brief: flags.brief ?? briefText,
+    },
+    { interactive: resolveInteractiveMode(flags) },
+  );
+
+  const slug = slugify(input.slug);
+  if (!slug) {
+    throw new Error("Document management requires a valid project slug.");
+  }
+
+  const projectRoot = path.join(repoRoot, "projects", slug);
+  if (!(await pathExists(projectRoot))) {
+    throw new Error(`Project does not exist: ${projectRoot}. Start with $dv-plan first.`);
+  }
+
+  const mode = await resolveDocumentManagementMode({
+    flags,
+    projectRoot,
+    brief: input.brief,
+  });
+  const normalizedBrief = normalizeDocumentManagementBrief({ brief: input.brief, mode });
+
+  const result = await updateProjectWorkflowDoc({
+    repoRoot,
+    workflowName: "document-management",
+    fileName: "document-management.md",
+    brief: normalizedBrief,
+    rawSlug: slug,
+    notesBuilder: ({ brief }) =>
+      renderWorkflowUpdateDoc({
+        title: "Document Management",
+        brief,
+        mode,
+        notes: buildDocumentManagementNotes(mode),
+      }),
+  });
+
+  const handoff = subagentInit({
+    repoRoot,
+    projectSlug: result.slug,
+    workflowName: "document-management",
+    commandName,
+    brief: normalizedBrief,
+    promptContext: runtimeContext?.promptContext,
+    usage: runtimeContext?.usage,
+  });
+
+  console.log(`Updated project: ${result.projectRoot}`);
+  console.log("Workflow: document-management");
+  console.log(`Mode: ${mode}`);
+  console.log(`Doc updated: ${path.join("docs", "document-management.md")}`);
+  console.log(`Validation: checked ${result.validation.checked} required paths`);
   console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
 }
 
@@ -220,6 +280,28 @@ async function runCookWorkflow({ flags, repoRoot, briefText, runtimeContext, com
   console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
 }
 
+async function runHelpWorkflow({ repoRoot, briefText, runtimeContext, commandName }) {
+  workflowRoutingGate({ workflowName: "help", brief: briefText });
+
+  const recommendation = resolveHelpRecommendation(briefText);
+  const handoff = subagentInit({
+    repoRoot,
+    workflowName: "help",
+    commandName,
+    brief: briefText,
+    promptContext: runtimeContext?.promptContext,
+    usage: runtimeContext?.usage,
+  });
+
+  console.log("Data Visualization Kit Help");
+  console.log("Workflow: help");
+  console.log(`Recommended next command: ${recommendation.command}`);
+  console.log(`Why: ${recommendation.reason}`);
+  console.log(`Example: ${recommendation.example}`);
+  console.log("Canonical commands: $dv-help, $dv-plan, $dv-cook, $dv-data-preparation, $dv-data-visualize, $dv-publish, $dv-debug, $dv-document-management");
+  console.log(`Codex handoff: ${JSON.stringify(handoff, null, 2)}`);
+}
+
 async function updateProjectWorkflowDoc({ repoRoot, workflowName, fileName, notesBuilder, brief, rawSlug }) {
   workflowRoutingGate({ workflowName, brief });
 
@@ -270,6 +352,132 @@ ${notes}
 `;
 }
 
+async function resolveDocumentManagementMode({ flags, projectRoot, brief }) {
+  const explicitMode = normalizeDocumentManagementMode(flags.mode);
+  if (explicitMode) {
+    return explicitMode;
+  }
+
+  const briefMode = normalizeDocumentManagementMode(extractLeadingToken(brief));
+  if (briefMode) {
+    return briefMode;
+  }
+
+  const docsDir = path.join(projectRoot, "docs");
+  const canonicalDocs = [
+    "project-brief.md",
+    "project-plan.md",
+    "data-preparation.md",
+    "visualization.md",
+    "publish.md",
+  ];
+  let populatedDocs = 0;
+
+  for (const fileName of canonicalDocs) {
+    if (await pathExists(path.join(docsDir, fileName))) {
+      populatedDocs += 1;
+    }
+  }
+
+  return populatedDocs >= 3 ? "update" : "init";
+}
+
+function normalizeDocumentManagementBrief({ brief, mode }) {
+  const trimmed = String(brief ?? "").trim();
+  const withoutMode = normalizeDocumentManagementMode(extractLeadingToken(trimmed))
+    ? trimmed.split(/\s+/).slice(1).join(" ").trim()
+    : trimmed;
+
+  if (withoutMode) {
+    return withoutMode;
+  }
+
+  return `Run ${mode} pass for project docs.`;
+}
+
+function normalizeDocumentManagementMode(value) {
+  const normalized = String(value ?? "").trim().toLowerCase();
+  if (normalized === "init" || normalized === "update" || normalized === "summarize") {
+    return normalized;
+  }
+  return null;
+}
+
+function extractLeadingToken(value) {
+  return String(value ?? "").trim().split(/\s+/, 1)[0] ?? "";
+}
+
+function buildDocumentManagementNotes(mode) {
+  switch (mode) {
+    case "init":
+      return "Create or normalize the initial project docs set, keep all docs under `docs/`, and remove path confusion before downstream workflows continue.";
+    case "summarize":
+      return "Refresh only the highest-signal project summaries, keep the docs tree compact, and avoid broad rewrites unless they are required for correctness.";
+    case "update":
+    default:
+      return "Refresh project docs after workflow changes, keep assets inside `docs/assets/`, and update only the smallest correct doc set.";
+  }
+}
+
+function resolveHelpRecommendation(briefText) {
+  const brief = String(briefText ?? "").trim();
+  const normalized = brief.toLowerCase();
+
+  const recommendations = [
+    {
+      command: "$dv-publish",
+      reason: "Your ask sounds like git-readiness, deployment, or release packaging work.",
+      example: 'npm run dv -- \'$dv-publish\' --slug ecommerce-churn --brief "Make this project git-ready and deployable"',
+      matches: ["publish", "deploy", "release", "ship", "git-ready", "go live", "deployment"],
+    },
+    {
+      command: "$dv-debug",
+      reason: "Your ask sounds like failure diagnosis, runtime debugging, or root-cause analysis.",
+      example: 'npm run dv -- \'$dv-debug\' --slug ecommerce-churn --brief "Find why the dashboard build is failing"',
+      matches: ["debug", "bug", "error", "broken", "failure", "failing", "issue", "root cause"],
+    },
+    {
+      command: "$dv-document-management",
+      reason: "Your ask sounds like project docs cleanup, summaries, or asset organization.",
+      example: 'npm run dv -- \'$dv-document-management\' --slug ecommerce-churn --brief "summarize refresh the project docs after the latest workflow pass"',
+      matches: ["docs", "document", "summary", "summarize", "documentation", "assets", "cleanup"],
+    },
+    {
+      command: "$dv-data-visualize",
+      reason: "Your ask sounds like dashboard construction, refresh, or visualization-path work.",
+      example: 'npm run dv -- \'$dv-data-visualize\' --slug ecommerce-churn --brief "Rebuild visuals after source schema changed"',
+      matches: ["visual", "visualize", "dashboard", "chart", "grafana", "metabase", "superset"],
+    },
+    {
+      command: "$dv-data-preparation",
+      reason: "Your ask sounds like ingestion, cleaning, shaping, or dataset-readiness work.",
+      example: 'npm run dv -- \'$dv-data-preparation\' --slug ecommerce-churn --brief "Clean order and customer data into dashboard-ready tables"',
+      matches: ["prepare", "preparation", "clean", "etl", "transform", "schema", "dataset", "sql", "pipeline", "ingest"],
+    },
+    {
+      command: "$dv-cook",
+      reason: "Your ask sounds like a post-intake execution pass across the full project workflow.",
+      example: 'npm run dv -- \'$dv-cook\' --slug ecommerce-churn --brief "Run the full project workflow from the approved intake"',
+      matches: ["cook", "full project", "end-to-end", "continue project", "approved intake", "full workflow"],
+    },
+  ];
+
+  for (const recommendation of recommendations) {
+    if (recommendation.matches.some((keyword) => normalized.includes(keyword))) {
+      return recommendation;
+    }
+  }
+
+  return {
+    command: "$dv-plan",
+    reason: brief
+      ? "Your ask is still broad enough that planning-first intake is the safest starting point."
+      : "No specific workflow was requested, so the planning-first entrypoint is the safest default.",
+    example:
+      'npm run dv -- \'$dv-plan\' --project-context "E-commerce analysis" --project-dataset "Orders and customers" --project-goals "Show churn insights"',
+  };
+}
+
 function resolveInteractiveMode(flags) {
   if (flags["non-interactive"] === "true") {
     return false;
@@ -280,6 +488,8 @@ function resolveInteractiveMode(flags) {
 module.exports = {
   resolveInteractiveMode,
   runCookWorkflow,
+  runDocumentManagementWorkflow,
+  runHelpWorkflow,
   runPlanWorkflow,
   runProjectUpdateWorkflow,
 };

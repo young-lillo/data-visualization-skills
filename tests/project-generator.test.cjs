@@ -8,6 +8,8 @@ const { hasTextValue, parseArgs, printHelp } = require("../scripts/lib/cli.cjs")
 const { privacyBlock } = require("../scripts/hooks/privacy-block.cjs");
 const { projectPreflight } = require("../scripts/hooks/project-preflight.cjs");
 const { generateProject } = require("../scripts/lib/project-generator.cjs");
+const { routeCommand } = require("../scripts/lib/router.cjs");
+const { runDocumentManagementWorkflow } = require("../scripts/lib/dv-workflows.cjs");
 const { collectPrimaryInput, collectWorkflowUpdateInput } = require("../scripts/lib/workflow-inputs.cjs");
 const { docsOutputGate } = require("../scripts/hooks/docs-output-gate.cjs");
 
@@ -196,6 +198,78 @@ test("printHelp reflects the current public command surface", () => {
   assert.doesNotMatch(output, /\$dv-orchestration <brief>/);
 });
 
+test("routeCommand sends $dv-help through the help workflow runtime", async () => {
+  const output = await captureConsoleLogAsync(() =>
+    routeCommand({
+      command: "$dv-help",
+      flags: {},
+      repoRoot: "D:\\repo",
+      rawText: "$dv-help publish this project",
+      runtimeContext: {
+        promptContext: {
+          interactive: false,
+          rawText: "$dv-help publish this project",
+          summary: "Command: $dv-help",
+        },
+        usage: {
+          summary: "5h 20% | 7d 10%",
+        },
+      },
+    }),
+  );
+
+  assert.match(output, /Workflow: help/);
+  assert.match(output, /Recommended next command: \$dv-publish/);
+  assert.doesNotMatch(output, /^Data Visualization Kit\r?\n\r?\nCommands:/);
+});
+
+test("runDocumentManagementWorkflow parses summarize mode from the brief", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const project = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Retention analysis",
+      projectDataset: "Orders and customers",
+      projectGoals: "Show churn insight and technical workflow",
+    },
+    slug: "retention-analysis",
+    preferFreeDeploy: true,
+  });
+
+  await captureConsoleLogAsync(() =>
+    runDocumentManagementWorkflow({
+      flags: {
+        slug: project.slug,
+        brief: "summarize refresh only the highest-signal docs",
+        "non-interactive": "true",
+      },
+      repoRoot,
+      briefText: "summarize refresh only the highest-signal docs",
+      runtimeContext: {
+        promptContext: {
+          interactive: false,
+          projectSlug: project.slug,
+          rawText: "$dv-document-management summarize refresh only the highest-signal docs",
+          summary: "Command: $dv-document-management",
+        },
+      },
+      commandName: "$dv-document-management",
+    }),
+  );
+
+  const documentManagementDoc = await fs.readFile(
+    path.join(project.projectRoot, "docs", "document-management.md"),
+    "utf8",
+  );
+
+  assert.match(documentManagementDoc, /## Mode\r?\n\r?\nsummarize/);
+  assert.match(documentManagementDoc, /refresh only the highest-signal docs/);
+  assert.doesNotMatch(documentManagementDoc, /## Brief\r?\n\r?\nsummarize refresh/);
+});
+
 test("hasTextValue rejects placeholder boolean flags", () => {
   assert.equal(hasTextValue("true"), false);
   assert.equal(hasTextValue(" real text "), true);
@@ -227,6 +301,22 @@ function captureConsoleLog(run) {
 
   try {
     run();
+  } finally {
+    console.log = originalLog;
+  }
+
+  return output;
+}
+
+async function captureConsoleLogAsync(run) {
+  const originalLog = console.log;
+  let output = "";
+  console.log = (value) => {
+    output += `${value}\n`;
+  };
+
+  try {
+    await run();
   } finally {
     console.log = originalLog;
   }

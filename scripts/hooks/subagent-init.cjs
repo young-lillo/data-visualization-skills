@@ -1,15 +1,16 @@
 const path = require("node:path");
 
 function subagentInit({ repoRoot, projectSlug, workflowName, commandName, brief, promptContext, usage }) {
-  const workContext = path.join(repoRoot, "projects", projectSlug);
-  const docsPath = path.join(workContext, "docs");
+  const hasProject = typeof projectSlug === "string" && projectSlug.trim() !== "";
+  const workContext = hasProject ? path.join(repoRoot, "projects", projectSlug) : null;
+  const docsPath = workContext ? path.join(workContext, "docs") : null;
   return {
     repoRoot,
     projectRoot: workContext,
     workContext,
     docsPath,
     reportsPath: docsPath,
-    outputsPath: path.join(docsPath, "assets", "exports"),
+    outputsPath: docsPath ? path.join(docsPath, "assets", "exports") : null,
     plansPath: path.join(repoRoot, "plans"),
     workflow: {
       name: workflowName ?? null,

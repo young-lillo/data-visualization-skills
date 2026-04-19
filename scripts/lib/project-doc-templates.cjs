@@ -214,14 +214,22 @@ Keep portfolio presentation clean, readable, and professional.
 `;
 }
 
-function renderWorkflowUpdateDoc({ title, brief, notes }) {
+function renderWorkflowUpdateDoc({ title, brief, notes, mode }) {
+  const modeSection = mode
+    ? `## Mode
+
+${mode}
+
+`
+    : "";
+
   return `# ${title}
 
 ## Brief
 
 ${brief}
 
-## Notes
+${modeSection}## Notes
 
 ${notes}
 `;
