@@ -26,6 +26,14 @@ async function main() {
       "Orders, customers, support tickets, and campaign touchpoints.",
       "--project-goals",
       "Show churn insight, segmentation, and a reproducible technical workflow.",
+      "--framework",
+      "CRISP-DM",
+      "--goal-tier",
+      "Pro",
+      "--visualization-tool",
+      "Metabase",
+      "--deploy-target",
+      "VPS",
       "--prefer-free-deploy=true",
     ], { cwd: repoRoot });
 

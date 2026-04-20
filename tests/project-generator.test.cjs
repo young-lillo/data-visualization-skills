@@ -8,6 +8,7 @@ const { hasTextValue, parseArgs, printHelp } = require("../scripts/lib/cli.cjs")
 const { privacyBlock } = require("../scripts/hooks/privacy-block.cjs");
 const { projectPreflight } = require("../scripts/hooks/project-preflight.cjs");
 const { generateProject } = require("../scripts/lib/project-generator.cjs");
+const { buildDecisionBundle } = require("../scripts/lib/selector.cjs");
 const { routeCommand } = require("../scripts/lib/router.cjs");
 const { runDocumentManagementWorkflow } = require("../scripts/lib/dv-workflows.cjs");
 const { collectPrimaryInput, collectWorkflowUpdateInput } = require("../scripts/lib/workflow-inputs.cjs");
@@ -24,6 +25,7 @@ test("generateProject creates a git-ready project workspace", async () => {
       projectContext: "Retention analysis",
       projectDataset: "Orders and customers",
       projectGoals: "Show churn insight and technical workflow",
+      deployTarget: "VPS",
     },
     slug: "retention-analysis",
     preferFreeDeploy: true,
@@ -40,6 +42,7 @@ test("generateProject creates a git-ready project workspace", async () => {
     "docs/debug-report.md",
     "docs/document-management.md",
     "docs/assets/exports/01-analysis.sql",
+    "docs/assets/evidence-build/.gitkeep",
   ];
 
   for (const relativePath of files) {
@@ -68,6 +71,7 @@ test("generateProject selects Grafana for operational time-series goals", async 
       projectContext: "Platform monitoring",
       projectDataset: "Metrics, logs, and traces",
       projectGoals: "Build a real-time observability dashboard for SLA metrics",
+      deployTarget: "VPS",
     },
     slug: "ops-monitoring",
     preferFreeDeploy: true,
@@ -88,6 +92,7 @@ test("generateProject escapes quoted intake values in the python starter", async
       projectContext: 'Portfolio for "quoted" context',
       projectDataset: 'Dataset with "quotes"',
       projectGoals: "Show advanced technical workflow",
+      deployTarget: "VPS",
     },
     slug: "quoted-intake",
     preferFreeDeploy: true,
@@ -127,12 +132,13 @@ test("collectPortfolioInput rejects malformed non-interactive flags", async () =
       collectPrimaryInput(
         {
           slug: "malformed-intake",
-          "project-context": "true",
-          "project-dataset": "true",
-          "project-goals": "true",
-        },
-        { interactive: false },
-      ),
+        "project-context": "true",
+        "project-dataset": "true",
+        "project-goals": "true",
+        "deploy-target": "VPS",
+      },
+      { interactive: false },
+    ),
     /Missing required intake values/,
   );
 });
@@ -255,11 +261,12 @@ test("routeCommand sends broad $dv asks to the planning workflow", async () => {
       flags: {
         "project-context": "E-commerce retention",
         "project-dataset": "Orders and customers",
-        // plan-intake-validation requires all three decisions in non-interactive mode.
+        // plan-intake-validation requires all four decisions in non-interactive mode.
         "project-goals": "Show churn insight and retention trends",
         framework: "CRISP-DM",
         "goal-tier": "Pro",
         "visualization-tool": "Metabase",
+        "deploy-target": "VPS",
         "non-interactive": "true",
       },
       repoRoot,
@@ -289,6 +296,7 @@ test("routeCommand sends explicit $dv specialist asks to the matching owner work
       projectContext: "Retention analysis",
       projectDataset: "Orders and customers",
       projectGoals: "Show churn insight and technical workflow",
+      deployTarget: "VPS",
     },
     slug: "retention-analysis",
     preferFreeDeploy: true,
@@ -333,6 +341,7 @@ test("runDocumentManagementWorkflow parses summarize mode from the brief", async
       projectContext: "Retention analysis",
       projectDataset: "Orders and customers",
       projectGoals: "Show churn insight and technical workflow",
+      deployTarget: "VPS",
     },
     slug: "retention-analysis",
     preferFreeDeploy: true,
@@ -372,6 +381,74 @@ test("runDocumentManagementWorkflow parses summarize mode from the brief", async
 test("hasTextValue rejects placeholder boolean flags", () => {
   assert.equal(hasTextValue("true"), false);
   assert.equal(hasTextValue(" real text "), true);
+});
+
+test("generateProject records Evidence + Netlify for static portfolio projects", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const result = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Kaggle sales analysis",
+      projectDataset: "sales.csv",
+      projectGoals: "Show monthly revenue trends",
+      framework: "CRISP-DM",
+      goalTier: "Basic",
+      visualizationTool: "Evidence",
+      deployTarget: "Netlify",
+      slug: "kaggle-sales",
+    },
+    preferFreeDeploy: true,
+  });
+
+  const planDoc = await fs.readFile(path.join(result.projectRoot, "docs", "project-plan.md"), "utf8");
+  const publishDoc = await fs.readFile(path.join(result.projectRoot, "docs", "publish.md"), "utf8");
+
+  assert.match(planDoc, /Evidence/);
+  assert.match(planDoc, /Netlify/);
+  assert.match(publishDoc, /npm run sources && npm run build/);
+  assert.match(publishDoc, /Static Deploy \(Netlify\)/);
+  await assert.doesNotReject(() => fs.access(path.join(result.projectRoot, "evidence", "package.json")));
+  await assert.doesNotReject(() => fs.access(path.join(result.projectRoot, "evidence", "pages", "index.md")));
+  await assert.doesNotReject(() => fs.access(path.join(result.projectRoot, "docs", "assets", "evidence-build", ".gitkeep")));
+});
+
+test("buildDecisionBundle auto-selects Evidence for static deploy targets", () => {
+  const result = buildDecisionBundle({
+    projectGoals: "Show monthly revenue trends from a CSV portfolio dataset",
+    preferFreeDeploy: true,
+    deployTarget: "Netlify",
+  });
+
+  assert.equal(result.tool.name, "Evidence");
+  assert.equal(result.deployTarget, "Netlify");
+});
+
+test("generateProject records Vercel-specific static publish guidance", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const result = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Spreadsheet KPI portfolio",
+      projectDataset: "kpis.xlsx",
+      projectGoals: "Build a static KPI showcase for portfolio review",
+      framework: "CRISP-DM",
+      goalTier: "Basic",
+      visualizationTool: "Evidence",
+      deployTarget: "Vercel",
+    },
+    slug: "spreadsheet-kpis",
+    preferFreeDeploy: true,
+  });
+
+  const publishDoc = await fs.readFile(path.join(result.projectRoot, "docs", "publish.md"), "utf8");
+  assert.match(publishDoc, /Static Deploy \(Vercel\)/);
+  assert.match(publishDoc, /vercel\.json/);
 });
 
 test("parseArgs preserves $dv command and brief text", () => {

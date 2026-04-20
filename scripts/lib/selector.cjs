@@ -12,7 +12,7 @@ function selectFramework(projectGoals) {
 
   const usePipeline = pipelineKeywords.some((keyword) => goals.includes(keyword));
   return {
-    name: usePipeline ? "Data Pipeline Framework" : "CRISP-DM",
+    name: usePipeline ? "Data Pipeline" : "CRISP-DM",
     reason: usePipeline
       ? "Goals are engineering-first, so the project should emphasize ingestion, transformation, and reproducibility."
       : "Goals are insight-first, so the project should emphasize business framing, analysis, and recommendations.",
@@ -50,7 +50,7 @@ function selectLayer(projectGoals) {
   };
 }
 
-function selectVisualizationTool(projectGoals, preferFreeDeploy) {
+function selectVisualizationTool(projectGoals, preferFreeDeploy, deployTarget) {
   const goals = projectGoals.toLowerCase();
   const grafanaKeywords = [
     "grafana",
@@ -68,6 +68,18 @@ function selectVisualizationTool(projectGoals, preferFreeDeploy) {
     "incident",
     "sla",
   ];
+  const evidenceKeywords = [
+    "evidence",
+    "static",
+    "csv",
+    "excel",
+    "kaggle",
+    "parquet",
+    "portfolio",
+    "netlify",
+    "vercel",
+    "static site",
+  ];
   const metabaseKeywords = [
     "metabase",
     "dashboard",
@@ -83,6 +95,23 @@ function selectVisualizationTool(projectGoals, preferFreeDeploy) {
     "sql editor",
     "semantic layer",
   ];
+  const isStaticHost = deployTarget === "Netlify" || deployTarget === "Vercel";
+
+  if (isStaticHost && !grafanaKeywords.some((keyword) => goals.includes(keyword))) {
+    return {
+      name: "Evidence",
+      reason: "Deploy target is static hosting. Evidence.dev runs in the browser with no server required.",
+      deployNote: "Evidence.dev builds to static HTML + WASM. Deploy with `npm run sources && npm run build` to Netlify or Vercel.",
+    };
+  }
+
+  if (evidenceKeywords.some((keyword) => goals.includes(keyword)) && !grafanaKeywords.some((keyword) => goals.includes(keyword))) {
+    return {
+      name: "Evidence",
+      reason: "Goals point to a static portfolio workflow, which fits Evidence.dev better than a server-backed BI stack.",
+      deployNote: "Evidence.dev builds to static HTML + WASM. Deploy with `npm run sources && npm run build` to Netlify or Vercel.",
+    };
+  }
 
   if (grafanaKeywords.some((keyword) => goals.includes(keyword))) {
     return {
@@ -114,7 +143,8 @@ function selectVisualizationTool(projectGoals, preferFreeDeploy) {
  * plan-intake-validation hook take priority over keyword-based auto-selection.
  * Auto-selection is only used when the user did not confirm a value interactively.
  */
-function buildDecisionBundle({ projectGoals, preferFreeDeploy, framework, goalTier, visualizationTool }) {
+function buildDecisionBundle({ projectGoals, preferFreeDeploy, framework, goalTier, visualizationTool, deployTarget }) {
+  const resolvedDeployTarget = deployTarget ?? "VPS";
   const resolvedFramework = framework
     ? { name: framework, reason: "Confirmed by user during intake." }
     : selectFramework(projectGoals);
@@ -125,9 +155,9 @@ function buildDecisionBundle({ projectGoals, preferFreeDeploy, framework, goalTi
 
   const resolvedTool = visualizationTool
     ? { name: visualizationTool, reason: "Confirmed by user during intake.", deployNote: buildDeployNote(visualizationTool) }
-    : selectVisualizationTool(projectGoals, preferFreeDeploy);
+    : selectVisualizationTool(projectGoals, preferFreeDeploy, resolvedDeployTarget);
 
-  return { framework: resolvedFramework, layer: resolvedLayer, tool: resolvedTool };
+  return { framework: resolvedFramework, layer: resolvedLayer, tool: resolvedTool, deployTarget: resolvedDeployTarget };
 }
 
 /** Convert a confirmed goal tier string into a layer descriptor matching selectLayer output. */
@@ -160,6 +190,8 @@ function buildLayerFromTier(tier) {
 /** Return a deploy note string for an explicitly selected tool. */
 function buildDeployNote(tool) {
   switch (tool) {
+    case "Evidence":
+      return "Evidence.dev builds to static HTML + WASM. Deploy with `npm run sources && npm run build` to Netlify or Vercel. No server required.";
     case "Grafana":
       return "Grafana works best on free-tier VM/container hosting or self-hosted deployment, not static hosting.";
     case "Apache Superset":

@@ -7,13 +7,13 @@ const { planIntakeValidation } = require("../hooks/plan-intake-validation.cjs");
 async function collectPrimaryInput(flags, options = {}) {
   const interactive = options.interactive ?? stdin.isTTY;
 
-  // All three base fields supplied — run decision validation without a prompt loop.
+  // All base fields supplied - run decision validation without a prompt loop.
   if (
     hasTextValue(flags["project-context"]) &&
     hasTextValue(flags["project-dataset"]) &&
     hasTextValue(flags["project-goals"])
   ) {
-    // Validate (or auto-confirm) framework, goal tier, and visualization tool.
+    // Validate (or auto-confirm) framework, goal tier, visualization tool, and deploy target.
     const decisions = await planIntakeValidation({ flags, interactive });
     return {
       projectContext: flags["project-context"],
@@ -24,6 +24,7 @@ async function collectPrimaryInput(flags, options = {}) {
       framework: decisions.framework,
       goalTier: decisions.goalTier,
       visualizationTool: decisions.visualizationTool,
+      deployTarget: decisions.deployTarget,
     };
   }
 
@@ -48,7 +49,7 @@ async function collectPrimaryInput(flags, options = {}) {
       (await rl.question("Prefer free-tier or self-host-friendly open-source deployment by default? [Y/n]: "));
     const slug = flags.slug ?? (await rl.question("Project slug (optional): "));
 
-    // Present framework, goal tier, and tool choices — user must confirm each.
+    // Present framework, goal tier, tool, and deploy target choices - user must confirm each.
     const decisions = await planIntakeValidation({ flags, interactive, rl });
 
     return {
@@ -60,6 +61,7 @@ async function collectPrimaryInput(flags, options = {}) {
       framework: decisions.framework,
       goalTier: decisions.goalTier,
       visualizationTool: decisions.visualizationTool,
+      deployTarget: decisions.deployTarget,
     };
   } finally {
     rl.close();

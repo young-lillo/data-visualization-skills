@@ -6,6 +6,8 @@ const {
   renderDataPreparationDoc,
   renderDebugReportDoc,
   renderDesignGuidelinesDoc,
+  renderEvidenceIndexPage,
+  renderEvidencePackageJson,
   renderProjectBriefDoc,
   renderProjectGitignore,
   renderProjectPlanDoc,
@@ -44,9 +46,11 @@ async function generateProject(options) {
     framework: options.intake.framework ?? null,
     goalTier: options.intake.goalTier ?? null,
     visualizationTool: options.intake.visualizationTool ?? null,
+    deployTarget: options.intake.deployTarget ?? null,
   });
 
   const docsRoot = path.join(projectRoot, "docs");
+  const evidenceRoot = path.join(projectRoot, "evidence");
   const docsFiles = {
     projectBrief: path.join(docsRoot, "project-brief.md"),
     projectPlan: path.join(docsRoot, "project-plan.md"),
@@ -59,6 +63,7 @@ async function generateProject(options) {
     screenshots: path.join(docsRoot, "assets", "screenshots", ".gitkeep"),
     userFiles: path.join(docsRoot, "assets", "user-files", ".gitkeep"),
     exports: path.join(docsRoot, "assets", "exports", ".gitkeep"),
+    evidenceBuild: path.join(docsRoot, "assets", "evidence-build", ".gitkeep"),
   };
 
   for (const target of Object.values(docsFiles)) {
@@ -95,6 +100,7 @@ async function generateProject(options) {
     [docsFiles.screenshots]: "",
     [docsFiles.userFiles]: "",
     [docsFiles.exports]: "",
+    [docsFiles.evidenceBuild]: "",
     [path.join(docsRoot, "assets", "exports", "01-analysis.sql")]: buildSqlStarter(options.intake),
   };
 
@@ -102,6 +108,10 @@ async function generateProject(options) {
     files[path.join(docsRoot, "assets", "exports", "01-analysis.py")] = buildPythonStarter(options.intake);
   } else {
     files[path.join(docsRoot, "assets", "exports", ".gitkeep")] = "";
+  }
+
+  if (decisions.tool.name === "Evidence") {
+    Object.assign(files, buildEvidenceWorkspaceFiles(evidenceRoot));
   }
 
   await writeMany(files);
@@ -145,6 +155,15 @@ function flattenLine(value) {
 
 function toPythonStringLiteral(value) {
   return JSON.stringify(String(value));
+}
+
+function buildEvidenceWorkspaceFiles(evidenceRoot) {
+  return {
+    [path.join(evidenceRoot, "package.json")]: renderEvidencePackageJson(),
+    [path.join(evidenceRoot, "pages", "index.md")]: renderEvidenceIndexPage(),
+    [path.join(evidenceRoot, "components", ".gitkeep")]: "",
+    [path.join(evidenceRoot, "sources", "data", "dataset.csv")]: "category,value\nexample,1\n",
+  };
 }
 
 module.exports = {

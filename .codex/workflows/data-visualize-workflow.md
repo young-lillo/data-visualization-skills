@@ -55,9 +55,14 @@ If these sources disagree, prefer the latest project docs and make the mismatch 
 
 Choose exactly one domain skill:
 
+- `evidence` for static portfolio dashboards - CSV, Excel, Parquet, DuckDB WASM, Netlify/Vercel deploy
 - `metabase` for the default general BI path
 - `grafana` for operational, observability, or time-series dashboards
-- `apache-superset` only for legacy projects that already selected Superset or when migration analysis is explicitly required
+- `apache-superset` only for legacy projects that already selected Superset or when migration analysis is explicitly required (requires 4GB+ RAM)
+
+**Deploy-target routing:**
+- deploy target is Netlify or Vercel -> prefer `evidence` unless goals are operational or time-series
+- deploy target is VPS -> prefer `metabase` as the default general BI path
 
 ### 4. Visualization Build
 
@@ -81,6 +86,9 @@ Choose exactly one domain skill:
 
 - if the project was already initialized, preserve the chosen visualization path from project docs unless the user asks to switch
 - if the tool is missing or unclear:
+  - if deploy target is Netlify or Vercel and dataset is CSV/static -> route to `evidence`
+  - if the project already selected Evidence, preserve that path
+  - if the task needs a live SQL DB connection, route to `metabase` regardless of deploy target
   - prefer `Metabase` for general BI
   - prefer `Grafana` for operational or time-series asks
   - use `Apache Superset` only for existing Superset estates
@@ -92,6 +100,7 @@ Choose exactly one domain skill:
 This workflow coordinates:
 
 - `$dv-data-preparation` to confirm the cleaned input surface
+- `evidence` for the selected Evidence.dev path
 - `metabase` for the selected Metabase path
 - `grafana` for the selected Grafana path
 - `apache-superset` for the selected Superset path

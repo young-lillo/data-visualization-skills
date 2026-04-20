@@ -34,6 +34,18 @@ async function validateGeneratedProject(projectRoot) {
     }
   }
 
+  const visualizationDoc = await fs.readFile(path.join(projectRoot, "docs", "visualization.md"), "utf8");
+  if (visualizationDoc.includes("Tool: Evidence")) {
+    for (const relativePath of [
+      "docs/assets/evidence-build/.gitkeep",
+      "evidence/package.json",
+      "evidence/pages/index.md",
+      "evidence/sources/data/dataset.csv",
+    ]) {
+      await fs.access(path.join(projectRoot, relativePath));
+    }
+  }
+
   return {
     ok: true,
     checked: requiredPaths.length,

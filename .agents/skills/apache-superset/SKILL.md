@@ -1,12 +1,16 @@
 ---
 name: apache-superset
-description: Maintain and evolve existing Apache Superset analytics stacks. Use for Superset SQL Lab, datasets, charts, dashboards, RBAC, embedding, operational fixes, and migration planning toward Metabase or Grafana. Prefer only for legacy projects that already selected Superset.
+description: Maintain and evolve existing Apache Superset analytics stacks. Use for Superset SQL Lab, datasets, charts, dashboards, RBAC, embedding, operational fixes, and migration planning toward Metabase or Grafana. Prefer only for legacy projects that already selected Superset. Requires 4GB+ RAM.
 license: MIT
 argument-hint: "[maintenance-task] [legacy-scope]"
 metadata:
   author: data-visualization-kit
   version: "1.0.0"
 ---
+
+> **RAM Requirement:** Apache Superset requires a minimum of **4GB RAM** in production
+> (Celery worker + Redis + PostgreSQL metadata + Gunicorn). It will OOM on a 2GB VPS under load.
+> **This is a legacy-only path.** For new projects, use Metabase (VPS) or Evidence.dev (Netlify/Vercel).
 
 # Apache Superset Skill
 

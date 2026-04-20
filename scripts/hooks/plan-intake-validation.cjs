@@ -4,7 +4,8 @@ const { stdin, stdout } = require("node:process");
 // Valid values for each decision dimension.
 const VALID_FRAMEWORKS = ["CRISP-DM", "Data Pipeline"];
 const VALID_GOAL_TIERS = ["Basic", "Pro", "Advanced"];
-const VALID_TOOLS = ["Metabase", "Grafana", "Apache Superset"];
+const VALID_TOOLS = ["Evidence", "Metabase", "Grafana", "Apache Superset"];
+const VALID_DEPLOY_TARGETS = ["Netlify", "Vercel", "VPS"];
 
 // Descriptions shown to the user when prompting interactively.
 const FRAMEWORK_DESCRIPTIONS = {
@@ -19,19 +20,26 @@ const GOAL_TIER_DESCRIPTIONS = {
 };
 
 const TOOL_DESCRIPTIONS = {
+  Evidence: "static portfolio dashboards, CSV/Excel/Kaggle, Netlify/Vercel deploy",
   Metabase: "general BI, stakeholder dashboards, SQL-backed questions (default)",
   Grafana: "operational monitoring, time-series, observability, alert-aware panels",
   "Apache Superset": "legacy Superset estates only or migration analysis",
 };
 
+const DEPLOY_TARGET_DESCRIPTIONS = {
+  Netlify: "static hosting - free tier, deploys Evidence.dev and static sites",
+  Vercel: "static hosting - free tier, deploys Evidence.dev and static sites",
+  VPS: "self-hosted server - required for Metabase, Grafana, Apache Superset",
+};
+
 /**
- * Validate that all three planning decisions (framework, goal tier, visualization tool)
+ * Validate that all four planning decisions (framework, goal tier, visualization tool, deploy target)
  * are either explicitly provided via flags or confirmed by the user interactively.
  *
  * When running interactively, presents each decision with all options + descriptions
  * and prompts the user to select one (suggest-and-confirm pattern).
  *
- * Returns an object with validated framework, goalTier, and visualizationTool.
+ * Returns an object with validated framework, goalTier, visualizationTool, and deployTarget.
  * Throws if running non-interactively with missing values.
  */
 async function planIntakeValidation({ flags = {}, interactive, rl: externalRl } = {}) {
@@ -57,17 +65,29 @@ async function planIntakeValidation({ flags = {}, interactive, rl: externalRl } 
     rl: externalRl,
   });
 
+  const deployTarget = await resolveDecision({
+    flagValue: flags["deploy-target"],
+    validValues: VALID_DEPLOY_TARGETS,
+    descriptions: DEPLOY_TARGET_DESCRIPTIONS,
+    promptLabel: "Deploy target",
+    defaultValue: "Netlify",
+    isInteractive,
+    rl: externalRl,
+  });
+
   const visualizationTool = await resolveDecision({
     flagValue: flags["visualization-tool"],
     validValues: VALID_TOOLS,
     descriptions: TOOL_DESCRIPTIONS,
     promptLabel: "Visualization tool",
-    defaultValue: "Metabase",
+    defaultValue: getDefaultVisualizationTool(deployTarget),
     isInteractive,
     rl: externalRl,
   });
 
-  return { ok: true, framework, goalTier, visualizationTool };
+  validateDecisionCombination({ visualizationTool, deployTarget });
+
+  return { ok: true, framework, goalTier, visualizationTool, deployTarget };
 }
 
 /**
@@ -155,6 +175,25 @@ function toFlagName(label) {
   return label.toLowerCase().replace(/\s+/g, "-");
 }
 
+function getDefaultVisualizationTool(deployTarget) {
+  return deployTarget === "VPS" ? "Metabase" : "Evidence";
+}
+
+function validateDecisionCombination({ visualizationTool, deployTarget }) {
+  const isStaticTarget = deployTarget === "Netlify" || deployTarget === "Vercel";
+  const isServerOnlyTool = visualizationTool === "Metabase" || visualizationTool === "Grafana" || visualizationTool === "Apache Superset";
+
+  if (isStaticTarget && isServerOnlyTool) {
+    throw new Error(
+      `${visualizationTool} requires VPS deployment. Use Evidence for ${deployTarget}, or switch deploy target to VPS.`,
+    );
+  }
+
+  if (deployTarget === "VPS" && visualizationTool === "Evidence") {
+    throw new Error("Evidence is the static-site path. Use Netlify or Vercel as the deploy target.");
+  }
+}
+
 if (require.main === module) {
   const payload = process.argv[2] ? JSON.parse(process.argv[2]) : {};
   planIntakeValidation(payload)
@@ -170,4 +209,5 @@ module.exports = {
   VALID_FRAMEWORKS,
   VALID_GOAL_TIERS,
   VALID_TOOLS,
+  VALID_DEPLOY_TARGETS,
 };

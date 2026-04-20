@@ -51,7 +51,7 @@ If any of these are vague, ask direct clarification questions until the inputs a
 
 ## Mandatory Decision Gate (REQUIRED — do not skip)
 
-**Before producing any plan output**, you MUST explicitly confirm all three decisions with the user.
+**Before producing any plan output**, you MUST explicitly confirm all four decisions with the user.
 Do not auto-select silently. Do not proceed until the user has responded to each question.
 
 Present each decision as a numbered choice with a short description. Wait for the user's selection.
@@ -84,20 +84,37 @@ Ask: *"Which goal tier fits your ambition for this project? (1, 2, or 3)"*
 
 ### 3. Visualization Tool
 
-Present all three options and ask the user to choose:
+Present all four options and ask the user to choose:
 
 | # | Tool | Best for |
 |---|------|---------|
-| 1 | **Metabase** | general BI, stakeholder dashboards, SQL-backed questions (default) |
-| 2 | **Grafana** | operational monitoring, time-series, observability, alert-aware panels |
-| 3 | **Apache Superset** | legacy Superset estates only or migration analysis |
+| 1 | **Evidence.dev** | static portfolio dashboards from CSV/Excel/Kaggle, Netlify/Vercel deploy |
+| 2 | **Metabase** | general BI, stakeholder dashboards, SQL-backed questions |
+| 3 | **Grafana** | operational monitoring, time-series, observability, alert-aware panels |
+| 4 | **Apache Superset** | legacy Superset estates only or migration analysis |
 
-Ask: *"Which visualization tool should this project use? (1, 2, or 3)"*
+Ask: *"Which visualization tool should this project use? (1, 2, 3, or 4)"*
 
-**Do not proceed to write the plan until all three decisions are confirmed.**
-Record all three confirmed choices at the top of `project-plan.md`.
+### 4. Deploy Target
+
+Present all three options and ask the user to choose:
+
+| # | Target | Implications |
+|---|--------|-------------|
+| 1 | **Netlify** | static hosting - free tier, Evidence.dev deploys here (default for CSV/Kaggle projects) |
+| 2 | **Vercel** | static hosting - free tier, Evidence.dev deploys here |
+| 3 | **VPS** | self-hosted server - required for Metabase, Grafana, Apache Superset |
+
+Ask: *"Where will this portfolio project be deployed? (1, 2, or 3)"*
+
+**If the user selects Netlify or Vercel**, suggest Evidence.dev as the visualization tool unless goals are explicitly operational or time-series.
+
+**Do not proceed to write the plan until all four decisions are confirmed.**
+Record all four confirmed choices at the top of `project-plan.md`.
 
 ## Output Requirement
+
+`project-plan.md` must record all four confirmed decisions (framework, goal tier, visualization tool, deploy target) at the top, before any phase breakdown.
 
 After the inputs are clear enough, produce one canonical plan file:
 

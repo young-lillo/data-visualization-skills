@@ -39,6 +39,12 @@ If this skill and the workflow file ever disagree, follow `./.codex/workflows/da
 
 **Choose the selected path from project docs when it already exists.**
 
+**Prefer Evidence.dev when:**
+- the deploy target is Netlify or Vercel
+- the dataset is CSV, Excel, Parquet, or another static file format
+- no live DB connection is required
+- the portfolio piece should work without any server infrastructure
+
 **Prefer Metabase when:**
 - the project is general interactive BI
 - stakeholders need accessible dashboard navigation and business-readable metrics
@@ -77,6 +83,7 @@ See: `./.codex/workflows/data-visualize-workflow.md`
 - `./.codex/workflows/data-visualize-workflow.md` - required visualization workflow contract, routing, validation, docs sync
 
 **Visualization Domain Skills:**
+- `evidence` - static portfolio path for Evidence.dev
 - `metabase` - default general BI path
 - `grafana` - operational and time-series path
 - `apache-superset` - legacy Superset path only
@@ -107,6 +114,7 @@ See: `./.codex/workflows/data-visualize-workflow.md`
 
 | Need | Choose |
 |------|--------|
+| Build a static portfolio dashboard from CSV/Kaggle | Evidence via DV Data Visualize |
 | Build or refresh a general BI dashboard | Metabase via DV Data Visualize |
 | Build or refresh an operational or time-series dashboard | Grafana via DV Data Visualize |
 | Maintain or extend a legacy Superset dashboard path | Apache Superset via DV Data Visualize |
@@ -126,7 +134,7 @@ See: `./.codex/workflows/data-visualize-workflow.md`
 - route backward if the visualization layer would otherwise rely on guessed semantics
 
 **Path Resolution:**
-- choose exactly one domain skill: `metabase`, `grafana`, or `apache-superset`
+- choose exactly one domain skill: `evidence`, `metabase`, `grafana`, or `apache-superset`
 - preserve compatibility with the current project docs unless the requested scope changes
 
 **Visualization Build:**
@@ -153,7 +161,7 @@ See: `./.codex/workflows/data-visualize-workflow.md`
 **Data Visualization Kit Context:**
 - This skill is the project-scoped visualization domain skill for Data Visualization Kit
 - The authoritative orchestration contract lives in `./.codex/workflows/data-visualize-workflow.md`
-- Use `metabase`, `grafana`, or `apache-superset` as the selected downstream domain skill, not as parallel active paths
+- Use `evidence`, `metabase`, `grafana`, or `apache-superset` as the selected downstream domain skill, not as parallel active paths
 
 ## Output Rules
 
