@@ -223,6 +223,100 @@ test("routeCommand sends $dv-help through the help workflow runtime", async () =
   assert.doesNotMatch(output, /^Data Visualization Kit\r?\n\r?\nCommands:/);
 });
 
+test("routeCommand sends bare $dv to the help workflow when no brief is provided", async () => {
+  const output = await captureConsoleLogAsync(() =>
+    routeCommand({
+      command: "$dv",
+      flags: {},
+      repoRoot: "D:\\repo",
+      rawText: "$dv",
+      runtimeContext: {
+        promptContext: {
+          interactive: true,
+          rawText: "$dv",
+          summary: "Command: $dv",
+        },
+      },
+    }),
+  );
+
+  assert.match(output, /Hub route: \$dv -> \$dv-help/);
+  assert.match(output, /Workflow: help/);
+});
+
+test("routeCommand sends broad $dv asks to the planning workflow", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const output = await captureConsoleLogAsync(() =>
+    routeCommand({
+      command: "$dv",
+      flags: {
+        "project-context": "E-commerce retention",
+        "project-dataset": "Orders and customers",
+        "non-interactive": "true",
+      },
+      repoRoot,
+      rawText: "$dv build a churn dashboard portfolio project",
+      runtimeContext: {
+        promptContext: {
+          interactive: false,
+          rawText: "$dv build a churn dashboard portfolio project",
+          summary: "Command: $dv",
+        },
+      },
+    }),
+  );
+
+  assert.match(output, /Hub route: \$dv -> \$dv-plan/);
+  assert.match(output, /Workflow: plan/);
+});
+
+test("routeCommand sends explicit $dv specialist asks to the matching owner workflow", async () => {
+  const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
+  const repoRoot = path.join(tempRoot, "repo");
+  await fs.mkdir(path.join(repoRoot, "projects"), { recursive: true });
+
+  const project = await generateProject({
+    repoRoot,
+    intake: {
+      projectContext: "Retention analysis",
+      projectDataset: "Orders and customers",
+      projectGoals: "Show churn insight and technical workflow",
+    },
+    slug: "retention-analysis",
+    preferFreeDeploy: true,
+  });
+
+  const output = await captureConsoleLogAsync(() =>
+    routeCommand({
+      command: "$dv",
+      flags: {
+        slug: project.slug,
+        "non-interactive": "true",
+      },
+      repoRoot,
+      rawText: "$dv publish make this project git-ready and deployable",
+      runtimeContext: {
+        promptContext: {
+          interactive: false,
+          projectSlug: project.slug,
+          rawText: "$dv publish make this project git-ready and deployable",
+          summary: "Command: $dv",
+        },
+      },
+    }),
+  );
+
+  assert.match(output, /Hub route: \$dv -> \$dv-publish/);
+  assert.match(output, /Workflow: publish/);
+
+  const publishDoc = await fs.readFile(path.join(project.projectRoot, "docs", "publish.md"), "utf8");
+  assert.match(publishDoc, /make this project git-ready and deployable/);
+  assert.doesNotMatch(publishDoc, /publish make this project git-ready and deployable/);
+});
+
 test("runDocumentManagementWorkflow parses summarize mode from the brief", async () => {
   const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), "codex-data-viz-kit-"));
   const repoRoot = path.join(tempRoot, "repo");

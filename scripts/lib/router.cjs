@@ -1,4 +1,5 @@
 const {
+  resolveHelpRecommendation,
   runCookWorkflow,
   runDocumentManagementWorkflow,
   runHelpWorkflow,
@@ -10,6 +11,20 @@ const { renderWorkflowUpdateDoc } = require("./project-doc-templates.cjs");
 async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext }) {
   const normalizedCommand = normalizeCommand(command);
   const briefText = deriveBriefText(normalizedCommand, rawText, command);
+
+  if (normalizedCommand === "$dv") {
+    const hubDispatch = resolveHubDispatch({ briefText, flags });
+    const targetCommand = hubDispatch.targetCommand;
+    console.log(`Hub route: $dv -> ${targetCommand}`);
+    await routeCommand({
+      command: targetCommand,
+      flags,
+      repoRoot,
+      rawText: [targetCommand, hubDispatch.forwardedBrief].filter(Boolean).join(" "),
+      runtimeContext,
+    });
+    return;
+  }
 
   if (normalizedCommand === "$dv-help") {
     await runHelpWorkflow({
@@ -127,6 +142,9 @@ async function routeCommand({ command, flags, repoRoot, rawText, runtimeContext 
 }
 
 function normalizeCommand(command) {
+  if (command === "$dv") {
+    return "$dv";
+  }
   if (command === "$dv-docs") {
     return "$dv-document-management";
   }
@@ -182,6 +200,121 @@ function withBrief(flags, briefText) {
 
 function hasNaturalLanguageFallback(normalizedCommand, rawText) {
   return !normalizedCommand.startsWith("$dv-") && rawText.trim().includes(" ");
+}
+
+function resolveHubDispatch({ briefText, flags }) {
+  const brief = String(briefText ?? "").trim();
+  if (!brief) {
+    return {
+      targetCommand: "$dv-help",
+      forwardedBrief: "",
+    };
+  }
+
+  const firstToken = extractLeadingToken(brief);
+  const explicitCommand = normalizeHubWorkflowToken(firstToken);
+  if (explicitCommand) {
+    return {
+      targetCommand: explicitCommand,
+      forwardedBrief: stripLeadingToken(brief),
+    };
+  }
+
+  const normalizedBrief = brief.toLowerCase();
+  if (isDiscoveryIntent(normalizedBrief)) {
+    return {
+      targetCommand: "$dv-help",
+      forwardedBrief: brief,
+    };
+  }
+
+  if (!hasSlugValue(flags?.slug) && isBroadPlanningIntent(normalizedBrief)) {
+    return {
+      targetCommand: "$dv-plan",
+      forwardedBrief: brief,
+    };
+  }
+
+  return {
+    targetCommand: resolveHelpRecommendation(brief).command,
+    forwardedBrief: brief,
+  };
+}
+
+function extractLeadingToken(value) {
+  return String(value ?? "").trim().split(/\s+/, 1)[0] ?? "";
+}
+
+function stripLeadingToken(value) {
+  return String(value ?? "").trim().split(/\s+/).slice(1).join(" ").trim();
+}
+
+function normalizeHubWorkflowToken(token) {
+  const value = String(token ?? "").trim().toLowerCase();
+  const tokenMap = {
+    "$dv-help": "$dv-help",
+    help: "$dv-help",
+    "$dv-plan": "$dv-plan",
+    plan: "$dv-plan",
+    primary: "$dv-plan",
+    "$dv-primary": "$dv-plan",
+    "$dv-cook": "$dv-cook",
+    cook: "$dv-cook",
+    "$dv-data-preparation": "$dv-data-preparation",
+    "data-preparation": "$dv-data-preparation",
+    preparation: "$dv-data-preparation",
+    "$dv-data-visualize": "$dv-data-visualize",
+    "data-visualize": "$dv-data-visualize",
+    visualize: "$dv-data-visualize",
+    visualization: "$dv-data-visualize",
+    "$dv-publish": "$dv-publish",
+    publish: "$dv-publish",
+    "$dv-debug": "$dv-debug",
+    debug: "$dv-debug",
+    "$dv-document-management": "$dv-document-management",
+    "document-management": "$dv-document-management",
+    docs: "$dv-document-management",
+    "$dv-docs": "$dv-document-management",
+  };
+
+  return tokenMap[value] ?? null;
+}
+
+function isDiscoveryIntent(normalizedBrief) {
+  const discoveryPhrases = [
+    "what commands",
+    "which command",
+    "what workflow",
+    "workflow roster",
+    "command surface",
+    "how do i start",
+    "how to start",
+    "show commands",
+    "available commands",
+  ];
+
+  return discoveryPhrases.some((phrase) => normalizedBrief.includes(phrase));
+}
+
+function isBroadPlanningIntent(normalizedBrief) {
+  const planningPhrases = [
+    "build ",
+    "create ",
+    "start ",
+    "new project",
+    "portfolio project",
+    "dataset",
+    "project goals",
+    "project context",
+    "business context",
+    "analysis project",
+  ];
+
+  return planningPhrases.some((phrase) => normalizedBrief.includes(phrase));
+}
+
+function hasSlugValue(value) {
+  return typeof value === "string" && value.trim() !== "" && value !== "true";
 }
 
 module.exports = {

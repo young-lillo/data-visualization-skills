@@ -425,6 +425,12 @@ function resolveHelpRecommendation(briefText) {
 
   const recommendations = [
     {
+      command: "$dv-help",
+      reason: "Your ask is about command discovery or choosing the right workflow.",
+      example: "npm run dv -- '$dv-help'",
+      matches: ["help", "commands", "command surface", "which command", "what command", "workflow roster", "how do i start"],
+    },
+    {
       command: "$dv-publish",
       reason: "Your ask sounds like git-readiness, deployment, or release packaging work.",
       example: 'npm run dv -- \'$dv-publish\' --slug ecommerce-churn --brief "Make this project git-ready and deployable"',
@@ -487,6 +493,7 @@ function resolveInteractiveMode(flags) {
 
 module.exports = {
   resolveInteractiveMode,
+  resolveHelpRecommendation,
   runCookWorkflow,
   runDocumentManagementWorkflow,
   runHelpWorkflow,
