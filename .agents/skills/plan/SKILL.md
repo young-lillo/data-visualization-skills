@@ -49,40 +49,53 @@ If any of these are vague, ask direct clarification questions until the inputs a
 - if the user gives weak goals, translate them into sharper analytical questions before planning
 - do not pretend missing goals are already clear
 
-## Framework Mapping
+## Mandatory Decision Gate (REQUIRED — do not skip)
 
-After clarification, map the project to the most suitable data framework.
+**Before producing any plan output**, you MUST explicitly confirm all three decisions with the user.
+Do not auto-select silently. Do not proceed until the user has responded to each question.
 
-**Prefer CRISP-DM when:**
-- the ask is insight-first
-- the user wants business understanding, analysis, explanation, and recommendations
-- the dataset is mainly a vehicle for analytical questions and portfolio storytelling
+Present each decision as a numbered choice with a short description. Wait for the user's selection.
 
-**Prefer a data-pipeline-first framework when:**
-- the ask is engineering-first
-- the user cares about ingestion, transformation, orchestration, data quality, reproducibility, or handoff between systems
-- the dataset story depends on reliable data movement as much as analysis
+### 1. Framework
 
-Make the framework choice explicit in the plan with a short reason.
+Present both options and ask the user to choose:
 
-## Goal Ladder
+| # | Framework | Best for |
+|---|-----------|---------|
+| 1 | **CRISP-DM** | insight-first — business understanding, analysis, explanation, recommendations |
+| 2 | **Data Pipeline** | engineering-first — ingestion, transformation, orchestration, data quality, reproducibility |
 
-If goals are incomplete or underpowered, suggest them in three levels and ask the user to confirm or refine:
+Ask: *"Which framework fits your project? (1 or 2)"*
 
-- `Basic`
-  - answer common descriptive questions
-  - profile and clean the dataset
-  - produce a lighter dashboard or portfolio outcome
-- `Pro`
-  - answer harder stakeholder questions
-  - explain drivers, segments, or relationships
-  - produce a stronger analytical story with more technical proof
-- `Advanced`
-  - answer high-difficulty questions
-  - include deeper methods such as scenario analysis, forecasting, anomaly analysis, root-cause analysis, or richer technical design
-  - make the dataset support a more senior portfolio narrative
+If the user's brief already contains strong signals (e.g. "ETL pipeline", "forecasting"), suggest a default but still ask to confirm.
 
-Do not stop at listing these tiers. Suggest concrete goal ideas based on the user's dataset and context.
+### 2. Goal Tier
+
+Present all three tiers and ask the user to choose:
+
+| # | Tier | What it delivers |
+|---|------|-----------------|
+| 1 | **Basic** | descriptive questions, data profiling, lighter dashboard output |
+| 2 | **Pro** | harder stakeholder questions, driver/segment analysis, stronger analytical story (default) |
+| 3 | **Advanced** | forecasting, anomaly detection, scenario analysis, senior portfolio narrative |
+
+Suggest concrete goal ideas for each tier based on the user's dataset and context before asking.
+Ask: *"Which goal tier fits your ambition for this project? (1, 2, or 3)"*
+
+### 3. Visualization Tool
+
+Present all three options and ask the user to choose:
+
+| # | Tool | Best for |
+|---|------|---------|
+| 1 | **Metabase** | general BI, stakeholder dashboards, SQL-backed questions (default) |
+| 2 | **Grafana** | operational monitoring, time-series, observability, alert-aware panels |
+| 3 | **Apache Superset** | legacy Superset estates only or migration analysis |
+
+Ask: *"Which visualization tool should this project use? (1, 2, or 3)"*
+
+**Do not proceed to write the plan until all three decisions are confirmed.**
+Record all three confirmed choices at the top of `project-plan.md`.
 
 ## Output Requirement
 

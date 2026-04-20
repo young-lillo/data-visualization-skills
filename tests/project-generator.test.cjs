@@ -255,6 +255,11 @@ test("routeCommand sends broad $dv asks to the planning workflow", async () => {
       flags: {
         "project-context": "E-commerce retention",
         "project-dataset": "Orders and customers",
+        // plan-intake-validation requires all three decisions in non-interactive mode.
+        "project-goals": "Show churn insight and retention trends",
+        framework: "CRISP-DM",
+        "goal-tier": "Pro",
+        "visualization-tool": "Metabase",
         "non-interactive": "true",
       },
       repoRoot,

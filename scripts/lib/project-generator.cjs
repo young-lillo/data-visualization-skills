@@ -39,6 +39,11 @@ async function generateProject(options) {
   const decisions = buildDecisionBundle({
     projectGoals: options.intake.projectGoals,
     preferFreeDeploy: options.preferFreeDeploy,
+    // Pass explicitly confirmed decisions from the intake validation hook.
+    // These take priority over keyword-based auto-selection in selector.cjs.
+    framework: options.intake.framework ?? null,
+    goalTier: options.intake.goalTier ?? null,
+    visualizationTool: options.intake.visualizationTool ?? null,
   });
 
   const docsRoot = path.join(projectRoot, "docs");

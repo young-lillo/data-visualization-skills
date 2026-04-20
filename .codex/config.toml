@@ -3,6 +3,9 @@ name = "data-visualization-kit"
 default_entrypoint = "$dv"
 help_entrypoint = "$dv-help"
 
+[features]
+codex_hooks = true
+
 [paths]
 prompts = ".codex/prompts"
 workflows = ".codex/workflows"

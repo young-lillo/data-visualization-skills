@@ -72,6 +72,7 @@ Do not expose a separate hook-only workflow command.
 - `user-prompt-submit`
 - `usage-context-awareness`
 - `workflow-routing-gate`
+- `plan-intake-validation` *(plan workflow only — confirms framework, goal tier, and tool with user)*
 - `project-preflight`
 - `subagent-init`
 - `privacy-block`

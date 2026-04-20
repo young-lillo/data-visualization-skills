@@ -2,21 +2,28 @@ const readline = require("node:readline/promises");
 const { stdin, stdout } = require("node:process");
 
 const { hasTextValue, resolveBoolean } = require("./cli.cjs");
+const { planIntakeValidation } = require("../hooks/plan-intake-validation.cjs");
 
 async function collectPrimaryInput(flags, options = {}) {
   const interactive = options.interactive ?? stdin.isTTY;
 
+  // All three base fields supplied — run decision validation without a prompt loop.
   if (
     hasTextValue(flags["project-context"]) &&
     hasTextValue(flags["project-dataset"]) &&
     hasTextValue(flags["project-goals"])
   ) {
+    // Validate (or auto-confirm) framework, goal tier, and visualization tool.
+    const decisions = await planIntakeValidation({ flags, interactive });
     return {
       projectContext: flags["project-context"],
       projectDataset: flags["project-dataset"],
       projectGoals: flags["project-goals"],
       preferFreeDeploy: resolveBoolean(flags["prefer-free-deploy"], true),
       slug: flags.slug,
+      framework: decisions.framework,
+      goalTier: decisions.goalTier,
+      visualizationTool: decisions.visualizationTool,
     };
   }
 
@@ -24,6 +31,7 @@ async function collectPrimaryInput(flags, options = {}) {
     throw new Error("Missing required intake values for non-interactive execution.");
   }
 
+  // Interactive path — open one shared readline interface for all prompts.
   const rl = readline.createInterface({ input: stdin, output: stdout });
   try {
     const projectContext = hasTextValue(flags["project-context"])
@@ -37,8 +45,11 @@ async function collectPrimaryInput(flags, options = {}) {
       : await rl.question("Project goals: ");
     const preferFreeDeploy =
       flags["prefer-free-deploy"] ??
-      await rl.question("Prefer free-tier or self-host-friendly open-source deployment by default? [Y/n]: ");
-    const slug = flags.slug ?? await rl.question("Project slug (optional): ");
+      (await rl.question("Prefer free-tier or self-host-friendly open-source deployment by default? [Y/n]: "));
+    const slug = flags.slug ?? (await rl.question("Project slug (optional): "));
+
+    // Present framework, goal tier, and tool choices — user must confirm each.
+    const decisions = await planIntakeValidation({ flags, interactive, rl });
 
     return {
       projectContext,
@@ -46,6 +57,9 @@ async function collectPrimaryInput(flags, options = {}) {
       projectGoals,
       preferFreeDeploy: resolveBoolean(preferFreeDeploy, true),
       slug,
+      framework: decisions.framework,
+      goalTier: decisions.goalTier,
+      visualizationTool: decisions.visualizationTool,
     };
   } finally {
     rl.close();
