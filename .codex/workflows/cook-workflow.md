@@ -64,12 +64,29 @@ If these sources disagree, prefer the latest project docs and record the mismatc
 - run `$dv-data-visualize` only after the prepared-data contract is trustworthy enough
 - preserve the selected visualization path from project docs unless the user explicitly changes scope
 - keep visualization aligned to the active project plan, not to ad hoc chart ideas
+- **the dashboard output must be a live, interactive UI** — not a static HTML export or screenshot
+
+### 4.5. Local Deploy
+
+After visualization completes, start the selected tool locally so the user can test it immediately:
+
+- read the selected tool from `projects/<slug>/docs/visualization.md`
+- **Evidence**: run `npm install && npm run dev` inside `projects/<slug>/evidence/` → live at http://localhost:3000
+- **Metabase**: run `docker compose up -d` inside `projects/<slug>/` → live at http://localhost:3000
+- **Grafana**: run `docker compose up -d` inside `projects/<slug>/` → live at http://localhost:3000
+- confirm the server starts without errors
+- report the local URL to the user so they can open and interact with the dashboard
 
 ### 5. Validation
 
-- run the `test` skill or project validation after the execution pass materially changes outputs
+- run the `test` skill or project validator after the execution pass materially changes outputs
 - verify the prepared-data contract, dashboard behavior, and delivery intent still agree
 - treat failed checks, broken queries, missing assets, and plan drift as blocking issues
+- **tool-aware deploy check**: confirm the selected dashboard is reachable at its local URL
+  - Evidence: `http://localhost:3000` responds via `npm run dev`
+  - Metabase: Docker container is running and Metabase UI is reachable
+  - Grafana: Docker container is running and Grafana UI is reachable
+- report the live URL to the user as part of validation output
 
 ### 6. Docs Sync
 
@@ -109,6 +126,8 @@ Cook execution is complete only when:
 - the project was executed from an approved plan rather than guessed scope
 - the prepared-data contract is current and trusted
 - the visualization pass reflects the prepared-data contract
+- the dashboard is running locally as a live interactive UI (not a static file)
+- the user has been given the local URL to test the dashboard
 - validation has passed or remaining blockers are made explicit
 - project docs reflect the latest execution state
 - the project is ready for `$dv-publish` with unresolved questions called out clearly

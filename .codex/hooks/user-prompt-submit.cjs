@@ -17,30 +17,13 @@
 'use strict';
 
 const fs = require('node:fs');
-const path = require('node:path');
-
-// Import the existing privacy-block logic from the Node.js hook layer.
-// Resolves from the git root so this works regardless of CWD.
-function requireFromRepo(relPath) {
-  try {
-    // Try git root resolution first (preferred for repo-local hooks).
-    const { execFileSync } = require('node:child_process');
-    const gitRoot = execFileSync('git', ['rev-parse', '--show-toplevel'], {
-      encoding: 'utf8', timeout: 3000, stdio: ['pipe', 'pipe', 'pipe'],
-    }).trim();
-    return require(path.join(gitRoot, relPath));
-  } catch {
-    // Fall back to cwd-relative.
-    return require(path.join(process.cwd(), relPath));
-  }
-}
 
 // ---- Decision gate reminder text (mirrors dv-plan.md Step 3) ----------------
 
 const PLAN_INTAKE_REMINDER = `
 MANDATORY DECISION GATE — $dv-plan detected.
 
-Before writing any project plan file, you MUST explicitly confirm all three decisions with the user:
+Before writing any project plan file, you MUST explicitly confirm all four decisions with the user:
 
 1. Framework
    1. CRISP-DM — insight-first (business understanding, analysis, recommendations)
@@ -54,12 +37,19 @@ Before writing any project plan file, you MUST explicitly confirm all three deci
    → Ask: "Which goal tier best matches your ambition? (1, 2, or 3)"
 
 3. Visualization Tool
-   1. Metabase — general BI, stakeholder dashboards (default)
-   2. Grafana — operational monitoring, time-series, observability
-   3. Apache Superset — legacy Superset estates or migration analysis
-   → Ask: "Which visualization tool will you use? (1, 2, or 3)"
+   1. Evidence.dev — CSV/Excel/Kaggle datasets, static portfolio, Netlify/Vercel deploy (no server)
+   2. Metabase — SQL DB, interactive BI, self-hosted VPS (default)
+   3. Grafana — operational monitoring, time-series, observability, self-hosted VPS
+   4. Apache Superset — legacy Superset estates or migration analysis only (4GB+ RAM required)
+   → Ask: "Which visualization tool will you use? (1, 2, 3, or 4)"
 
-Do NOT proceed to create any project files until the user has answered all three questions.
+4. Deploy Target
+   1. Netlify — static hosting only → Evidence.dev is the natural fit
+   2. Vercel — static hosting only → Evidence.dev is the natural fit
+   3. VPS — server-side → Metabase or Grafana
+   → Ask: "Where will this project be deployed? (1, 2, or 3)"
+
+Do NOT proceed to create any project files until the user has answered all four questions.
 Record the confirmed answers in the project-plan.md decisions section.
 `.trim();
 
