@@ -137,9 +137,12 @@ That plan file must be rich enough for downstream `$dv-*` workflows and skills t
 
 ## Handoff Rule
 
-- `$dv-cook` should run after the plan is locked and the project workspace exists
-- `$dv-data-preparation` should use the plan file as its primary project contract
-- `$dv-data-visualize` should use the plan file as the starting project contract when visualization work begins
+After the plan is locked, always suggest **`$dv-cook`** as the primary next command.
+Do not suggest `$dv-data-preparation` or `$dv-data-visualize` as the next step — those are downstream specialist commands invoked from within `$dv-cook` or by the user for targeted refreshes.
+
+- `$dv-cook` — **primary next command** after `$dv-plan` completes
+- `$dv-data-preparation` — downstream specialist; uses the plan file as its contract, but is not the suggested post-plan command
+- `$dv-data-visualize` — downstream specialist; uses the plan file as its starting contract, but is not the suggested post-plan command
 
 ## Common Pitfalls To Avoid
 
