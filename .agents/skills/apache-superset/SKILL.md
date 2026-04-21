@@ -1,11 +1,13 @@
 ---
 name: apache-superset
-description: Maintain and evolve existing Apache Superset analytics stacks. Use for Superset SQL Lab, datasets, charts, dashboards, RBAC, embedding, operational fixes, and migration planning toward Metabase or Grafana. Prefer only for legacy projects that already selected Superset. Requires 4GB+ RAM.
+description: Maintain and evolve existing Apache Superset analytics stacks (v6.x). Use for SQL Lab, datasets, charts, dashboards, RBAC, RLS, embedding via guest token API, REST API integration, Celery async, caching, Docker/Helm deployment, and migration planning toward Metabase or Grafana. Prefer only for legacy projects that already selected Superset. Requires 4GB+ RAM.
 license: MIT
 argument-hint: "[maintenance-task] [legacy-scope]"
 metadata:
   author: data-visualization-kit
-  version: "1.0.0"
+  version: "2.0.0"
+  superset-version: "6.0.0"
+  updated: "2026-04-21"
 ---
 
 > **RAM Requirement:** Apache Superset requires a minimum of **4GB RAM** in production
@@ -14,13 +16,16 @@ metadata:
 
 # Apache Superset Skill
 
-Production-ready Apache Superset maintenance for legacy analytics stacks, with SQL-first modeling, semantic reuse, governance, and migration-aware thinking.
+Production-ready Apache Superset maintenance for legacy analytics stacks. Covers SQL Lab, datasets, charts, dashboards, RBAC, RLS, embedding, REST API, Celery async, caching, Docker Compose, Kubernetes/Helm, and migration planning.
+
+**Current stable version:** 6.0.0 (Dec 2024) | RC 6.1.0 (Apr 2025)
 
 ## When to Use
 
 - Maintaining an existing Apache Superset workspace already in production or staging
 - Updating SQL Lab queries, virtual datasets, charts, dashboards, or filters
 - Troubleshooting Superset permissions, datasource wiring, caching, or dashboard behavior
+- Configuring REST API access, guest token embedding, or async query execution
 - Hardening a Superset instance for team use, governed access, or embedded analytics
 - Auditing whether a legacy Superset project should stay on Superset or migrate to Metabase or Grafana
 
@@ -58,8 +63,8 @@ See: `references/superset-core.md`
 ## Reference Navigation
 
 **Core Domain References:**
-- `superset-core.md` - SQL Lab, datasets, charts, dashboards, filters, RBAC, embeds, caching, delivery patterns
-- `superset-migration.md` - keep-vs-migrate criteria, migration triggers, target mapping to Metabase or Grafana
+- `superset-core.md` - Full technical reference: installation, config, SQL Lab, datasets, charts, dashboards, filters, RBAC, RLS, REST API, embedding, caching, Celery, CLI, feature flags, v6.0 breaking changes
+- `superset-migration.md` - Keep-vs-migrate criteria, migration triggers, target mapping to Metabase or Grafana
 
 ## Key Best Practices
 
@@ -77,11 +82,13 @@ See: `references/superset-core.md`
 - Review datasource permissions, database credentials, and row-level security together
 - Minimize broad admin grants; treat role design as part of product design
 - Validate embeds, guest access, and shared links against tenant and data-boundary rules
+- Never hardcode `SECRET_KEY`; always read from environment variable
 
 **Operations:**
 - Watch query latency, cache hit behavior, and dashboard render cost
 - Treat broken charts as data-contract issues first, UI issues second
 - Record legacy decisions and migration blockers in project docs
+- On v6.0 upgrade: cache invalidates due to MD5→SHA-256 hash change; plan for warm-up
 
 ## Quick Decision Matrix
 
@@ -89,6 +96,8 @@ See: `references/superset-core.md`
 |------|--------|
 | Maintain existing Superset estate | Apache Superset |
 | SQL Lab plus reusable governed datasets | Apache Superset |
+| Guest token embedding in app | Apache Superset |
+| REST API / programmatic dashboard access | Apache Superset |
 | Simpler BI for general stakeholders | Metabase |
 | Operational, observability, or time-series dashboards | Grafana |
 | New default DV portfolio BI path | Metabase |
@@ -100,6 +109,7 @@ See: `references/superset-core.md`
 - Confirm Superset is already the selected stack
 - Inventory databases, datasets, dashboards, roles, and embeds
 - Capture current breakages, business asks, and deployment constraints
+- Note current version — check `references/superset-core.md` for v6.0 breaking changes if upgrading
 
 **Model Layer:**
 - Review SQL Lab sources and virtual datasets
@@ -114,6 +124,7 @@ See: `references/superset-core.md`
 **Governance:**
 - Review database credentials, roles, row-level rules, and guest/embed flows
 - Check access boundaries for team, client, and public use cases
+- Validate `DOMAIN_ALLOWLIST` for embedded deployments
 
 **Quality:**
 - Re-run representative queries
@@ -128,12 +139,15 @@ See: `references/superset-core.md`
 4. Ignoring cache behavior while blaming the database for every slowdown
 5. Granting broad roles to bypass permission design
 6. Keeping Superset on a new project just because it already exists somewhere else
+7. Upgrading to v6.0 without planning for SHA-256 hash migration and theme system rewrite
 
 ## Resources
 
 **Official Documentation:**
 - Apache Superset: https://superset.apache.org/
 - Superset docs: https://superset.apache.org/docs/intro
+- GitHub repo: https://github.com/apache/superset
+- REST API (Swagger): `http://<host>:8088/api/v1/swagger` (when `SWAGGER_UI_ENABLED=True`)
 
 **Data Visualization Kit Context:**
 - Prefer Metabase for new general BI work
