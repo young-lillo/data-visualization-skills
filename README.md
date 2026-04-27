@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
   <img src="https://img.shields.io/badge/Default%20Deploy-Metabase-f59e0b" alt="Metabase" />
   <img src="https://img.shields.io/badge/Dashboard%20Mode-interactive-16a34a" alt="Interactive Dashboard" />
-  <img src="https://img.shields.io/badge/License-MIT-black" alt="MIT License" />
+  <img src="https://img.shields.io/badge/License-For%20Personal%20Use-black" alt="For Personal Use License" />
 </p>
 
 Data Visualization Kit helps you build portfolio-grade data visualization projects with Codex in a more structured way.
@@ -275,7 +275,7 @@ Each generated project keeps its own working context under `projects/`.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed for personal use.
 See [LICENSE](./LICENSE).
 
 ## The Point
