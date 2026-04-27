@@ -7,7 +7,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Commands-8-0ea5e9" alt="Commands" />
-  <img src="https://img.shields.io/badge/Project%20Outputs-docs%2Dcentric-22c55e" alt="Docs Centric Outputs" />
   <img src="https://img.shields.io/badge/Default%20Deploy-Metabase-f59e0b" alt="Metabase" />
   <img src="https://img.shields.io/badge/Dashboard%20Mode-interactive-16a34a" alt="Interactive Dashboard" />
   <img src="https://img.shields.io/badge/License-For%20Personal%20Use-black" alt="For Personal Use License" />
